@@ -9,4 +9,9 @@
     <string name="job">JOB</string>
     <string name="manager">MANAGER</string>
     <string name="settings">SETTINGS</string>
+    <string name="add_new_manager">Add new Manager</string>
+    <string name="name">name</string>
+    <string name="surname">surname</string>
+    <string name="email">email</string>
+    <string name="save">SAVE</string>
 </resources>
