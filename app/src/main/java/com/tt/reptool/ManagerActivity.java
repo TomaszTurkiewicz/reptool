@@ -126,7 +126,7 @@ public class ManagerActivity extends AppCompatActivity {
             Toast.makeText(ManagerActivity.this,"Fields empty",
                     Toast.LENGTH_LONG).show();
         }
-        
+
         //TODO editing manager
 
 
