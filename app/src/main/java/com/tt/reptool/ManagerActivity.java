@@ -37,6 +37,7 @@ public class ManagerActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference=firebaseDatabase.getReference("Manager");
         initManagerList();
+
     }
 
     private void initManagerList() {
@@ -93,6 +94,9 @@ public class ManagerActivity extends AppCompatActivity {
                         manager.setEmailAddress(email);
                         databaseReference.child(name + " " + surname).setValue(manager);
                         initManagerList();
+                        managerName.setText("");
+                        managerSurname.setText("");
+                        managerEmail.setText("");
                     }
                 }
 
@@ -110,8 +114,9 @@ public class ManagerActivity extends AppCompatActivity {
             Toast.makeText(ManagerActivity.this,"Fields empty",
                     Toast.LENGTH_LONG).show();
         }
-        //TODO check if fields are not empty
-        //TODO delete fields after uploading
+
+        //TODO deleting manager
+        //TODO editing manager
 
 
 
