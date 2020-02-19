@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ManagerActivity">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewManagers"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-/>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ManagerActivity"
+    android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/activityManagerParentLayout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:layout_width="match_parent"
@@ -27,7 +21,11 @@
                 android:text="@string/add_new_manager"
                 android:gravity="center"
                 android:textSize="@dimen/bigText"
-                android:layout_margin="@dimen/margin"/>
+                android:layout_marginRight="@dimen/margin"
+                android:layout_marginLeft="@dimen/margin"
+                android:layout_marginTop="@dimen/margin"
+                android:layout_marginBottom="@dimen/marginHalf"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,7 +38,10 @@
                     tools:ignore="Suspicious0dp"
                     android:layout_weight="1"
                     android:text="@string/name"
-                    android:layout_margin="@dimen/margin"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginEnd="@dimen/marginHalf"
+                    android:layout_marginTop="@dimen/marginHalf"
+                    android:layout_marginBottom="@dimen/marginHalf"
                     android:textSize="@dimen/smallText"/>
                 <EditText
                     android:id="@+id/managerName"
@@ -48,7 +49,11 @@
                     android:layout_height="wrap_content"
                     tools:ignore="Suspicious0dp"
                     android:layout_weight="3"
-                    android:layout_margin="@dimen/margin"/>
+                    android:layout_marginStart="@dimen/marginHalf"
+                    android:layout_marginEnd="@dimen/margin"
+                    android:layout_marginTop="@dimen/marginHalf"
+                    android:layout_marginBottom="@dimen/marginHalf"
+                    />
 
             </LinearLayout>
             <LinearLayout
@@ -62,7 +67,10 @@
                     tools:ignore="Suspicious0dp"
                     android:layout_weight="1"
                     android:text="@string/surname"
-                    android:layout_margin="@dimen/margin"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginEnd="@dimen/marginHalf"
+                    android:layout_marginTop="@dimen/marginHalf"
+                    android:layout_marginBottom="@dimen/marginHalf"
                     android:textSize="@dimen/smallText"/>
                 <EditText
                     android:id="@+id/managerSurname"
@@ -70,7 +78,11 @@
                     android:layout_height="wrap_content"
                     tools:ignore="Suspicious0dp"
                     android:layout_weight="3"
-                    android:layout_margin="@dimen/margin"/>
+                    android:layout_marginStart="@dimen/marginHalf"
+                    android:layout_marginEnd="@dimen/margin"
+                    android:layout_marginTop="@dimen/marginHalf"
+                    android:layout_marginBottom="@dimen/marginHalf"
+                    />
 
             </LinearLayout>
             <LinearLayout
@@ -84,7 +96,10 @@
                     tools:ignore="Suspicious0dp"
                     android:layout_weight="1"
                     android:text="@string/email"
-                    android:layout_margin="@dimen/margin"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginEnd="@dimen/marginHalf"
+                    android:layout_marginTop="@dimen/marginHalf"
+                    android:layout_marginBottom="@dimen/marginHalf"
                     android:textSize="@dimen/smallText"/>
                 <EditText
                     android:id="@+id/managerEmail"
@@ -92,23 +107,33 @@
                     android:layout_height="wrap_content"
                     tools:ignore="Suspicious0dp"
                     android:layout_weight="3"
-                    android:layout_margin="@dimen/margin"/>
+                    android:layout_marginStart="@dimen/marginHalf"
+                    android:layout_marginEnd="@dimen/margin"
+                    android:layout_marginTop="@dimen/marginHalf"
+                    android:layout_marginBottom="@dimen/margin"
+                    />
 
             </LinearLayout>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginTop="@dimen/marginHalf"
+                android:layout_marginBottom="@dimen/margin"
                 android:text="@string/save"
                 android:onClick="saveManager"/>
 
-
         </LinearLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewManagers"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activityManagerParentLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-    </LinearLayout>
-
-
-
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
