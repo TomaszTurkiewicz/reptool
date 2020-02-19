@@ -73,7 +73,25 @@ public class ManagerActivity extends AppCompatActivity {
             public void onDeleteClick(int position) {
                 removeManager(position);
             }
+
+            @Override
+            public void onEditClick(int position) {
+                editManager(position);
+            }
         });
+    }
+
+    private void editManager(int position) {
+        openDialog(position);
+        initManagerList();
+    }
+
+    private void openDialog(int position) {
+        ManagerDialog managerDialog =
+                new ManagerDialog(mList.get(position).getName(),
+                        mList.get(position).getSurname(),
+                        mList.get(position).getEmailAddress());
+        managerDialog.show(getSupportFragmentManager(),"manager dialog");
     }
 
     private void removeManager(int position) {
@@ -96,7 +114,7 @@ public class ManagerActivity extends AppCompatActivity {
 
             final String mName = name.substring(0,1).toUpperCase()+name.substring(1).toLowerCase();
             final String mSurname = surname.substring(0,1).toUpperCase()+surname.substring(1).toLowerCase();
-            databaseReference.child(name + " " + surname).addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReference.child(mName + " " + mSurname).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.exists()){
@@ -128,6 +146,7 @@ public class ManagerActivity extends AppCompatActivity {
         }
 
         //TODO editing manager
+        //TODO add email verification if manager exists
 
 
 

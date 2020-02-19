@@ -23,6 +23,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public interface OnItemClickListener{
         void onDeleteClick(int position);
+        void onEditClick(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){
@@ -60,6 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView managerSurname;
         LinearLayout managerLayout;
         ImageView managerDeleteImage;
+        ImageView managerEditImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,6 +69,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             managerSurname = itemView.findViewById(R.id.managerSurnameLayoutManager);
             managerLayout = itemView.findViewById(R.id.manager_layout);
             managerDeleteImage = itemView.findViewById(R.id.imageDeleteLayoutManager);
+            managerEditImage = itemView.findViewById(R.id.imageEditLayoutManager);
 
             managerDeleteImage.setOnClickListener(new View.OnClickListener(){
                 @Override
@@ -75,6 +78,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION){
                             mListener.onDeleteClick(position);
+                        }
+                    }
+                }
+            });
+
+            managerEditImage.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    if(mListener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            mListener.onEditClick(position);
                         }
                     }
                 }

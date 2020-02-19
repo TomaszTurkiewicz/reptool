@@ -21,6 +21,14 @@
         android:layout_margin="8dp" />
 
     <ImageView
+        android:id="@+id/imageEditLayoutManager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_edit"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="8dp"/>
+
+    <ImageView
         android:id="@+id/imageDeleteLayoutManager"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
