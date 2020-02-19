@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,6 +19,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private List<Manager> mList = new ArrayList<>(); //TODO why redundant?
     private Context mContext;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener{
+        void onDeleteClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
+    }
 
     public RecyclerViewAdapter(Context mContext, List<Manager> mList) {
         this.mList = mList;
@@ -48,12 +59,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView managerName;
         TextView managerSurname;
         LinearLayout managerLayout;
+        ImageView managerDeleteImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             managerName = itemView.findViewById(R.id.managerNameLayoutManager);
             managerSurname = itemView.findViewById(R.id.managerSurnameLayoutManager);
             managerLayout = itemView.findViewById(R.id.manager_layout);
+            managerDeleteImage = itemView.findViewById(R.id.imageDeleteLayoutManager);
+
+            managerDeleteImage.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    if(mListener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            mListener.onDeleteClick(position);
+                        }
+                    }
+                }
+            });
+
         }
     }
 

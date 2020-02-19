@@ -20,7 +20,12 @@
         android:textSize="@dimen/TextSize"
         android:layout_margin="8dp" />
 
-
-
+    <ImageView
+        android:id="@+id/imageDeleteLayoutManager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="8dp"/>
 
 </LinearLayout>
