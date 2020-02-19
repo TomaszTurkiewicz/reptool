@@ -67,6 +67,21 @@ public class ManagerActivity extends AppCompatActivity {
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this,mList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        adapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onDeleteClick(int position) {
+                removeManager(position);
+            }
+        });
+    }
+
+    private void removeManager(int position) {
+        String dName = mList.get(position).getName();
+        String dSurname = mList.get(position).getSurname();
+        databaseReference.child(dName + " " + dSurname).removeValue();
+        initManagerList();
+
     }
 
     public void saveManager(View view) {
@@ -92,7 +107,7 @@ public class ManagerActivity extends AppCompatActivity {
                         manager.setName(mName);
                         manager.setSurname(mSurname);
                         manager.setEmailAddress(email);
-                        databaseReference.child(name + " " + surname).setValue(manager);
+                        databaseReference.child(mName + " " + mSurname).setValue(manager);
                         initManagerList();
                         managerName.setText("");
                         managerSurname.setText("");
@@ -106,16 +121,12 @@ public class ManagerActivity extends AppCompatActivity {
                 }
             });
 
-
-
-
         }
         else{
             Toast.makeText(ManagerActivity.this,"Fields empty",
                     Toast.LENGTH_LONG).show();
         }
-
-        //TODO deleting manager
+        
         //TODO editing manager
 
 
