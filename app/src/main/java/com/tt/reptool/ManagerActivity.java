@@ -37,10 +37,10 @@ public class ManagerActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference=firebaseDatabase.getReference("Manager");
         initManagerList();
-
     }
 
-    private void initManagerList() {
+
+    public void initManagerList() {
 
         mList.clear();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -83,21 +83,27 @@ public class ManagerActivity extends AppCompatActivity {
 
     private void editManager(int position) {
         openDialog(position);
-        initManagerList();
     }
 
     private void openDialog(int position) {
         ManagerDialog managerDialog =
                 new ManagerDialog(mList.get(position).getName(),
                         mList.get(position).getSurname(),
-                        mList.get(position).getEmailAddress());
+                        mList.get(position).getEmailAddress(),
+                        new ManagerDialog.DialogCallback() {
+                            @Override
+                            public void onDialogCallback() {
+                                initManagerList();
+                            }
+                        });
         managerDialog.show(getSupportFragmentManager(),"manager dialog");
     }
 
     private void removeManager(int position) {
         String dName = mList.get(position).getName();
         String dSurname = mList.get(position).getSurname();
-        databaseReference.child(dName + " " + dSurname).removeValue();
+        String dEmail = mList.get(position).getEmailAddress();
+        databaseReference.child(dName + " " + dSurname + " " + dEmail).removeValue();
         initManagerList();
 
     }
@@ -114,7 +120,7 @@ public class ManagerActivity extends AppCompatActivity {
 
             final String mName = name.substring(0,1).toUpperCase()+name.substring(1).toLowerCase();
             final String mSurname = surname.substring(0,1).toUpperCase()+surname.substring(1).toLowerCase();
-            databaseReference.child(mName + " " + mSurname).addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReference.child(mName + " " + mSurname + " " + email).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.exists()){
@@ -125,7 +131,7 @@ public class ManagerActivity extends AppCompatActivity {
                         manager.setName(mName);
                         manager.setSurname(mSurname);
                         manager.setEmailAddress(email);
-                        databaseReference.child(mName + " " + mSurname).setValue(manager);
+                        databaseReference.child(mName + " " + mSurname + " " + email).setValue(manager);
                         initManagerList();
                         managerName.setText("");
                         managerSurname.setText("");
@@ -146,7 +152,6 @@ public class ManagerActivity extends AppCompatActivity {
         }
 
         //TODO editing manager
-        //TODO add email verification if manager exists
 
 
 

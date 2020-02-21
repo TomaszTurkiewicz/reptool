@@ -30,16 +30,18 @@ public class ManagerDialog extends AppCompatDialogFragment {
     private String name;
     private String surname;
     private String email;
+    private DialogCallback callback;
 
-    public ManagerDialog(String name, String surname, String email) {
+    public ManagerDialog(String name, String surname, String email, DialogCallback callback) {
         this.name = name;
         this.surname = surname;
         this.email = email;
+        this.callback = callback;
     }
 
     @NonNull
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+    public Dialog onCreateDialog(@Nullable final Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.layout_dialog_manager, null);
@@ -51,35 +53,36 @@ public class ManagerDialog extends AppCompatDialogFragment {
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        dialog.dismiss();
                     }
                 })
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(final DialogInterface dialog, int which) {
                         String managerName = editTextManagerName.getText().toString().trim();
                         String managerSurname = editTextManagerSurname.getText().toString().trim();
-                        String managerEmail = editTextManagerEmail.getText().toString().trim();
+                        final String managerEmail = editTextManagerEmail.getText().toString().trim();
 
-                        databaseReference.child(name + " " + surname).removeValue();
+
                         //TODO adding new manager
                         if(!TextUtils.isEmpty(managerName)&&!TextUtils.isEmpty(managerSurname)&&!TextUtils.isEmpty(managerEmail)) {
 
                             final String mName = managerName.substring(0,1).toUpperCase()+managerName.substring(1).toLowerCase();
                             final String mSurname = managerSurname.substring(0,1).toUpperCase()+managerSurname.substring(1).toLowerCase();
-                            databaseReference.child(mName + " " + mSurname).addListenerForSingleValueEvent(new ValueEventListener() {
+                            databaseReference.child(mName + " " + mSurname + " " + managerEmail).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    if(dataSnapshot.exists()){
-                                        Toast.makeText(getContext(),"Already exist", Toast.LENGTH_LONG).show();
-                                    }else{
+
+                                        databaseReference.child(name + " " + surname + " " + email).removeValue();
                                         Manager manager = new Manager();
                                         manager.setName(mName);
                                         manager.setSurname(mSurname);
                                         manager.setEmailAddress(email);
-                                        databaseReference.child(mName + " " + mSurname).setValue(manager);
+                                        databaseReference.child(mName + " " + mSurname + " " + managerEmail).setValue(manager);
 
-                                    }
+                                    callback.onDialogCallback();
+                                    dialog.dismiss();
+
                                 }
 
                                 @Override
@@ -108,6 +111,10 @@ public class ManagerDialog extends AppCompatDialogFragment {
         editTextManagerEmail.setText(email);
 
         return builder.create();
+    }
+
+    public interface DialogCallback{
+        void onDialogCallback();
     }
 
 }
