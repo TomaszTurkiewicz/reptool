@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".JobActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:text="@string/find_job"
+            android:onClick="findJob"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_new_job"
+            android:gravity="center"
+            android:textSize="@dimen/bigText"
+            android:layout_marginRight="@dimen/margin"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginBottom="@dimen/marginHalf"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:ignore="Suspicious0dp"
+                android:layout_weight="1"
+                android:text="@string/job_number"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginEnd="@dimen/marginHalf"
+                android:layout_marginTop="@dimen/marginHalf"
+                android:layout_marginBottom="@dimen/marginHalf"
+                android:textSize="@dimen/smallText"/>
+            <EditText
+                android:id="@+id/jobNumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:ignore="Suspicious0dp"
+                android:layout_weight="3"
+                android:layout_marginStart="@dimen/marginHalf"
+                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginTop="@dimen/marginHalf"
+                android:layout_marginBottom="@dimen/marginHalf"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:ignore="Suspicious0dp"
+                android:layout_weight="1"
+                android:text="@string/client_name"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginEnd="@dimen/marginHalf"
+                android:layout_marginTop="@dimen/marginHalf"
+                android:layout_marginBottom="@dimen/marginHalf"
+                android:textSize="@dimen/smallText"/>
+            <EditText
+                android:id="@+id/clientName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:ignore="Suspicious0dp"
+                android:layout_weight="3"
+                android:layout_marginStart="@dimen/marginHalf"
+                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginTop="@dimen/marginHalf"
+                android:layout_marginBottom="@dimen/marginHalf"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:ignore="Suspicious0dp"
+                android:layout_weight="1"
+                android:text="@string/street"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginEnd="@dimen/marginHalf"
+                android:layout_marginTop="@dimen/marginHalf"
+                android:layout_marginBottom="@dimen/marginHalf"
+                android:textSize="@dimen/smallText"/>
+            <EditText
+                android:id="@+id/street"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:ignore="Suspicious0dp"
+                android:layout_weight="3"
+                android:layout_marginStart="@dimen/marginHalf"
+                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginTop="@dimen/marginHalf"
+                android:layout_marginBottom="@dimen/marginHalf"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:ignore="Suspicious0dp"
+                android:layout_weight="1"
+                android:text="@string/postcode"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginEnd="@dimen/marginHalf"
+                android:layout_marginTop="@dimen/marginHalf"
+                android:layout_marginBottom="@dimen/marginHalf"
+                android:textSize="@dimen/smallText"/>
+            <EditText
+                android:id="@+id/postcode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:ignore="Suspicious0dp"
+                android:layout_weight="3"
+                android:layout_marginStart="@dimen/marginHalf"
+                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginTop="@dimen/marginHalf"
+                android:layout_marginBottom="@dimen/marginHalf"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:ignore="Suspicious0dp"
+                android:layout_weight="1"
+                android:text="@string/jobDescription"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginEnd="@dimen/marginHalf"
+                android:layout_marginTop="@dimen/marginHalf"
+                android:layout_marginBottom="@dimen/marginHalf"
+                android:textSize="@dimen/smallText"/>
+            <EditText
+                android:id="@+id/jobDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:ignore="Suspicious0dp"
+                android:layout_weight="3"
+                android:layout_marginStart="@dimen/marginHalf"
+                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginTop="@dimen/marginHalf"
+                android:layout_marginBottom="@dimen/margin"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:ignore="Suspicious0dp"
+                android:layout_weight="1"
+                android:text="@string/jobManager"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginEnd="@dimen/marginHalf"
+                android:layout_marginTop="@dimen/marginHalf"
+                android:layout_marginBottom="@dimen/marginHalf"
+                android:textSize="@dimen/smallText"/>
+            <Spinner
+                android:id="@+id/jobPM"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:ignore="Suspicious0dp"
+                android:layout_weight="3"
+                android:layout_marginStart="@dimen/marginHalf"
+                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginTop="@dimen/marginHalf"
+                android:layout_marginBottom="@dimen/margin"
+                />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:text="@string/save"
+            android:onClick="saveJob"/>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,4 +22,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ManagerActivity.class);
         startActivity(intent);
     }
+
+    public void onJobClick(View view) {
+        Intent intent = new Intent(this, JobActivity.class);
+        startActivity(intent);
+    }
 }

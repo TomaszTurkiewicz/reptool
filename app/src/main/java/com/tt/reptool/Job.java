@@ -14,10 +14,19 @@ Job:
 public class Job {
 
     private String jobNumber;
-    private String address;
+    private Address address;
+    private String shortDescription;
     private Manager projectManager;
 
     public Job() {
+    }
+
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
     }
 
     public String getJobNumber() {
@@ -28,11 +37,11 @@ public class Job {
         this.jobNumber = jobNumber;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 

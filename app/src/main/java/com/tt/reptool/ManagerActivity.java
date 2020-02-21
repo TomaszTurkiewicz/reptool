@@ -41,7 +41,7 @@ public class ManagerActivity extends AppCompatActivity {
 
 
     //clear list and fill with new data
-    public void initManagerList() {
+    private void initManagerList() {
 
         mList.clear();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {

@@ -37,7 +37,8 @@
         android:layout_gravity="center"
         android:text="@string/job"
         android:id="@+id/buttonJob"
-        android:layout_margin="@dimen/margin"/>
+        android:layout_margin="@dimen/margin"
+        android:onClick="onJobClick"/>
 
     <Button
         android:layout_width="match_parent"
