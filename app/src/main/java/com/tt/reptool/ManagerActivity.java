@@ -163,9 +163,6 @@ public class ManagerActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
 
-        //TODO editing manager
-
-
-
     }
 }
+//TODO inputs only single line

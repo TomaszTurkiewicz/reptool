@@ -105,5 +105,4 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 }
-//TODO change recyclerView (has to show that can be scrolled)
 //TODO change single item in recylerview (frame, background color etc)
