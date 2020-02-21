@@ -76,16 +76,17 @@ public class ManagerDialog extends AppCompatDialogFragment {
 
                             final String mName = managerName.substring(0,1).toUpperCase()+managerName.substring(1).toLowerCase();
                             final String mSurname = managerSurname.substring(0,1).toUpperCase()+managerSurname.substring(1).toLowerCase();
-                            databaseReference.child(mName + " " + mSurname + " " + managerEmail).addListenerForSingleValueEvent(new ValueEventListener() {
+                            final String mEmail = managerEmail.replace(".","(dot)");
+                            databaseReference.child(mName + " " + mSurname + " " + mEmail).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                        databaseReference.child(name + " " + surname + " " + email).removeValue();
+                                        databaseReference.child(name + " " + surname + " " + email.replace(".","(dot)")).removeValue();
                                         Manager manager = new Manager();
                                         manager.setName(mName);
                                         manager.setSurname(mSurname);
                                         manager.setEmailAddress(managerEmail);
-                                        databaseReference.child(mName + " " + mSurname + " " + managerEmail).setValue(manager);
+                                        databaseReference.child(mName + " " + mSurname + " " + mEmail).setValue(manager);
 
                                         //notify recyclerview about changes
 

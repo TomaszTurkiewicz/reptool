@@ -108,7 +108,8 @@ public class ManagerActivity extends AppCompatActivity {
         String dName = mList.get(position).getName();
         String dSurname = mList.get(position).getSurname();
         String dEmail = mList.get(position).getEmailAddress();
-        databaseReference.child(dName + " " + dSurname + " " + dEmail).removeValue();
+        String drEmail = dEmail.replace(".","(dot)");
+        databaseReference.child(dName + " " + dSurname + " " + drEmail).removeValue();
         initManagerList();
 
     }
@@ -129,7 +130,8 @@ public class ManagerActivity extends AppCompatActivity {
 
             final String mName = name.substring(0,1).toUpperCase()+name.substring(1).toLowerCase();
             final String mSurname = surname.substring(0,1).toUpperCase()+surname.substring(1).toLowerCase();
-            databaseReference.child(mName + " " + mSurname + " " + email).addListenerForSingleValueEvent(new ValueEventListener() {
+            final String mEmail = email.replace(".","(dot)");
+            databaseReference.child(mName + " " + mSurname + " " + mEmail).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -143,7 +145,7 @@ public class ManagerActivity extends AppCompatActivity {
                         manager.setName(mName);
                         manager.setSurname(mSurname);
                         manager.setEmailAddress(email);
-                        databaseReference.child(mName + " " + mSurname + " " + email).setValue(manager);
+                        databaseReference.child(mName + " " + mSurname + " " + mEmail).setValue(manager);
                         initManagerList();
                         managerName.setText("");
                         managerSurname.setText("");
