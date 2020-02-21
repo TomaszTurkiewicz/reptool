@@ -47,6 +47,13 @@ public class ManagerDialog extends AppCompatDialogFragment {
         View view = inflater.inflate(R.layout.layout_dialog_manager, null);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference=firebaseDatabase.getReference("Manager");
+        editTextManagerName = view.findViewById(R.id.editManagerName);
+        editTextManagerSurname = view.findViewById(R.id.editManagerSurname);
+        editTextManagerEmail = view.findViewById(R.id.editManagerEmail);
+
+        editTextManagerName.setText(name);
+        editTextManagerSurname.setText(surname);
+        editTextManagerEmail.setText(email);
 
         builder.setView(view)
                 .setTitle("Change")
@@ -63,8 +70,8 @@ public class ManagerDialog extends AppCompatDialogFragment {
                         String managerSurname = editTextManagerSurname.getText().toString().trim();
                         final String managerEmail = editTextManagerEmail.getText().toString().trim();
 
+                        // check if fields are not empty
 
-                        //TODO adding new manager
                         if(!TextUtils.isEmpty(managerName)&&!TextUtils.isEmpty(managerSurname)&&!TextUtils.isEmpty(managerEmail)) {
 
                             final String mName = managerName.substring(0,1).toUpperCase()+managerName.substring(1).toLowerCase();
@@ -77,11 +84,13 @@ public class ManagerDialog extends AppCompatDialogFragment {
                                         Manager manager = new Manager();
                                         manager.setName(mName);
                                         manager.setSurname(mSurname);
-                                        manager.setEmailAddress(email);
+                                        manager.setEmailAddress(managerEmail);
                                         databaseReference.child(mName + " " + mSurname + " " + managerEmail).setValue(manager);
 
-                                    callback.onDialogCallback();
-                                    dialog.dismiss();
+                                        //notify recyclerview about changes
+
+                                        callback.onDialogCallback();
+                                        dialog.dismiss();
 
                                 }
 
@@ -97,18 +106,8 @@ public class ManagerDialog extends AppCompatDialogFragment {
                                     Toast.LENGTH_LONG).show();
                         }
 
-
-
                     }
                 });
-
-        editTextManagerName = view.findViewById(R.id.editManagerName);
-        editTextManagerSurname = view.findViewById(R.id.editManagerSurname);
-        editTextManagerEmail = view.findViewById(R.id.editManagerEmail);
-
-        editTextManagerName.setText(name);
-        editTextManagerSurname.setText(surname);
-        editTextManagerEmail.setText(email);
 
         return builder.create();
     }

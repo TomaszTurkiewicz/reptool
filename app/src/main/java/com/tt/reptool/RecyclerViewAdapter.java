@@ -15,9 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    RecyclerViewAdapter for managers
+ */
+
+
+
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private List<Manager> mList = new ArrayList<>(); //TODO why redundant?
+    private List<Manager> mList;
     private Context mContext;
     private OnItemClickListener mListener;
 

@@ -40,6 +40,7 @@ public class ManagerActivity extends AppCompatActivity {
     }
 
 
+    //clear list and fill with new data
     public void initManagerList() {
 
         mList.clear();
@@ -62,12 +63,12 @@ public class ManagerActivity extends AppCompatActivity {
 
     }
 
+    //init recyclerview with data
     private void initRecycleView() {
         RecyclerView recyclerView = findViewById(R.id.recyclerViewManagers);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this,mList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         adapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onDeleteClick(int position) {
@@ -81,10 +82,13 @@ public class ManagerActivity extends AppCompatActivity {
         });
     }
 
+    //change existing manager data
     private void editManager(int position) {
         openDialog(position);
     }
 
+    // open dialog for editing manager data
+    // callback for refreshing recyclerview
     private void openDialog(int position) {
         ManagerDialog managerDialog =
                 new ManagerDialog(mList.get(position).getName(),
@@ -99,6 +103,7 @@ public class ManagerActivity extends AppCompatActivity {
         managerDialog.show(getSupportFragmentManager(),"manager dialog");
     }
 
+    // delete manager and refresh recycler view
     private void removeManager(int position) {
         String dName = mList.get(position).getName();
         String dSurname = mList.get(position).getSurname();
@@ -108,6 +113,8 @@ public class ManagerActivity extends AppCompatActivity {
 
     }
 
+    // add new manager
+
     public void saveManager(View view) {
         managerName = findViewById(R.id.managerName);
         managerSurname = findViewById(R.id.managerSurname);
@@ -116,6 +123,8 @@ public class ManagerActivity extends AppCompatActivity {
         final String surname = managerSurname.getText().toString().trim();
         final String email = managerEmail.getText().toString().trim();
 
+        //check if fields are not empty
+
         if(!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(surname)&&!TextUtils.isEmpty(email)) {
 
             final String mName = name.substring(0,1).toUpperCase()+name.substring(1).toLowerCase();
@@ -123,6 +132,9 @@ public class ManagerActivity extends AppCompatActivity {
             databaseReference.child(mName + " " + mSurname + " " + email).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    //check if new manager already exists
+
                     if(dataSnapshot.exists()){
                         Toast.makeText(ManagerActivity.this,"Already exists",
                                 Toast.LENGTH_LONG).show();
