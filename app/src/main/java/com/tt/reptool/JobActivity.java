@@ -3,6 +3,7 @@ package com.tt.reptool;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -91,6 +92,8 @@ public class JobActivity extends AppCompatActivity {
     }
 
     public void findJob(View view) {
+        Intent intent = new Intent(this, FindJobActivity.class);
+        startActivity(intent);
     }
 
     public void saveJob(View view) {

@@ -22,4 +22,7 @@
     <string name="client_name">client name</string>
     <string name="street">street</string>
     <string name="postcode">postcode</string>
+    <string name="showAll">SHOW ALL</string>
+    <string name="find_job_by">FIND JOB BY</string>
+    <string name="find">FIND</string>
 </resources>

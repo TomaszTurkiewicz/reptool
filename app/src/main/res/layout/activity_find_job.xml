@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".JobActivity">
+    tools:context=".FindJobActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:id="@+id/activityFindJobParentLayout"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -19,19 +20,19 @@
             android:layout_marginStart="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
             android:layout_marginTop="@dimen/margin"
-            android:layout_marginBottom="@dimen/margin"
-            android:text="@string/find_job"
-            android:onClick="findJob"/>
+            android:layout_marginBottom="@dimen/marginHalf"
+            android:text="@string/showAll"
+            android:onClick="showAllOnClick"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/add_new_job"
+            android:text="@string/find_job_by"
             android:gravity="center"
             android:textSize="@dimen/bigText"
             android:layout_marginRight="@dimen/margin"
             android:layout_marginLeft="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"
+            android:layout_marginTop="@dimen/marginHalf"
             android:layout_marginBottom="@dimen/marginHalf"
             />
 
@@ -52,65 +53,7 @@
                 android:layout_marginBottom="@dimen/marginHalf"
                 android:textSize="@dimen/smallText"/>
             <EditText
-                android:id="@+id/jobNumber"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                tools:ignore="Suspicious0dp"
-                android:layout_weight="3"
-                android:layout_marginStart="@dimen/marginHalf"
-                android:layout_marginEnd="@dimen/margin"
-                android:layout_marginTop="@dimen/marginHalf"
-                android:layout_marginBottom="@dimen/marginHalf"
-                />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                tools:ignore="Suspicious0dp"
-                android:layout_weight="1"
-                android:text="@string/client_name"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginEnd="@dimen/marginHalf"
-                android:layout_marginTop="@dimen/marginHalf"
-                android:layout_marginBottom="@dimen/marginHalf"
-                android:textSize="@dimen/smallText"/>
-            <EditText
-                android:id="@+id/clientName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                tools:ignore="Suspicious0dp"
-                android:layout_weight="3"
-                android:layout_marginStart="@dimen/marginHalf"
-                android:layout_marginEnd="@dimen/margin"
-                android:layout_marginTop="@dimen/marginHalf"
-                android:layout_marginBottom="@dimen/marginHalf"
-                />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                tools:ignore="Suspicious0dp"
-                android:layout_weight="1"
-                android:text="@string/street"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginEnd="@dimen/marginHalf"
-                android:layout_marginTop="@dimen/marginHalf"
-                android:layout_marginBottom="@dimen/marginHalf"
-                android:textSize="@dimen/smallText"/>
-            <EditText
-                android:id="@+id/street"
+                android:id="@+id/jobNumberFindJobActivity"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 tools:ignore="Suspicious0dp"
@@ -139,7 +82,7 @@
                 android:layout_marginBottom="@dimen/marginHalf"
                 android:textSize="@dimen/smallText"/>
             <EditText
-                android:id="@+id/postcode"
+                android:id="@+id/jobPostcodeFindJobActivity"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 tools:ignore="Suspicious0dp"
@@ -161,14 +104,14 @@
                 android:layout_height="wrap_content"
                 tools:ignore="Suspicious0dp"
                 android:layout_weight="1"
-                android:text="@string/jobDescription"
+                android:text="@string/jobAddress"
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/marginHalf"
                 android:layout_marginTop="@dimen/marginHalf"
                 android:layout_marginBottom="@dimen/marginHalf"
                 android:textSize="@dimen/smallText"/>
             <EditText
-                android:id="@+id/jobDescription"
+                android:id="@+id/jobAddressFindJobActivity"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 tools:ignore="Suspicious0dp"
@@ -198,7 +141,7 @@
                 android:layout_marginBottom="@dimen/marginHalf"
                 android:textSize="@dimen/smallText"/>
             <Spinner
-                android:id="@+id/jobPM"
+                android:id="@+id/jobPMFindJobActivity"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 tools:ignore="Suspicious0dp"
@@ -216,12 +159,20 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"
+            android:layout_marginTop="@dimen/marginHalf"
             android:layout_marginBottom="@dimen/margin"
-            android:text="@string/save"
-            android:onClick="saveJob"/>
+            android:text="@string/find"
+            android:onClick="findJobWithCriteria"/>
 
     </LinearLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewFindJobActivity"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activityFindJobParentLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
