@@ -49,4 +49,8 @@ public class Manager {
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
+
+    public String getNameAndSurname(){
+        return name + " " + surname;
+    }
 }
