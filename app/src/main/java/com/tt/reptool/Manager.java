@@ -20,6 +20,12 @@ public class Manager {
     public Manager() {
     }
 
+    public Manager(String name, String surname, String emailAddress){
+        this.name=name;
+        this.surname=surname;
+        this.emailAddress=emailAddress;
+    }
+
     public String getName() {
         return name;
     }

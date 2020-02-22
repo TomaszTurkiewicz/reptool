@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -29,7 +30,8 @@ public class JobActivity extends AppCompatActivity {
     private DatabaseReference databaseReferenceJob;
     private DatabaseReference databaseReferenceManager;
     private List<Manager> mList = new ArrayList<>();
-
+    private Manager pm = new Manager();
+    Job job = new Job();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +42,30 @@ public class JobActivity extends AppCompatActivity {
         jobStreet = findViewById(R.id.street);
         jobPostcode = findViewById(R.id.postcode);
         jobDescription = findViewById(R.id.jobDescription);
-        jobPMSpinner = findViewById(R.id.jobPM);
+        jobPMSpinner = (Spinner)findViewById(R.id.jobPM);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReferenceJob=firebaseDatabase.getReference("Job");
         databaseReferenceManager = firebaseDatabase.getReference("Manager");
         initManagerList();
+        ManagerSpinnerAdapter managerSpinnerAdapter = new ManagerSpinnerAdapter(this,mList);
+        jobPMSpinner.setAdapter(managerSpinnerAdapter);
 
 
+        jobPMSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Manager clickedItem = (Manager) parent.getItemAtPosition(position);
+                pm.setName(clickedItem.getName());
+                pm.setSurname(clickedItem.getSurname());
+                pm.setEmailAddress(clickedItem.getEmailAddress());
+                job.setProjectManager(pm);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
 
@@ -61,12 +80,18 @@ public class JobActivity extends AppCompatActivity {
         jAddress.setPostCode(jobPostcode.getText().toString().trim().toUpperCase());
         String jDescription = jobDescription.getText().toString().trim();
 
-        Job job = new Job();
+
+
         job.setJobNumber(jNumber);
         job.setAddress(jAddress);
         job.setShortDescription(jDescription);
 
         databaseReferenceJob.child(jNumber).setValue(job);
+        jobNumber.setText("");
+        jobClientName.setText("");
+        jobStreet.setText("");
+        jobPostcode.setText("");
+        jobDescription.setText("");
 
     }
 
@@ -92,3 +117,5 @@ public class JobActivity extends AppCompatActivity {
 
     }
 }
+//TODO why doesn't add manager to job?
+//TODO empty fields job
