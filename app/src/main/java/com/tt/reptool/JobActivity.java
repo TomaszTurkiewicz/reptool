@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -51,6 +52,8 @@ public class JobActivity extends AppCompatActivity {
         databaseReferenceJob=firebaseDatabase.getReference("Job");
         databaseReferenceManager = firebaseDatabase.getReference("Manager");
 
+
+        //initialize list
         mList.clear();
         databaseReferenceManager.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -60,66 +63,89 @@ public class JobActivity extends AppCompatActivity {
                     Manager manager = ps.getValue(Manager.class);
                     mList.add(manager);
                 }
+
+                //after list is initialize load to spinner
+
                 jobPMSpinner = (Spinner)findViewById(R.id.jobPM);
                 managerSpinnerAdapter = new ManagerSpinnerAdapter(JobActivity.this,mList);
                 jobPMSpinner.setAdapter(managerSpinnerAdapter);
                 jobPMSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                        //Item selected from spinner
                         Manager clickedItem = (Manager) parent.getItemAtPosition(position);
                         pm.setName(clickedItem.getName());
                         pm.setSurname(clickedItem.getSurname());
                         pm.setEmailAddress(clickedItem.getEmailAddress());
-
                     }
-
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-
                     }
                 });
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
-
-
-
-
     }
-
 
     public void findJob(View view) {
     }
 
     public void saveJob(View view) {
-        String jNumber = jobNumber.getText().toString().trim().toUpperCase();
-        Address jAddress = new Address();
+        final String jNumber = jobNumber.getText().toString().trim().toUpperCase();
+        final Address jAddress = new Address();
         jAddress.setName(jobClientName.getText().toString().trim());
         jAddress.setStreet(jobStreet.getText().toString().trim());
         jAddress.setPostCode(jobPostcode.getText().toString().trim().toUpperCase());
-        String jDescription = jobDescription.getText().toString().trim();
+        final String jDescription = jobDescription.getText().toString().trim();
+
+        //check empty fields: job - number,postcode,street,description
+        if(!TextUtils.isEmpty(jNumber)&&
+                !TextUtils.isEmpty(jAddress.getPostCode())&&
+                !TextUtils.isEmpty(jAddress.getStreet())&&
+                !TextUtils.isEmpty(jDescription)) {
 
 
+            databaseReferenceJob.child(jNumber).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-        job.setJobNumber(jNumber);
-        job.setAddress(jAddress);
-        job.setShortDescription(jDescription);
-        job.setProjectManager(pm);
+                    //check if job (with this number) already exists
+                    if(dataSnapshot.exists()){
+                        Toast.makeText(JobActivity.this,"Job already exists",
+                                Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        job.setJobNumber(jNumber);
+                        job.setAddress(jAddress);
+                        job.setShortDescription(jDescription);
+                        job.setProjectManager(pm);
 
-        databaseReferenceJob.child(jNumber).setValue(job);
-        jobNumber.setText("");
-        jobClientName.setText("");
-        jobStreet.setText("");
-        jobPostcode.setText("");
-        jobDescription.setText("");
+                        databaseReferenceJob.child(jNumber).setValue(job);
+                        jobNumber.setText("");
+                        jobClientName.setText("");
+                        jobStreet.setText("");
+                        jobPostcode.setText("");
+                        jobDescription.setText("");
+                    }
+                }
 
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
+        }
+        else{
+            Toast.makeText(JobActivity.this,"Fields empty",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
 }
-//TODO why doesn't add manager to job?
-//TODO empty fields job
+
+//TODO spinner default null selection at position 0
