@@ -109,9 +109,12 @@ public class JobActivity extends AppCompatActivity {
                 !TextUtils.isEmpty(jAddress.getPostCode())&&
                 !TextUtils.isEmpty(jAddress.getStreet())&&
                 !TextUtils.isEmpty(jDescription)) {
+            job.setJobNumber(jNumber);
+            job.setAddress(jAddress);
+            job.setShortDescription(jDescription);
+            job.setProjectManager(pm);
 
-
-            databaseReferenceJob.child(jNumber).addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReferenceJob.child(job.getJobNumber()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -121,10 +124,7 @@ public class JobActivity extends AppCompatActivity {
                                 Toast.LENGTH_LONG).show();
                     }
                     else{
-                        job.setJobNumber(jNumber);
-                        job.setAddress(jAddress);
-                        job.setShortDescription(jDescription);
-                        job.setProjectManager(pm);
+
 
                         databaseReferenceJob.child(job.getJobNumber()).setValue(job);
                         jobNumber.setText(getString(R.string.empty));

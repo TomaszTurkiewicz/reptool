@@ -141,3 +141,5 @@ public class EditJob extends AppCompatActivity {
         finish();
     }
 }
+
+//TODO check if job after editing already exists
