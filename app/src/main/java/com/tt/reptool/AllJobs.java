@@ -76,7 +76,8 @@ public class AllJobs extends AppCompatActivity {
     }
 
     private void removeJob(int position) {
-
+        databaseReference.child(jList.get(position).getJobNumber()).removeValue();
+        initJobList();
     }
 }
 
