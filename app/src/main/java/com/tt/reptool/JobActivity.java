@@ -50,8 +50,8 @@ public class JobActivity extends AppCompatActivity {
 
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReferenceJob=firebaseDatabase.getReference("Job");
-        databaseReferenceManager = firebaseDatabase.getReference("Manager");
+        databaseReferenceJob=firebaseDatabase.getReference(getString(R.string.firebasepath_job));
+        databaseReferenceManager = firebaseDatabase.getReference(getString(R.string.firebasepath_manager));
 
 
         //initialize list
@@ -117,7 +117,7 @@ public class JobActivity extends AppCompatActivity {
 
                     //check if job (with this number) already exists
                     if(dataSnapshot.exists()){
-                        Toast.makeText(JobActivity.this,"Job already exists",
+                        Toast.makeText(JobActivity.this,getString(R.string.job_exists),
                                 Toast.LENGTH_LONG).show();
                     }
                     else{
@@ -126,12 +126,12 @@ public class JobActivity extends AppCompatActivity {
                         job.setShortDescription(jDescription);
                         job.setProjectManager(pm);
 
-                        databaseReferenceJob.child(jNumber).setValue(job);
-                        jobNumber.setText("");
-                        jobClientName.setText("");
-                        jobStreet.setText("");
-                        jobPostcode.setText("");
-                        jobDescription.setText("");
+                        databaseReferenceJob.child(job.getJobNumber()).setValue(job);
+                        jobNumber.setText(getString(R.string.empty));
+                        jobClientName.setText(getString(R.string.empty));
+                        jobStreet.setText(getString(R.string.empty));
+                        jobPostcode.setText(getString(R.string.empty));
+                        jobDescription.setText(getString(R.string.empty));
                     }
                 }
 
@@ -144,7 +144,7 @@ public class JobActivity extends AppCompatActivity {
 
         }
         else{
-            Toast.makeText(JobActivity.this,"Fields empty",
+            Toast.makeText(JobActivity.this,getString(R.string.empty_fields),
                     Toast.LENGTH_LONG).show();
         }
     }

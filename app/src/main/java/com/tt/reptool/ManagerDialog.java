@@ -46,7 +46,7 @@ public class ManagerDialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.layout_dialog_manager, null);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference=firebaseDatabase.getReference("Manager");
+        databaseReference=firebaseDatabase.getReference(getString(R.string.firebasepath_manager));
         editTextManagerName = view.findViewById(R.id.editManagerName);
         editTextManagerSurname = view.findViewById(R.id.editManagerSurname);
         editTextManagerEmail = view.findViewById(R.id.editManagerEmail);
@@ -56,28 +56,56 @@ public class ManagerDialog extends AppCompatDialogFragment {
         editTextManagerEmail.setText(email);
 
         builder.setView(view)
-                .setTitle("Change")
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                .setTitle(getString(R.string.change))
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
                 })
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.save), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, int which) {
-                        String managerName = editTextManagerName.getText().toString().trim();
-                        String managerSurname = editTextManagerSurname.getText().toString().trim();
-                        final String managerEmail = editTextManagerEmail.getText().toString().trim();
+                        String managerName = editTextManagerName
+                                .getText()
+                                .toString()
+                                .trim();
+
+                        String managerSurname = editTextManagerSurname
+                                .getText()
+                                .toString()
+                                .trim();
+
+                        final String managerEmail = editTextManagerEmail
+                                .getText()
+                                .toString()
+                                .trim();
 
                         // check if fields are not empty
 
-                        if(!TextUtils.isEmpty(managerName)&&!TextUtils.isEmpty(managerSurname)&&!TextUtils.isEmpty(managerEmail)) {
+                        if(!TextUtils.isEmpty(managerName)&&
+                                !TextUtils.isEmpty(managerSurname)&&
+                                !TextUtils.isEmpty(managerEmail)) {
 
-                            final String mName = managerName.substring(0,1).toUpperCase()+managerName.substring(1).toLowerCase();
-                            final String mSurname = managerSurname.substring(0,1).toUpperCase()+managerSurname.substring(1).toLowerCase();
-                            final String mEmail = managerEmail.replace(".","(dot)");
-                            databaseReference.child(mName + " " + mSurname + " " + mEmail).addListenerForSingleValueEvent(new ValueEventListener() {
+                            final String mName = managerName
+                                    .substring(0,1)
+                                    .toUpperCase()
+                                    +managerName
+                                    .substring(1)
+                                    .toLowerCase();
+
+                            final String mSurname = managerSurname
+                                    .substring(0,1)
+                                    .toUpperCase()
+                                    +managerSurname
+                                    .substring(1)
+                                    .toLowerCase();
+
+                            final String mEmail = managerEmail
+                                    .replace(".","(dot)");
+
+                            databaseReference.child(mName + " " + mSurname + " " + mEmail)
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -103,7 +131,7 @@ public class ManagerDialog extends AppCompatDialogFragment {
 
                         }
                         else{
-                            Toast.makeText(getContext(),"Fields empty",
+                            Toast.makeText(getContext(),getString(R.string.empty_fields),
                                     Toast.LENGTH_LONG).show();
                         }
 

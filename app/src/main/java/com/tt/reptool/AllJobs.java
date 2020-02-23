@@ -28,7 +28,7 @@ public class AllJobs extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_jobs);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Job");
+        databaseReference = firebaseDatabase.getReference(getString(R.string.firebasepath_job));
         initJobList();
     }
 
@@ -75,7 +75,7 @@ public class AllJobs extends AppCompatActivity {
     private void editJob(int position) {
         String jobNumber = jList.get(position).getJobNumber();
         Intent intent = new Intent(this,EditJob.class);
-        intent.putExtra("jobNumber",jobNumber);
+        intent.putExtra(getString(R.string.extra_jobNumber),jobNumber);
         startActivity(intent);
         finish();
     }

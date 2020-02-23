@@ -31,7 +31,7 @@ public class EditJob extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_job);
         Bundle extras = getIntent().getExtras();
-        jNumber = extras.getString("jobNumber");
+        jNumber = extras.getString(getString(R.string.extra_jobNumber));
         manager = new Manager();
         address = new Address();
         jobNumber = findViewById(R.id.jobNumberEditJob);
@@ -42,20 +42,58 @@ public class EditJob extends AppCompatActivity {
         jobManager = findViewById(R.id.jobPMEditJob);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Job");
+        databaseReference = firebaseDatabase.getReference(getString(R.string.firebasepath_job));
 
         databaseReference.child(jNumber).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    job.setJobNumber(dataSnapshot.child("jobNumber").getValue().toString());
-                    job.setShortDescription(dataSnapshot.child("shortDescription").getValue().toString());
-                    address.setName(dataSnapshot.child("address").child("name").getValue().toString());
-                    address.setPostCode(dataSnapshot.child("address").child("postCode").getValue().toString());
-                    address.setStreet(dataSnapshot.child("address").child("street").getValue().toString());
-                    manager.setName(dataSnapshot.child("projectManager").child("name").getValue().toString());
-                    manager.setSurname(dataSnapshot.child("projectManager").child("surname").getValue().toString());
-                    manager.setEmailAddress(dataSnapshot.child("projectManager").child("emailAddress").getValue().toString());
+                    job.setJobNumber(dataSnapshot
+                            .child(getString(R.string.firebasepath_job_jobNumber))
+                            .getValue()
+                            .toString());
+
+                    job.setShortDescription(dataSnapshot
+                            .child(getString(R.string.firebasepath_job_description))
+                            .getValue()
+                            .toString());
+
+                    address.setName(dataSnapshot
+                            .child(getString(R.string.firebasepath_job_address))
+                            .child(getString(R.string.firebasepath_job_address_name))
+                            .getValue()
+                            .toString());
+
+                    address.setPostCode(dataSnapshot
+                            .child(getString(R.string.firebasepath_job_address))
+                            .child(getString(R.string.firebasepath_job_address_postcode))
+                            .getValue()
+                            .toString());
+
+                    address.setStreet(dataSnapshot
+                            .child(getString(R.string.firebasepath_job_address))
+                            .child(getString(R.string.firebasepath_job_address_street))
+                            .getValue()
+                            .toString());
+
+                    manager.setName(dataSnapshot
+                            .child(getString(R.string.firebasepath_job_projectManager))
+                            .child(getString(R.string.firebasepath_manager_name))
+                            .getValue()
+                            .toString());
+
+                    manager.setSurname(dataSnapshot
+                            .child(getString(R.string.firebasepath_job_projectManager))
+                            .child(getString(R.string.firebasepath_manager_surname))
+                            .getValue()
+                            .toString());
+
+                    manager.setEmailAddress(dataSnapshot
+                            .child(getString(R.string.firebasepath_job_projectManager))
+                            .child(getString(R.string.firebasepath_manager_emailAddress))
+                            .getValue()
+                            .toString());
+
                     job.setProjectManager(manager);
                     job.setAddress(address);
                     show(job);

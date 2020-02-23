@@ -35,7 +35,7 @@ public class ManagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference=firebaseDatabase.getReference("Manager");
+        databaseReference=firebaseDatabase.getReference(getString(R.string.firebasepath_manager));
         initManagerList();
     }
 
@@ -131,14 +131,15 @@ public class ManagerActivity extends AppCompatActivity {
             final String mName = name;
             final String mSurname = surname;
             final String mEmail = email.replace(".","(dot)");
-            databaseReference.child(mName + " " + mSurname + " " + mEmail).addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReference.child(mName + " " + mSurname + " " + mEmail)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                     //check if new manager already exists
 
                     if(dataSnapshot.exists()){
-                        Toast.makeText(ManagerActivity.this,"Already exists",
+                        Toast.makeText(ManagerActivity.this,getString(R.string.already_exists),
                                 Toast.LENGTH_LONG).show();
                     }else{
                         Manager manager = new Manager();
@@ -147,9 +148,9 @@ public class ManagerActivity extends AppCompatActivity {
                         manager.setEmailAddress(email);
                         databaseReference.child(mName + " " + mSurname + " " + mEmail).setValue(manager);
                         initManagerList();
-                        managerName.setText("");
-                        managerSurname.setText("");
-                        managerEmail.setText("");
+                        managerName.setText(getString(R.string.empty));
+                        managerSurname.setText(getString(R.string.empty));
+                        managerEmail.setText(getString(R.string.empty));
                     }
                 }
 
@@ -161,7 +162,7 @@ public class ManagerActivity extends AppCompatActivity {
 
         }
         else{
-            Toast.makeText(ManagerActivity.this,"Fields empty",
+            Toast.makeText(ManagerActivity.this,getString(R.string.empty_fields),
                     Toast.LENGTH_LONG).show();
         }
 

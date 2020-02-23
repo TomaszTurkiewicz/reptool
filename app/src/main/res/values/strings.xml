@@ -26,4 +26,22 @@
     <string name="find_job_by">FIND JOB BY</string>
     <string name="find">FIND</string>
     <string name="cancel">CANCEL</string>
+    <string name="firebasepath_job">Job</string>
+    <string name="extra_jobNumber">jobNumber</string>
+    <string name="firebasepath_job_jobNumber">jobNumber</string>
+    <string name="firebasepath_job_description">shortDescription</string>
+    <string name="firebasepath_job_address">address</string>
+    <string name="firebasepath_job_address_name">name</string>
+    <string name="firebasepath_job_address_postcode">postCode</string>
+    <string name="firebasepath_job_address_street">street</string>
+    <string name="firebasepath_job_projectManager">projectManager</string>
+    <string name="firebasepath_manager_name">name</string>
+    <string name="firebasepath_manager_surname">surname</string>
+    <string name="firebasepath_manager_emailAddress">emailAddress</string>
+    <string name="firebasepath_manager">Manager</string>
+    <string name="empty" />
+    <string name="job_exists">Job already exists</string>
+    <string name="empty_fields">Fields empty</string>
+    <string name="already_exists">Already exists</string>
+    <string name="change">Change</string>
 </resources>
