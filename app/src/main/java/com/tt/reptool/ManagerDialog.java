@@ -31,6 +31,8 @@ public class ManagerDialog extends AppCompatDialogFragment {
     private String surname;
     private String email;
     private DialogCallback callback;
+    private Manager oManager;
+    private Manager nManager;
 
     public ManagerDialog(String name, String surname, String email, DialogCallback callback) {
         this.name = name;
@@ -50,6 +52,13 @@ public class ManagerDialog extends AppCompatDialogFragment {
         editTextManagerName = view.findViewById(R.id.editManagerName);
         editTextManagerSurname = view.findViewById(R.id.editManagerSurname);
         editTextManagerEmail = view.findViewById(R.id.editManagerEmail);
+
+        oManager = new Manager();
+        nManager = new Manager();
+
+        oManager.setName(name);
+        oManager.setSurname(surname);
+        oManager.setEmailAddress(email);
 
         editTextManagerName.setText(name);
         editTextManagerSurname.setText(surname);
@@ -87,34 +96,38 @@ public class ManagerDialog extends AppCompatDialogFragment {
                                 !TextUtils.isEmpty(managerSurname)&&
                                 !TextUtils.isEmpty(managerEmail)) {
 
-                            final String mName = managerName
-                                    .substring(0,1)
-                                    .toUpperCase()
-                                    +managerName
-                                    .substring(1)
-                                    .toLowerCase();
-
-                            final String mSurname = managerSurname
-                                    .substring(0,1)
-                                    .toUpperCase()
-                                    +managerSurname
-                                    .substring(1)
-                                    .toLowerCase();
-
-                            final String mEmail = managerEmail
-                                    .replace(".","(dot)");
-
-                            databaseReference.child(mName + " " + mSurname + " " + mEmail)
+                            nManager.setName(managerName);
+                            nManager.setSurname(managerSurname);
+                            nManager.setEmailAddress(managerEmail);
+                            databaseReference.child(oManager.getName() + " " + oManager.getSurname() + " " + oManager.getEmailAddress().replace(".","(dot)")).removeValue();
+                            databaseReference.child(nManager.getName() +
+                                    " " +
+                                    nManager.getSurname() +
+                                    " " +
+                                    nManager.getEmailAddress().replace(".","(dot)"))
                                     .addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                        databaseReference.child(name + " " + surname + " " + email.replace(".","(dot)")).removeValue();
-                                        Manager manager = new Manager();
-                                        manager.setName(mName);
-                                        manager.setSurname(mSurname);
-                                        manager.setEmailAddress(managerEmail);
-                                        databaseReference.child(mName + " " + mSurname + " " + mEmail).setValue(manager);
+
+
+                                        if(dataSnapshot.exists()){
+                                            databaseReference.child(oManager.getName()+
+                                                    " "+
+                                                    oManager.getSurname()+
+                                                    " "+
+                                                    oManager.getEmailAddress().replace(".","(dot)")).setValue(oManager);
+                                        }
+                                        else{
+                                            databaseReference.child(nManager.getName()+
+                                                    " "+
+                                                    nManager.getSurname()+
+                                                    " "+
+                                                    nManager.getEmailAddress().replace(".","(dot)")).setValue(nManager);
+                                        }
+
+
+
 
                                         //notify recyclerview about changes
 

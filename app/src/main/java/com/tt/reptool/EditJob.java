@@ -21,9 +21,12 @@ public class EditJob extends AppCompatActivity {
     private TextView jobManager;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
-    private Manager manager;
-    private Address address;
-    Job job = new Job();
+    private Manager oManager = new Manager();
+    private Address oAddress = new Address();
+    private Job oJob = new Job();
+    private Manager nManager = new Manager();
+    private Address nAddress = new Address();
+    private Job nJob = new Job();
     String jNumber;
 
     @Override
@@ -32,8 +35,7 @@ public class EditJob extends AppCompatActivity {
         setContentView(R.layout.activity_edit_job);
         Bundle extras = getIntent().getExtras();
         jNumber = extras.getString(getString(R.string.extra_jobNumber));
-        manager = new Manager();
-        address = new Address();
+
         jobNumber = findViewById(R.id.jobNumberEditJob);
         jobClientName = findViewById(R.id.clientNameEditJob);
         jobStreet = findViewById(R.id.streetEditJob);
@@ -48,55 +50,55 @@ public class EditJob extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    job.setJobNumber(dataSnapshot
+                    oJob.setJobNumber(dataSnapshot
                             .child(getString(R.string.firebasepath_job_jobNumber))
                             .getValue()
                             .toString());
 
-                    job.setShortDescription(dataSnapshot
+                    oJob.setShortDescription(dataSnapshot
                             .child(getString(R.string.firebasepath_job_description))
                             .getValue()
                             .toString());
 
-                    address.setName(dataSnapshot
+                    oAddress.setName(dataSnapshot
                             .child(getString(R.string.firebasepath_job_address))
                             .child(getString(R.string.firebasepath_job_address_name))
                             .getValue()
                             .toString());
 
-                    address.setPostCode(dataSnapshot
+                    oAddress.setPostCode(dataSnapshot
                             .child(getString(R.string.firebasepath_job_address))
                             .child(getString(R.string.firebasepath_job_address_postcode))
                             .getValue()
                             .toString());
 
-                    address.setStreet(dataSnapshot
+                    oAddress.setStreet(dataSnapshot
                             .child(getString(R.string.firebasepath_job_address))
                             .child(getString(R.string.firebasepath_job_address_street))
                             .getValue()
                             .toString());
 
-                    manager.setName(dataSnapshot
+                    oManager.setName(dataSnapshot
                             .child(getString(R.string.firebasepath_job_projectManager))
                             .child(getString(R.string.firebasepath_manager_name))
                             .getValue()
                             .toString());
 
-                    manager.setSurname(dataSnapshot
+                    oManager.setSurname(dataSnapshot
                             .child(getString(R.string.firebasepath_job_projectManager))
                             .child(getString(R.string.firebasepath_manager_surname))
                             .getValue()
                             .toString());
 
-                    manager.setEmailAddress(dataSnapshot
+                    oManager.setEmailAddress(dataSnapshot
                             .child(getString(R.string.firebasepath_job_projectManager))
                             .child(getString(R.string.firebasepath_manager_emailAddress))
                             .getValue()
                             .toString());
 
-                    job.setProjectManager(manager);
-                    job.setAddress(address);
-                    show(job);
+                    oJob.setProjectManager(oManager);
+                    oJob.setAddress(oAddress);
+                    show(oJob);
                 }
             }
 
@@ -129,17 +131,38 @@ public class EditJob extends AppCompatActivity {
 
     public void onClickSave(View view) {
         databaseReference.child(jNumber).removeValue();
-        job.setJobNumber(jobNumber.getText().toString().trim());
-        job.setShortDescription(jobDescription.getText().toString().trim());
-        address.setName(jobClientName.getText().toString().trim());
-        address.setStreet(jobStreet.getText().toString().trim());
-        address.setPostCode(jobPostcode.getText().toString().trim());
-        job.setAddress(address);
-        databaseReference.child(job.getJobNumber()).setValue(job);
-        Intent intent = new Intent(this, AllJobs.class);
-        startActivity(intent);
-        finish();
+        nJob.setJobNumber(jobNumber.getText().toString().trim());
+        nJob.setShortDescription(jobDescription.getText().toString().trim());
+        nAddress.setName(jobClientName.getText().toString().trim());
+        nAddress.setStreet(jobStreet.getText().toString().trim());
+        nAddress.setPostCode(jobPostcode.getText().toString().trim());
+        nJob.setAddress(nAddress);
+
+        nManager.setName(oManager.getName());
+        nManager.setSurname(oManager.getSurname());
+        nManager.setEmailAddress(oManager.getEmailAddress());
+        nJob.setProjectManager(nManager);
+
+        databaseReference.child(nJob.getJobNumber()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.exists()){
+                    databaseReference.child(oJob.getJobNumber()).setValue(oJob);
+                }
+                else {
+                    databaseReference.child(nJob.getJobNumber()).setValue(nJob);
+                }
+                Intent i = new Intent(getApplicationContext(),AllJobs.class);
+                startActivity(i);
+                finish();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 }
-
-//TODO check if job after editing already exists

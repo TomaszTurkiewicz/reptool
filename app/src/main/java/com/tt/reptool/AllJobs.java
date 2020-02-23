@@ -86,5 +86,5 @@ public class AllJobs extends AppCompatActivity {
     }
 }
 
-// TODO firebase path from string resources
+
 //TODO add more spaces, margins in recyclerView

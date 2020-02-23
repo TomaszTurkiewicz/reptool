@@ -28,12 +28,14 @@ public class ManagerActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private List<Manager> mList = new ArrayList<>();
+    private Manager manager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager);
+        manager = new Manager();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference=firebaseDatabase.getReference(getString(R.string.firebasepath_manager));
         initManagerList();
@@ -49,8 +51,8 @@ public class ManagerActivity extends AppCompatActivity {
 
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ps : dataSnapshot.getChildren()){
-                    Manager manager = ps.getValue(Manager.class);
-                    mList.add(manager);
+                    Manager tmanager = ps.getValue(Manager.class);
+                    mList.add(tmanager);
                 }
                 initRecycleView();
             }
@@ -127,11 +129,12 @@ public class ManagerActivity extends AppCompatActivity {
         //check if fields are not empty
 
         if(!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(surname)&&!TextUtils.isEmpty(email)) {
+            manager.setName(name);
+            manager.setSurname(surname);
+            manager.setEmailAddress(email);
 
-            final String mName = name;
-            final String mSurname = surname;
             final String mEmail = email.replace(".","(dot)");
-            databaseReference.child(mName + " " + mSurname + " " + mEmail)
+            databaseReference.child(manager.getName() + " " + manager.getSurname() + " " + mEmail)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -142,11 +145,9 @@ public class ManagerActivity extends AppCompatActivity {
                         Toast.makeText(ManagerActivity.this,getString(R.string.already_exists),
                                 Toast.LENGTH_LONG).show();
                     }else{
-                        Manager manager = new Manager();
-                        manager.setName(mName);
-                        manager.setSurname(mSurname);
-                        manager.setEmailAddress(email);
-                        databaseReference.child(mName + " " + mSurname + " " + mEmail).setValue(manager);
+
+
+                        databaseReference.child(manager.getName() + " " + manager.getSurname() + " " + mEmail).setValue(manager);
                         initManagerList();
                         managerName.setText(getString(R.string.empty));
                         managerSurname.setText(getString(R.string.empty));
