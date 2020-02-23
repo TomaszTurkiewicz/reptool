@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.firebase.database.DataSnapshot;
@@ -72,7 +73,10 @@ public class AllJobs extends AppCompatActivity {
     }
 
     private void editJob(int position) {
-
+        String jobNumber = jList.get(position).getJobNumber();
+        Intent intent = new Intent(this,EditJob.class);
+        intent.putExtra("jobNumber",jobNumber);
+        startActivity(intent);
     }
 
     private void removeJob(int position) {

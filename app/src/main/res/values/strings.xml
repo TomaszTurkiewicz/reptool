@@ -25,4 +25,5 @@
     <string name="showAll">SHOW ALL</string>
     <string name="find_job_by">FIND JOB BY</string>
     <string name="find">FIND</string>
+    <string name="cancel">CANCEL</string>
 </resources>
