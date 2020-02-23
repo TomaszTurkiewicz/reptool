@@ -128,8 +128,8 @@ public class ManagerActivity extends AppCompatActivity {
 
         if(!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(surname)&&!TextUtils.isEmpty(email)) {
 
-            final String mName = name.substring(0,1).toUpperCase()+name.substring(1).toLowerCase();
-            final String mSurname = surname.substring(0,1).toUpperCase()+surname.substring(1).toLowerCase();
+            final String mName = name;
+            final String mSurname = surname;
             final String mEmail = email.replace(".","(dot)");
             databaseReference.child(mName + " " + mSurname + " " + mEmail).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

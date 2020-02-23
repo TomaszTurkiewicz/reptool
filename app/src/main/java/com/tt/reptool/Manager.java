@@ -31,7 +31,7 @@ public class Manager {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.substring(0,1).toUpperCase()+name.substring(1).toLowerCase();
     }
 
     public String getSurname() {
@@ -39,7 +39,7 @@ public class Manager {
     }
 
     public void setSurname(String surname) {
-        this.surname = surname;
+        this.surname = surname.substring(0,1).toUpperCase()+surname.substring(1).toLowerCase();
     }
 
     public String getEmailAddress() {
@@ -50,7 +50,7 @@ public class Manager {
         this.emailAddress = emailAddress;
     }
 
-    public String getNameAndSurname(){
+    public String nameAndSurnameToString(){
         return name + " " + surname;
     }
 }

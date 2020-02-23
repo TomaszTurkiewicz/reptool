@@ -21,14 +21,19 @@ public class EditJob extends AppCompatActivity {
     private TextView jobManager;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
+    private Manager manager;
+    private Address address;
+    Job job = new Job();
+    String jNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_job);
         Bundle extras = getIntent().getExtras();
-        String jNumber = extras.getString("jobNumber");
-
+        jNumber = extras.getString("jobNumber");
+        manager = new Manager();
+        address = new Address();
         jobNumber = findViewById(R.id.jobNumberEditJob);
         jobClientName = findViewById(R.id.clientNameEditJob);
         jobStreet = findViewById(R.id.streetEditJob);
@@ -37,22 +42,20 @@ public class EditJob extends AppCompatActivity {
         jobManager = findViewById(R.id.jobPMEditJob);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Job").child(jNumber);
+        databaseReference = firebaseDatabase.getReference("Job");
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(jNumber).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    Job job = new Job();
                     job.setJobNumber(dataSnapshot.child("jobNumber").getValue().toString());
                     job.setShortDescription(dataSnapshot.child("shortDescription").getValue().toString());
-                    Address address = new Address();
                     address.setName(dataSnapshot.child("address").child("name").getValue().toString());
                     address.setPostCode(dataSnapshot.child("address").child("postCode").getValue().toString());
                     address.setStreet(dataSnapshot.child("address").child("street").getValue().toString());
-                    Manager manager = new Manager();
                     manager.setName(dataSnapshot.child("projectManager").child("name").getValue().toString());
                     manager.setSurname(dataSnapshot.child("projectManager").child("surname").getValue().toString());
+                    manager.setEmailAddress(dataSnapshot.child("projectManager").child("emailAddress").getValue().toString());
                     job.setProjectManager(manager);
                     job.setAddress(address);
                     show(job);
@@ -77,7 +80,7 @@ public class EditJob extends AppCompatActivity {
         jobClientName.setText(job.getAddress().getName());
         jobPostcode.setText(job.getAddress().getPostCode());
         jobStreet.setText(job.getAddress().getStreet());
-        jobManager.setText(job.getProjectManager().getNameAndSurname());
+        jobManager.setText(job.getProjectManager().nameAndSurnameToString());
     }
 
     public void onClickCancel(View view) {
@@ -87,5 +90,16 @@ public class EditJob extends AppCompatActivity {
     }
 
     public void onClickSave(View view) {
+        databaseReference.child(jNumber).removeValue();
+        job.setJobNumber(jobNumber.getText().toString().trim());
+        job.setShortDescription(jobDescription.getText().toString().trim());
+        address.setName(jobClientName.getText().toString().trim());
+        address.setStreet(jobStreet.getText().toString().trim());
+        address.setPostCode(jobPostcode.getText().toString().trim());
+        job.setAddress(address);
+        databaseReference.child(job.getJobNumber()).setValue(job);
+        Intent intent = new Intent(this, AllJobs.class);
+        startActivity(intent);
+        finish();
     }
 }

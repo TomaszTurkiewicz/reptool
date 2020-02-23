@@ -77,6 +77,7 @@ public class AllJobs extends AppCompatActivity {
         Intent intent = new Intent(this,EditJob.class);
         intent.putExtra("jobNumber",jobNumber);
         startActivity(intent);
+        finish();
     }
 
     private void removeJob(int position) {
@@ -85,5 +86,5 @@ public class AllJobs extends AppCompatActivity {
     }
 }
 
-//TODO deleting and editing job
+// TODO firebase path from string resources
 //TODO add more spaces, margins in recyclerView

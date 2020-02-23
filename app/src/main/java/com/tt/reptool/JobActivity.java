@@ -97,11 +97,11 @@ public class JobActivity extends AppCompatActivity {
     }
 
     public void saveJob(View view) {
-        final String jNumber = jobNumber.getText().toString().trim().toUpperCase();
+        final String jNumber = jobNumber.getText().toString().trim();
         final Address jAddress = new Address();
         jAddress.setName(jobClientName.getText().toString().trim());
         jAddress.setStreet(jobStreet.getText().toString().trim());
-        jAddress.setPostCode(jobPostcode.getText().toString().trim().toUpperCase());
+        jAddress.setPostCode(jobPostcode.getText().toString().trim());
         final String jDescription = jobDescription.getText().toString().trim();
 
         //check empty fields: job - number,postcode,street,description

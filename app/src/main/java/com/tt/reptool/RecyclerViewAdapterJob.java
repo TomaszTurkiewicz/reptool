@@ -45,7 +45,7 @@ public class RecyclerViewAdapterJob extends RecyclerView.Adapter<RecyclerViewAda
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapterJob.ViewHolder holder, int position) {
         holder.jobNumber.setText(mList.get(position).getJobNumber());
-        holder.jobManager.setText(mList.get(position).getProjectManager().getNameAndSurname());
+        holder.jobManager.setText(mList.get(position).getProjectManager().nameAndSurnameToString());
         holder.jobPostcode.setText(mList.get(position).getAddress().getPostCode());
         holder.jobAddress.setText(mList.get(position).getAddress().getStreet());
         holder.jobDescription.setText(mList.get(position).getShortDescription());

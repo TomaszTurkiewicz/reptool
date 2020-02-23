@@ -40,6 +40,6 @@ public class Address {
     }
 
     public void setPostCode(String postCode) {
-        this.postCode = postCode;
+        this.postCode = postCode.toUpperCase();
     }
 }
