@@ -46,4 +46,7 @@
     <string name="change">Change</string>
     <string name="delete">DELETE</string>
     <string name="do_you_really_Want_to_delete">Do you really want to delete</string>
+    <string name="start">Start</string>
+    <string name="day">DAY</string>
+    <string name="startTime">Start</string>
 </resources>
