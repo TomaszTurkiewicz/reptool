@@ -56,6 +56,7 @@ public class DailyReport {
         this.year = startTime.get(Calendar.YEAR);
         this.weekNumber = startTime.get(Calendar.WEEK_OF_YEAR);
         this.dayOfWeek = startTime.get(Calendar.DAY_OF_WEEK);
+
     }
 
     public Calendar getStartTime() {

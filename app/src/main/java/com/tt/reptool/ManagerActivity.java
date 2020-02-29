@@ -1,6 +1,7 @@
 package com.tt.reptool;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -113,9 +114,8 @@ public class ManagerActivity extends AppCompatActivity {
         String drEmail = dEmail.replace(".","(dot)");
         databaseReference.child(dName + " " + dSurname + " " + drEmail).removeValue();
         initManagerList();
-
     }
-
+//TODO remove with confirmation using new manager delete dialog fragment
     // add new manager
 
     public void saveManager(View view) {

@@ -99,7 +99,11 @@ public class ManagerDialog extends AppCompatDialogFragment {
                             nManager.setName(managerName);
                             nManager.setSurname(managerSurname);
                             nManager.setEmailAddress(managerEmail);
-                            databaseReference.child(oManager.getName() + " " + oManager.getSurname() + " " + oManager.getEmailAddress().replace(".","(dot)")).removeValue();
+                            databaseReference.child(oManager.getName() +
+                                    " " + oManager.getSurname() +
+                                    " " + oManager.getEmailAddress()
+                                    .replace(".","(dot)"))
+                                    .removeValue();
                             databaseReference.child(nManager.getName() +
                                     " " +
                                     nManager.getSurname() +

@@ -8,4 +8,6 @@
     tools:context=".DailyReportActivity"
     android:orientation="vertical">
 
+
+
 </LinearLayout>
