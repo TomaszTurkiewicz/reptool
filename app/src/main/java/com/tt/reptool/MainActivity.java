@@ -27,4 +27,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, JobActivity.class);
         startActivity(intent);
     }
+
+    public void dailyReportOnClick(View view) {
+        Intent intent = new Intent(this,DailyReportActivity.class);
+        startActivity(intent);
+    }
 }

@@ -13,7 +13,8 @@
         android:layout_gravity="center"
         android:text="@string/daily_report"
         android:id="@+id/buttonDailyReport"
-        android:layout_margin="@dimen/margin"/>
+        android:layout_margin="@dimen/margin"
+        android:onClick="dailyReportOnClick"/>
 
     <Button
         android:layout_width="match_parent"
