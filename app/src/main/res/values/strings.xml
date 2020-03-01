@@ -50,4 +50,7 @@
     <string name="day">DAY</string>
     <string name="startTime">Start</string>
     <string name="endTime">End</string>
+    <string name="job_info">job info</string>
+    <string name="accidents">accidents</string>
+    <string name="firebasepath_weekly_reports">weeklyReports</string>
 </resources>

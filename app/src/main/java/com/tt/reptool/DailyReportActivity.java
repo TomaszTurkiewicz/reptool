@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -35,9 +36,12 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         private static final int START_TIME = 0;
         private static final int END_TIME = 1;
         private TextView startDate, startTime, endTime, jobOverview;
+        private EditText jobDescription, info, accidents;
         private Spinner jobNumberSpinner;
         private FirebaseDatabase firebaseDatabase;
         private DatabaseReference databaseReferenceJob;
+        private DatabaseReference databaseReferenceWeeklyReports;
+        private DatabaseReference databaseReferenceAllReports;
         private Calendar calendar, calendarEnd;
         private int flag;
         private List<Job> jobList = new ArrayList<>();
@@ -54,6 +58,9 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         startTime = findViewById(R.id.startTime);
         endTime = findViewById(R.id.endTime);
         jobOverview = findViewById(R.id.jobOverview);
+        jobDescription = findViewById(R.id.jobDescriptionActivityDailyReport);
+        info = findViewById(R.id.jobInfoActivityDailyReport);
+        accidents = findViewById(R.id.jobAccidentsActivityDailyReport);
         calendar = Calendar.getInstance();
         calendarEnd = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY,8);
@@ -185,4 +192,21 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
     public String showTime(Calendar c){
         return c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE);
     }
+
+    public void saveDailyReport(View view) {
+        String desc = jobDescription.getText().toString().trim();
+        String jInfo = info.getText().toString().trim();
+        String acc = accidents.getText().toString().trim();
+
+        DailyReport dailyReport = new DailyReport(calendar,calendarEnd,job,desc,jInfo,acc);
+        databaseReferenceWeeklyReports=firebaseDatabase.getReference(getString(R.string.firebasepath_weekly_reports));
+        databaseReferenceWeeklyReports.child(String.valueOf(dailyReport.getYear())).child(String.valueOf(dailyReport.getWeekNumber())).child(String.valueOf(dailyReport.getDayOfWeek())).setValue(dailyReport);
+
+    }
 }
+
+// TODO change day of week from int to string (names)
+// TODO empty fields
+// TODO save to all reports
+// TODO check if already exists
+//TODO change picking up job (filtering), maybe different activity?
