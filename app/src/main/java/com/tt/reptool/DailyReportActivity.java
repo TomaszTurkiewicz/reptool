@@ -1,5 +1,6 @@
 package com.tt.reptool;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -7,13 +8,24 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class DailyReportActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
         TimePickerDialog.OnTimeSetListener
@@ -22,9 +34,17 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
 {
         private static final int START_TIME = 0;
         private static final int END_TIME = 1;
-        private TextView startDate, startTime, endTime;
+        private TextView startDate, startTime, endTime, jobOverview;
+        private Spinner jobNumberSpinner;
+        private FirebaseDatabase firebaseDatabase;
+        private DatabaseReference databaseReferenceJob;
         private Calendar calendar, calendarEnd;
         private int flag;
+        private List<Job> jobList = new ArrayList<>();
+        private JobSpinnerAdapter jobSpinnerAdapter;
+        private Job job = new Job();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +53,7 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         startDate = findViewById(R.id.startDate);
         startTime = findViewById(R.id.startTime);
         endTime = findViewById(R.id.endTime);
+        jobOverview = findViewById(R.id.jobOverview);
         calendar = Calendar.getInstance();
         calendarEnd = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY,8);
@@ -43,6 +64,53 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         startDate.setText(showDate(calendar));
         startTime.setText(showTime(calendar));
         endTime.setText(showTime(calendarEnd));
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReferenceJob=firebaseDatabase.getReference(getString(R.string.firebasepath_job));
+        jobList.clear();
+        databaseReferenceJob.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ps : dataSnapshot.getChildren()){
+                    Job jobTemp = ps.getValue(Job.class);
+                    jobList.add(jobTemp);
+                }
+
+                jobNumberSpinner = (Spinner)findViewById(R.id.jobNumberSpinner);
+                jobSpinnerAdapter = new JobSpinnerAdapter(DailyReportActivity.this,jobList);
+                jobNumberSpinner.setAdapter(jobSpinnerAdapter);
+                jobNumberSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Job clickedItem = (Job)parent.getItemAtPosition(position);
+                        job.setJobNumber(clickedItem.getJobNumber());
+                        job.setAddress(new Address(clickedItem.getAddress().getName(),
+                                clickedItem.getAddress().getStreet(),
+                                clickedItem.getAddress().getPostCode()));
+                        job.setShortDescription(clickedItem.getShortDescription());
+                        job.setProjectManager(new Manager(clickedItem.getProjectManager().getName(),
+                                clickedItem.getProjectManager().getSurname(),
+                                clickedItem.getProjectManager().getEmailAddress()));
+                        jobOverview.setText(job.getJobNumber()+" "
+                                +job.getProjectManager().getName()+" "
+                        +job.getProjectManager().getSurname()+" "
+                        +job.getAddress().getName()+" "
+                        +job.getAddress().getStreet()+" "
+                        +job.getAddress().getPostCode());
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
         endTime.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +167,10 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         calendar.set(Calendar.YEAR,yearPicker);
         calendar.set(Calendar.MONTH,monthPicker);
         calendar.set(Calendar.DAY_OF_MONTH,dayOfMonthPicker);
+
+        calendarEnd.set(Calendar.YEAR,yearPicker);
+        calendarEnd.set(Calendar.MONTH,monthPicker);
+        calendarEnd.set(Calendar.DAY_OF_MONTH,dayOfMonthPicker);
 
         startDate.setText(showDate(calendar));
 
