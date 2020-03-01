@@ -9,11 +9,27 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 public class TimeStartPickerFragment extends DialogFragment {
+
+    private int hour;
+    private int min;
+
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+
         return new TimePickerDialog(getActivity(),
                 (TimePickerDialog.OnTimeSetListener) getActivity(),
-                8,30,true);
+                hour,min,true);
+
     }
+
 }

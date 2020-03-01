@@ -15,9 +15,16 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class DailyReportActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
-        private TextView startDate, startTime;
-        private Calendar calendar;
+public class DailyReportActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
+        TimePickerDialog.OnTimeSetListener
+
+
+{
+        private static final int START_TIME = 0;
+        private static final int END_TIME = 1;
+        private TextView startDate, startTime, endTime;
+        private Calendar calendar, calendarEnd;
+        private int flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,18 +32,39 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         setContentView(R.layout.activity_daily_report);
         startDate = findViewById(R.id.startDate);
         startTime = findViewById(R.id.startTime);
+        endTime = findViewById(R.id.endTime);
         calendar = Calendar.getInstance();
+        calendarEnd = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY,8);
+        calendarEnd.set(Calendar.HOUR_OF_DAY,17);
         calendar.set(Calendar.MINUTE,30);
+        calendarEnd.set(Calendar.MINUTE,30);
+        flag=0;
         startDate.setText(showDate(calendar));
         startTime.setText(showTime(calendar));
+        endTime.setText(showTime(calendarEnd));
 
+
+        endTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimeStartPickerFragment timeEndPicker = new TimeStartPickerFragment();
+                timeEndPicker.setHour(calendarEnd.get(Calendar.HOUR_OF_DAY));
+                timeEndPicker.setMin(calendarEnd.get(Calendar.MINUTE));
+                flag=END_TIME;
+                timeEndPicker.show(getSupportFragmentManager(),"time picker");
+            }
+        });
 
         startTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment timeStartPicker = new TimeStartPickerFragment();
+                TimeStartPickerFragment timeStartPicker = new TimeStartPickerFragment();
+                flag=START_TIME;
+                timeStartPicker.setHour(calendar.get(Calendar.HOUR_OF_DAY));
+                timeStartPicker.setMin(calendar.get(Calendar.MINUTE));
                 timeStartPicker.show(getSupportFragmentManager(),"time picker");
+
             }
         });
 
@@ -52,13 +80,18 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
-        calendar.set(Calendar.MINUTE,minute);
 
-        startTime.setText(showTime(calendar));
+       if(flag==START_TIME) {
+           calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+           calendar.set(Calendar.MINUTE, minute);
+           startTime.setText(showTime(calendar));
+       }else if(flag==END_TIME){
+           calendarEnd.set(Calendar.HOUR_OF_DAY, hourOfDay);
+           calendarEnd.set(Calendar.MINUTE, minute);
+           endTime.setText(showTime(calendarEnd));
+        }
     }
 
-    //TODO dlaczego time picker nie działa
 
     @Override
     public void onDateSet(DatePicker view, int yearPicker, int monthPicker, int dayOfMonthPicker) {
