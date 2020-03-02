@@ -200,13 +200,24 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
 
         DailyReport dailyReport = new DailyReport(calendar,calendarEnd,job,desc,jInfo,acc);
         databaseReferenceWeeklyReports=firebaseDatabase.getReference(getString(R.string.firebasepath_weekly_reports));
-        databaseReferenceWeeklyReports.child(String.valueOf(dailyReport.getYear())).child(String.valueOf(dailyReport.getWeekNumber())).child(String.valueOf(dailyReport.getDayOfWeek())).setValue(dailyReport);
+        databaseReferenceWeeklyReports
+                .child(String.valueOf(dailyReport.getYear()))
+                .child(String.valueOf(dailyReport.getWeekNumber()))
+                .child(String.valueOf(dailyReport.getDayOfWeek()))
+                .setValue(dailyReport);
+
+        databaseReferenceAllReports=firebaseDatabase.getReference(getString(R.string.firebasepath_all_reports));
+        databaseReferenceAllReports
+                .child(String.valueOf(dailyReport.getYear()))
+                .child(String.valueOf(dailyReport.getWeekNumber()))
+                .child(String.valueOf(dailyReport.getDayOfWeek()))
+                .setValue(dailyReport);
+
 
     }
 }
 
 // TODO change day of week from int to string (names)
 // TODO empty fields
-// TODO save to all reports
 // TODO check if already exists
 //TODO change picking up job (filtering), maybe different activity?
