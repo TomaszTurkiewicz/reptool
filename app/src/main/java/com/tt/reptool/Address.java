@@ -24,6 +24,9 @@ public class Address {
         this.street = street;
         this.postCode = postCode;
     }
+    public String getFullAddress(){
+        return street + " " + postCode;
+    }
 
     public String getName() {
         return name;

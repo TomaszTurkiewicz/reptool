@@ -59,6 +59,19 @@ public class DailyReport {
 
     }
 
+    public String dateToString (){
+        return startTime.get(Calendar.DAY_OF_MONTH)+"/"+
+                (startTime.get(Calendar.MONTH)+1)+"/"+
+                startTime.get(Calendar.YEAR);
+    }
+    public String showTimeInToString(){
+        return startTime.get(Calendar.HOUR_OF_DAY)+":"+startTime.get(Calendar.MINUTE);
+    }
+
+    public String showTimeOutToString(){
+        return endTime.get(Calendar.HOUR_OF_DAY)+":"+endTime.get(Calendar.MINUTE);
+    }
+
     public Calendar getStartTime() {
         return startTime;
     }

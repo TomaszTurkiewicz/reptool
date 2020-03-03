@@ -188,6 +188,11 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
                 (c.get(Calendar.MONTH)+1)+"/"+
                 c.get(Calendar.YEAR);
     }
+    public String showDateBackwards (Calendar c){
+        return (c.get(Calendar.YEAR))+"_"+
+                (c.get(Calendar.MONTH)+1)+"_"+
+                (c.get(Calendar.DAY_OF_MONTH));
+    }
 
     public String showTime(Calendar c){
         return c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE);
@@ -201,16 +206,12 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         DailyReport dailyReport = new DailyReport(calendar,calendarEnd,job,desc,jInfo,acc);
         databaseReferenceWeeklyReports=firebaseDatabase.getReference(getString(R.string.firebasepath_weekly_reports));
         databaseReferenceWeeklyReports
-                .child(String.valueOf(dailyReport.getYear()))
-                .child(String.valueOf(dailyReport.getWeekNumber()))
-                .child(String.valueOf(dailyReport.getDayOfWeek()))
+                .child(showDateBackwards(dailyReport.getStartTime()))
                 .setValue(dailyReport);
 
         databaseReferenceAllReports=firebaseDatabase.getReference(getString(R.string.firebasepath_all_reports));
         databaseReferenceAllReports
-                .child(String.valueOf(dailyReport.getYear()))
-                .child(String.valueOf(dailyReport.getWeekNumber()))
-                .child(String.valueOf(dailyReport.getDayOfWeek()))
+                .child(showDateBackwards(dailyReport.getStartTime()))
                 .setValue(dailyReport);
 
 
