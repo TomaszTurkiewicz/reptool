@@ -54,4 +54,5 @@
     <string name="accidents">accidents</string>
     <string name="firebasepath_weekly_reports">weeklyReports</string>
     <string name="firebasepath_all_reports">allReports</string>
+    <string name="send">send</string>
 </resources>

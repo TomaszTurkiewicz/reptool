@@ -22,7 +22,8 @@
         android:layout_gravity="center"
         android:text="@string/weeklyReport"
         android:id="@+id/buttonWeeklyReport"
-        android:layout_margin="@dimen/margin"/>
+        android:layout_margin="@dimen/margin"
+        android:onClick="weeklyReportOnClick"/>
 
     <Button
         android:layout_width="match_parent"

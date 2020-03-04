@@ -37,4 +37,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,AllReportsActivity.class);
         startActivity(intent);
     }
+
+    public void weeklyReportOnClick(View view) {
+        Intent intent = new Intent(this,WeeklyReportsActivity.class);
+        startActivity(intent);
+    }
 }
