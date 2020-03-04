@@ -203,17 +203,11 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         String jInfo = info.getText().toString().trim();
         String acc = accidents.getText().toString().trim();
 
-        DateAndTime startTime = new DateAndTime(calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH)+1,
-                calendar.get(Calendar.DAY_OF_MONTH),
-                calendar.get(Calendar.HOUR_OF_DAY),
-                calendar.get(Calendar.MINUTE));
+        DateAndTime startTime = new DateAndTime();
+        startTime.setDateAndTime(calendar);
 
-        DateAndTime endTime = new DateAndTime(calendarEnd.get(Calendar.YEAR),
-                calendarEnd.get(Calendar.MONTH)+1,
-                calendarEnd.get(Calendar.DAY_OF_MONTH),
-                calendarEnd.get(Calendar.HOUR_OF_DAY),
-                calendarEnd.get(Calendar.MINUTE));
+        DateAndTime endTime = new DateAndTime();
+        endTime.setDateAndTime(calendarEnd);
 
         DailyReport dailyReport = new DailyReport(startTime,endTime,job,desc,jInfo,acc);
         databaseReferenceWeeklyReports=firebaseDatabase.getReference(getString(R.string.firebasepath_weekly_reports));

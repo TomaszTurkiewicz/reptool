@@ -1,5 +1,7 @@
 package com.tt.reptool;
 
+import java.util.Calendar;
+
 public class DateAndTime {
     private int year;
     private int month;
@@ -57,4 +59,14 @@ public class DateAndTime {
     public void setMinute(int minute) {
         this.minute = minute;
     }
+
+    public void setDateAndTime(Calendar c){
+        setDay(c.get(Calendar.DAY_OF_MONTH));
+        setMonth(c.get(Calendar.MONTH)+1);
+        setYear(c.get(Calendar.YEAR));
+        setHour(c.get(Calendar.HOUR_OF_DAY));
+        setMinute(c.get(Calendar.MINUTE));
+    }
 }
+
+// TODO add methods to set time and date (calendar)

@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class AllReportsActivity extends AppCompatActivity {
@@ -41,6 +42,7 @@ public class AllReportsActivity extends AppCompatActivity {
                     DailyReport dr = ps.getValue(DailyReport.class);
                     rList.add(dr);
                 }
+                Collections.reverse(rList);
                 initRecyclerView();
             }
 
