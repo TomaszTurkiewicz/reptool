@@ -32,4 +32,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,DailyReportActivity.class);
         startActivity(intent);
     }
+
+    public void allReportsActivityClick(View view) {
+        Intent intent = new Intent(this,AllReportsActivity.class);
+        startActivity(intent);
+    }
 }

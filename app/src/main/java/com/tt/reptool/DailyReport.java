@@ -15,34 +15,23 @@ Daily report - what kind of job and where was taken
 
 
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class DailyReport {
 
-    private Calendar startTime;
-    private Calendar endTime;
+    private DateAndTime startTime;
+    private DateAndTime endTime;
     private Job job;
     private String description;
     private String info;
     private String accident;
-    private int year;
-    private int weekNumber;
-    private int dayOfWeek;
 
-    public int getYear() {
-        return year;
+    public DailyReport() {
     }
 
-    public int getWeekNumber() {
-        return weekNumber;
-    }
-
-    public int getDayOfWeek() {
-        return dayOfWeek;
-    }
-
-    public DailyReport(Calendar startTime,
-                       Calendar endTime,
+    public DailyReport(DateAndTime startTime,
+                       DateAndTime endTime,
                        Job job,
                        String description,
                        String info,
@@ -53,38 +42,21 @@ public class DailyReport {
         this.description = description;
         this.info = info;
         this.accident = accident;
-        this.year = startTime.get(Calendar.YEAR);
-        this.weekNumber = startTime.get(Calendar.WEEK_OF_YEAR);
-        this.dayOfWeek = startTime.get(Calendar.DAY_OF_WEEK);
-
     }
 
-    public String dateToString (){
-        return startTime.get(Calendar.DAY_OF_MONTH)+"/"+
-                (startTime.get(Calendar.MONTH)+1)+"/"+
-                startTime.get(Calendar.YEAR);
-    }
-    public String showTimeInToString(){
-        return startTime.get(Calendar.HOUR_OF_DAY)+":"+startTime.get(Calendar.MINUTE);
-    }
-
-    public String showTimeOutToString(){
-        return endTime.get(Calendar.HOUR_OF_DAY)+":"+endTime.get(Calendar.MINUTE);
-    }
-
-    public Calendar getStartTime() {
+    public DateAndTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Calendar startTime) {
+    public void setStartTime(DateAndTime startTime) {
         this.startTime = startTime;
     }
 
-    public Calendar getEndTime() {
+    public DateAndTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Calendar endTime) {
+    public void setEndTime(DateAndTime endTime) {
         this.endTime = endTime;
     }
 
@@ -120,8 +92,17 @@ public class DailyReport {
         this.accident = accident;
     }
 
+    public String dateToString() {
+        return startTime.getDay()+"/"+startTime.getMonth()+"/"+startTime.getYear();
+    }
 
+    public String showTimeInToString() {
+        return startTime.getHour()+":"+startTime.getMinute();
+    }
 
-    // TODO finish this class first!!!
+    public String showTimeOutToString() {
+        return endTime.getHour()+":"+endTime.getMinute();
+    }
+
 
 }

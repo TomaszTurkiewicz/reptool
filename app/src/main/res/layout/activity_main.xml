@@ -30,7 +30,8 @@
         android:layout_gravity="center"
         android:text="@string/allReports"
         android:id="@+id/buttonAllReports"
-        android:layout_margin="@dimen/margin"/>
+        android:layout_margin="@dimen/margin"
+        android:onClick="allReportsActivityClick"/>
 
     <Button
         android:layout_width="match_parent"

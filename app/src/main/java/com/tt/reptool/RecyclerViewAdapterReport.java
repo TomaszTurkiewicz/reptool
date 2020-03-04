@@ -46,7 +46,6 @@ public class RecyclerViewAdapterReport extends RecyclerView.Adapter<RecyclerView
         return repList.size();
     }
 
-    //TODO finish RecyclerView !!!!!!!!!!
 
 public class VH extends RecyclerView.ViewHolder{
     ConstraintLayout reportLayout;
