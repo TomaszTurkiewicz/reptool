@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintLayoutLayoutWeeklyReport">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dateAndTimeLinearLayoutLayoutWeeklyReport"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/marginHalf"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dateLayoutWeeklyReport"
+            android:layout_marginEnd="@dimen/marginHalf"
+            android:text="@string/day"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timeInLayoutWeeklyReport"
+            android:layout_marginHorizontal="@dimen/marginHalf"
+            android:text="@string/startTime"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timeOutLayoutWeeklyReport"
+            android:layout_marginStart="@dimen/marginHalf"
+            android:text="@string/endTime"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/jobNumberAndNameLinearLayoutLayoutWeeklyReport"
+        app:layout_constraintTop_toBottomOf="@id/dateAndTimeLinearLayoutLayoutWeeklyReport"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/jobNumberLayoutWeeklyReport"
+            android:layout_marginEnd="@dimen/marginHalf"
+            android:text="@string/job_number"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nameLayoutWeeklyReport"
+            android:layout_marginStart="@dimen/marginHalf"
+            android:text="@string/name"/>
+    </LinearLayout>
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/jobNumberAndNameLinearLayoutLayoutWeeklyReport"
+        android:id="@+id/addressLayoutWeeklyReport"
+        android:text="@string/jobAddress"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addressLayoutWeeklyReport"
+        android:id="@+id/descriptionLayoutWeeklyReport"
+        android:layout_marginBottom="@dimen/marginHalf"
+        android:text="@string/jobDescription"/>
+
+    <ImageView
+        android:id="@+id/imageEditLayoutWeeklyReport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_edit"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imageDeleteLayoutWeeklyReport"
+        android:layout_margin="@dimen/marginHalf"/>
+
+    <ImageView
+        android:id="@+id/imageDeleteLayoutWeeklyReport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="@dimen/marginHalf"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
