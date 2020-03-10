@@ -20,8 +20,8 @@ public class RecyclerViewAdapterWeeklyReports extends RecyclerView.Adapter<Recyc
 
 
     public interface OnItemClickListener{
-        void onDeleteClick (int position);
-        void onEditClick (int position);
+        void onDeleteWeeklyReportClick (int position);
+        void onEditWeeklyReportClick (int position);
     }
     public void setOnItemClickListener(OnItemClickListener listener){
         mListener = listener;
@@ -81,7 +81,7 @@ public class RecyclerViewAdapterWeeklyReports extends RecyclerView.Adapter<Recyc
                     if(mListener != null){
                         int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION){
-                            mListener.onDeleteClick(position);
+                            mListener.onDeleteWeeklyReportClick(position);
                         }
                     }
                 }
@@ -93,7 +93,7 @@ public class RecyclerViewAdapterWeeklyReports extends RecyclerView.Adapter<Recyc
                     if(mListener != null){
                         int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION){
-                            mListener.onEditClick(position);
+                            mListener.onEditWeeklyReportClick(position);
                         }
                     }
                 }

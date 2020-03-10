@@ -20,7 +20,8 @@ import java.util.List;
 public class WeeklyReportsActivity extends AppCompatActivity {
 
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReferenceWeeklyReport;
+    private DatabaseReference databaseReferenceAllReport;
     private List<DailyReport> wRepList = new ArrayList<>();
 
     @Override
@@ -28,13 +29,14 @@ public class WeeklyReportsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weekly_reports);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference(getString(R.string.firebasepath_weekly_reports));
+        databaseReferenceWeeklyReport = firebaseDatabase.getReference(getString(R.string.firebasepath_weekly_reports));
+        databaseReferenceAllReport = firebaseDatabase.getReference(getString(R.string.firebasepath_all_reports));
         initReportList();
     }
 
     private void initReportList() {
         wRepList.clear();
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReferenceWeeklyReport.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ps : dataSnapshot.getChildren()){
@@ -57,9 +59,34 @@ public class WeeklyReportsActivity extends AppCompatActivity {
         RecyclerViewAdapterWeeklyReports adapter = new RecyclerViewAdapterWeeklyReports(this,wRepList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter.setOnItemClickListener(new RecyclerViewAdapterWeeklyReports.OnItemClickListener() {
+            @Override
+            public void onDeleteWeeklyReportClick(int position) {
+                removeWeeklyReport(position);
+            }
+
+            @Override
+            public void onEditWeeklyReportClick(int position) {
+
+            }
+        });
+    }
+
+    private void removeWeeklyReport(int position) {
+        DateAndTime tempDate = wRepList.get(position).getStartTime();
+        databaseReferenceWeeklyReport.child(showDateBackwards(tempDate)).removeValue();
+        databaseReferenceAllReport.child(showDateBackwards(tempDate)).removeValue();
+        initReportList();
+    }
+
+    public String showDateBackwards (DateAndTime c){
+        return (c.getYear())+"_"+
+                (c.getMonth())+"_"+
+                (c.getDay());
     }
 
 
 }
 
 // TODO finish this activity - recyclerview plus boolean DailyReport (to send)
+// TODO sending email with reports!!!
