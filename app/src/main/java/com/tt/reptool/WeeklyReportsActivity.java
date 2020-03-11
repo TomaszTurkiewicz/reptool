@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -86,6 +88,30 @@ public class WeeklyReportsActivity extends AppCompatActivity {
     }
 
 
+    public void sendWeeklyReports(View view) {
+        if(wRepList.size()>0){
+        String [] emailTo = new String[]{"tturkiewicz83@gmail.com"};
+        String subject = "Weekly Report " +
+                wRepList.get(0).dateToString() +
+                " - " +
+                wRepList.get(wRepList.size()-1).dateToString();
+        String message = "Hi Tom"+"\n"+"\n";
+
+        for(int i = 0; i<wRepList.size();i++){
+            message = message + wRepList.get(i).reportToString();
+        }
+
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_EMAIL,emailTo);
+            intent.putExtra(Intent.EXTRA_SUBJECT,subject);
+            intent.putExtra(Intent.EXTRA_TEXT,message);
+
+
+            intent.setType("message/rfc822");
+            startActivity(Intent.createChooser(intent, "choose an email client"));
+        }
+        else;
+    }
 }
 
 // TODO finish this activity - recyclerview plus boolean DailyReport (to send)

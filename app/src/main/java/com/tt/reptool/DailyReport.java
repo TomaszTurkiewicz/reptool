@@ -103,6 +103,13 @@ public class DailyReport {
     public String showTimeOutToString() {
         return endTime.getHour()+":"+endTime.getMinute();
     }
+    public String reportToString(){
+        return dateToString()+"\n"+
+                showTimeInToString()+" "+showTimeOutToString()+"\n"+
+                getJob().getJobNumber()+" "+getJob().getAddress().getName()+"\n"+
+                getJob().getAddress().getFullAddress()+"\n"+
+                getDescription()+"\n"+"\n";
+    }
 
 
 }
