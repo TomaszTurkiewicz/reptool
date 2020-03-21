@@ -55,4 +55,12 @@
     <string name="firebasepath_weekly_reports">weeklyReports</string>
     <string name="firebasepath_all_reports">allReports</string>
     <string name="send">send</string>
+
+    <string-array name="spinnerDailyReport">
+        <item>WORK</item>
+        <item>DAY OFF</item>
+        <item>TRAINING</item>
+        <item>BANK HOLIDAY</item>
+    </string-array>
+
 </resources>

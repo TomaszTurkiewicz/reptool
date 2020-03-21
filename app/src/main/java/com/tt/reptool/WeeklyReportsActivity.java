@@ -101,6 +101,8 @@ public class WeeklyReportsActivity extends AppCompatActivity {
             message = message + wRepList.get(i).reportToString();
         }
 
+        message = message + "\n"+"\n"+"Kind Regards"+"\n"+"Tomasz Turkiewicz";
+
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.putExtra(Intent.EXTRA_EMAIL,emailTo);
             intent.putExtra(Intent.EXTRA_SUBJECT,subject);

@@ -9,7 +9,9 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -37,7 +39,7 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         private static final int END_TIME = 1;
         private TextView startDate, startTime, endTime, jobOverview;
         private EditText jobDescription, info, accidents;
-        private Spinner jobNumberSpinner;
+        private Spinner jobNumberSpinner, dailyReportSpinner;
         private FirebaseDatabase firebaseDatabase;
         private DatabaseReference databaseReferenceJob;
         private DatabaseReference databaseReferenceWeeklyReports;
@@ -47,6 +49,7 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         private List<Job> jobList = new ArrayList<>();
         private JobSpinnerAdapter jobSpinnerAdapter;
         private Job job = new Job();
+
 
 
 
@@ -61,6 +64,11 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         jobDescription = findViewById(R.id.jobDescriptionActivityDailyReport);
         info = findViewById(R.id.jobInfoActivityDailyReport);
         accidents = findViewById(R.id.jobAccidentsActivityDailyReport);
+        dailyReportSpinner = findViewById(R.id.spinner_daily_report);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinnerDailyReport, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dailyReportSpinner.setAdapter(adapter);
+
         calendar = Calendar.getInstance();
         calendarEnd = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY,8);
