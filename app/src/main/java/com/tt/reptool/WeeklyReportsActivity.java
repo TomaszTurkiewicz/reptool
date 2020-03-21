@@ -90,12 +90,12 @@ public class WeeklyReportsActivity extends AppCompatActivity {
 
     public void sendWeeklyReports(View view) {
         if(wRepList.size()>0){
-        String [] emailTo = new String[]{"tturkiewicz83@gmail.com"};
+
         String subject = "Weekly Report " +
                 wRepList.get(0).dateToString() +
                 " - " +
                 wRepList.get(wRepList.size()-1).dateToString();
-        String message = "Hi Tom"+"\n"+"\n";
+        String message = "Hi"+"\n"+"\n";
 
         for(int i = 0; i<wRepList.size();i++){
             message = message + wRepList.get(i).reportToString();
@@ -104,7 +104,6 @@ public class WeeklyReportsActivity extends AppCompatActivity {
         message = message + "\n"+"\n"+"Kind Regards"+"\n"+"Tomasz Turkiewicz";
 
             Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.putExtra(Intent.EXTRA_EMAIL,emailTo);
             intent.putExtra(Intent.EXTRA_SUBJECT,subject);
             intent.putExtra(Intent.EXTRA_TEXT,message);
 

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -39,7 +40,7 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         private static final int END_TIME = 1;
         private TextView startDate, startTime, endTime, jobOverview;
         private EditText jobDescription, info, accidents;
-        private Spinner jobNumberSpinner, dailyReportSpinner;
+        private Spinner jobNumberSpinner;
         private FirebaseDatabase firebaseDatabase;
         private DatabaseReference databaseReferenceJob;
         private DatabaseReference databaseReferenceWeeklyReports;
@@ -64,10 +65,7 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         jobDescription = findViewById(R.id.jobDescriptionActivityDailyReport);
         info = findViewById(R.id.jobInfoActivityDailyReport);
         accidents = findViewById(R.id.jobAccidentsActivityDailyReport);
-        dailyReportSpinner = findViewById(R.id.spinner_daily_report);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinnerDailyReport, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dailyReportSpinner.setAdapter(adapter);
+
 
         calendar = Calendar.getInstance();
         calendarEnd = Calendar.getInstance();
@@ -79,7 +77,6 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         startDate.setText(showDate(calendar));
         startTime.setText(showTime(calendar));
         endTime.setText(showTime(calendarEnd));
-
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReferenceJob=firebaseDatabase.getReference(getString(R.string.firebasepath_job));
         jobList.clear();
@@ -90,7 +87,6 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
                     Job jobTemp = ps.getValue(Job.class);
                     jobList.add(jobTemp);
                 }
-
                 jobNumberSpinner = (Spinner)findViewById(R.id.jobNumberSpinner);
                 jobSpinnerAdapter = new JobSpinnerAdapter(DailyReportActivity.this,jobList);
                 jobNumberSpinner.setAdapter(jobSpinnerAdapter);
