@@ -9,8 +9,10 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -44,7 +46,7 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         private static final int END_TIME = 1;
         private TextView startDate, startTime, endTime, jobOverview;
         private EditText jobDescription, info, accidents;
-        private Spinner jobNumberSpinner;
+        private Spinner jobNumberSpinner, dayTypeSpinner;
         private FirebaseDatabase firebaseDatabase;
         private DatabaseReference databaseReferenceJob;
         private DatabaseReference databaseReferenceWeeklyReports;
@@ -54,6 +56,9 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         private List<Job> jobList = new ArrayList<>();
         private JobSpinnerAdapter jobSpinnerAdapter;
         private Job job = new Job();
+        private Type type;
+        private LinearLayout jobSpinnerLinearLayout, jobOverviewLinearLayout, descriptionLinearLayout,
+                jobInfoLinearLayout, accidentsLinearLayout;
 
 
 
@@ -69,7 +74,37 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         jobDescription = findViewById(R.id.jobDescriptionActivityDailyReport);
         info = findViewById(R.id.jobInfoActivityDailyReport);
         accidents = findViewById(R.id.jobAccidentsActivityDailyReport);
+        dayTypeSpinner = findViewById(R.id.spinnerDayType);
+        jobSpinnerLinearLayout = findViewById(R.id.jobSpinnerLinearLayout);
+        jobOverviewLinearLayout = findViewById(R.id.jobOverviewLinearLayout);
+        descriptionLinearLayout = findViewById(R.id.descriptionLinearLayout);
+        jobInfoLinearLayout = findViewById(R.id.jobInfoLinearLayout);
+        accidentsLinearLayout = findViewById(R.id.accidentsLinearLayout);
+        dayTypeSpinner.setAdapter(new ArrayAdapter<Type>(this, android.R.layout.simple_spinner_item, Type.values()));
+        dayTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                type = (Type)parent.getItemAtPosition(position);
+                if (type==Type.WORK){
+                    setWorkReportLayout();
+                }
+                else if(type == Type.DAY_OFF){
+                    setDayOffReportLayout();
+                }
+                else if(type == Type.TRAINING){
+                    setTrainingReportLayout();
+                }
+                else if(type == Type.BANK_HOLIDAY){
+                    setBankHolidayReportLayout();
+                }
+                else;
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         calendar = Calendar.getInstance();
         calendarEnd = Calendar.getInstance();
@@ -236,9 +271,38 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
 
 
     }
+
+    public void setWorkReportLayout(){
+        jobSpinnerLinearLayout.setVisibility(View.VISIBLE);
+        jobOverviewLinearLayout.setVisibility(View.VISIBLE);
+        descriptionLinearLayout.setVisibility(View.VISIBLE);
+        jobInfoLinearLayout.setVisibility(View.VISIBLE);
+        accidentsLinearLayout.setVisibility(View.VISIBLE);
+    }
+    public void setDayOffReportLayout(){
+        jobSpinnerLinearLayout.setVisibility(View.GONE);
+        jobOverviewLinearLayout.setVisibility(View.GONE);
+        descriptionLinearLayout.setVisibility(View.GONE);
+        jobInfoLinearLayout.setVisibility(View.GONE);
+        accidentsLinearLayout.setVisibility(View.GONE);
+    }
+    public void setBankHolidayReportLayout(){
+        jobSpinnerLinearLayout.setVisibility(View.GONE);
+        jobOverviewLinearLayout.setVisibility(View.GONE);
+        descriptionLinearLayout.setVisibility(View.GONE);
+        jobInfoLinearLayout.setVisibility(View.GONE);
+        accidentsLinearLayout.setVisibility(View.GONE);
+    }
+    public void setTrainingReportLayout(){
+        jobSpinnerLinearLayout.setVisibility(View.GONE);
+        jobOverviewLinearLayout.setVisibility(View.GONE);
+        descriptionLinearLayout.setVisibility(View.VISIBLE);
+        jobInfoLinearLayout.setVisibility(View.GONE);
+        accidentsLinearLayout.setVisibility(View.GONE);
+    }
 }
 
 // TODO change day of week from int to string (names)
 // TODO empty fields
 // TODO check if already exists
-//TODO change picking up job (filtering), maybe different activity?
+// TODO change picking up job (filtering), maybe different activity?
