@@ -30,6 +30,7 @@ import com.tt.reptool.javaClasses.DailyReport;
 import com.tt.reptool.javaClasses.DateAndTime;
 import com.tt.reptool.javaClasses.Job;
 import com.tt.reptool.javaClasses.Manager;
+import com.tt.reptool.javaClasses.TrainingReport;
 import com.tt.reptool.javaClasses.Type;
 import com.tt.reptool.javaClasses.WorkReport;
 
@@ -247,18 +248,28 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
     }
 
     public void saveDailyReport(View view) {
-        String desc = jobDescription.getText().toString().trim();
-        String jInfo = info.getText().toString().trim();
-        String acc = accidents.getText().toString().trim();
 
         DateAndTime startTime = new DateAndTime();
         startTime.setDateAndTime(calendar);
 
         DateAndTime endTime = new DateAndTime();
         endTime.setDateAndTime(calendarEnd);
+        DailyReport dailyReport = new DailyReport(startTime,endTime, type);
 
-        DailyReport dailyReport = new DailyReport(startTime,endTime, Type.TRAINING);
-        dailyReport.setWorkReport(new WorkReport(job,desc,jInfo,acc));
+        if(type==Type.WORK) {
+            String desc = jobDescription.getText().toString().trim();
+            String jInfo = info.getText().toString().trim();
+            String acc = accidents.getText().toString().trim();
+            dailyReport.setWorkReport(new WorkReport(job, desc, jInfo, acc));
+        }
+        else if (type==Type.TRAINING){
+            String desc = jobDescription.getText().toString().trim();
+            dailyReport.setTrainingReport(new TrainingReport(desc));
+        }
+
+
+
+
         databaseReferenceWeeklyReports=firebaseDatabase.getReference(getString(R.string.firebasepath_weekly_reports));
         databaseReferenceWeeklyReports
                 .child(showDateBackwards(dailyReport.getStartTime()))

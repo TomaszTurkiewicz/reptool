@@ -61,7 +61,14 @@ public class DailyReport {
         }
     }
 
-
+    public void setTrainingReport(TrainingReport trainingReport) {
+        if(type==Type.TRAINING){
+            this.trainingReport = trainingReport;
+        }
+        else{
+            this.workReport=null;
+        }
+    }
 
     public WorkReport getWorkReport() {
         if(type==Type.WORK){
