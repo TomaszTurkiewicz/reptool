@@ -1,7 +1,6 @@
 package com.tt.reptool;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +16,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tt.reptool.adapters.RecyclerViewAdapter;
+import com.tt.reptool.fragments.ManagerDialog;
+import com.tt.reptool.javaClasses.Manager;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,6 +14,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tt.reptool.javaClasses.Address;
+import com.tt.reptool.javaClasses.Job;
+import com.tt.reptool.javaClasses.Manager;
 
 public class EditJob extends AppCompatActivity {
 

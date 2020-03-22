@@ -1,4 +1,4 @@
-package com.tt.reptool;
+package com.tt.reptool.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.tt.reptool.R;
+import com.tt.reptool.javaClasses.DailyReport;
+import com.tt.reptool.javaClasses.Type;
 
 import java.util.List;
 
@@ -45,10 +49,43 @@ public class RecyclerViewAdapterWeeklyReports extends RecyclerView.Adapter<Recyc
         holder.reportDate.setText(wRepList.get(position).dateToString());
         holder.reportTimeIn.setText(wRepList.get(position).showTimeInToString());
         holder.reportTimeOut.setText(wRepList.get(position).showTimeOutToString());
-        holder.reportJobNumber.setText(wRepList.get(position).getJob().getJobNumber());
-        holder.reportName.setText(wRepList.get(position).getJob().getAddress().getName());
-        holder.reportAddress.setText(wRepList.get(position).getJob().getAddress().getFullAddress());
-        holder.reportDescription.setText(wRepList.get(position).getDescription());
+//        holder.reportJobNumber.setText(wRepList.get(position).getJob().getJobNumber());
+
+        if(wRepList.get(position).getType()== Type.WORK){
+            holder.reportJobNumber.setText(wRepList.get(position).getWorkReport().getJob().getJobNumber());
+        }
+        else{
+            holder.reportJobNumber.setVisibility(View.GONE);
+        }
+
+//        holder.reportName.setText(wRepList.get(position).getJob().getAddress().getName());
+
+        if(wRepList.get(position).getType()== Type.WORK){
+            holder.reportName.setText(wRepList.get(position).getWorkReport().getJob().getAddress().getName());
+        }
+        else{
+            holder.reportName.setVisibility(View.GONE);
+        }
+
+
+//        holder.reportAddress.setText(wRepList.get(position).getJob().getAddress().getFullAddress());
+
+        if(wRepList.get(position).getType()== Type.WORK){
+            holder.reportAddress.setText(wRepList.get(position).getWorkReport().getJob().getAddress().getFullAddress());
+        }
+        else{
+            holder.reportAddress.setVisibility(View.GONE);
+        }
+
+//        holder.reportDescription.setText(wRepList.get(position).getDescription());
+
+        if(wRepList.get(position).getType()== Type.WORK){
+            holder.reportDescription.setText(wRepList.get(position).getWorkReport().getDescription());
+        }
+        else{
+            holder.reportDescription.setVisibility(View.GONE);
+        }
+
     }
 
     @Override

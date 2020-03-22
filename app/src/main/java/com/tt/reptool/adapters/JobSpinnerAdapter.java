@@ -1,4 +1,4 @@
-package com.tt.reptool;
+package com.tt.reptool.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.tt.reptool.R;
+import com.tt.reptool.javaClasses.Job;
 
 import java.util.List;
 

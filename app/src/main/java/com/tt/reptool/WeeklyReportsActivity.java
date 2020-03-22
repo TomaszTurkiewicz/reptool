@@ -14,9 +14,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tt.reptool.adapters.RecyclerViewAdapterWeeklyReports;
+import com.tt.reptool.javaClasses.DailyReport;
+import com.tt.reptool.javaClasses.DateAndTime;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class WeeklyReportsActivity extends AppCompatActivity {
@@ -33,6 +35,11 @@ public class WeeklyReportsActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReferenceWeeklyReport = firebaseDatabase.getReference(getString(R.string.firebasepath_weekly_reports));
         databaseReferenceAllReport = firebaseDatabase.getReference(getString(R.string.firebasepath_all_reports));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initReportList();
     }
 
@@ -82,9 +89,14 @@ public class WeeklyReportsActivity extends AppCompatActivity {
     }
 
     public String showDateBackwards (DateAndTime c){
+        String format = "%1$02d";
+
+        String month = String.format(format, c.getMonth());
+        String day = String.format(format, c.getDay());
+
         return (c.getYear())+"_"+
-                (c.getMonth())+"_"+
-                (c.getDay());
+                month + "_"+
+                day;
     }
 
 
@@ -110,6 +122,8 @@ public class WeeklyReportsActivity extends AppCompatActivity {
 
             intent.setType("message/rfc822");
             startActivity(Intent.createChooser(intent, "choose an email client"));
+            databaseReferenceWeeklyReport.removeValue();
+            finish();
         }
         else;
     }

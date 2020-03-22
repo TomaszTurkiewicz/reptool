@@ -1,4 +1,4 @@
-package com.tt.reptool;
+package com.tt.reptool.javaClasses;
 
 /*
 

@@ -9,12 +9,8 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -24,11 +20,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tt.reptool.adapters.JobSpinnerAdapter;
+import com.tt.reptool.fragments.DatePickerFragment;
+import com.tt.reptool.fragments.TimeStartPickerFragment;
+import com.tt.reptool.javaClasses.Address;
+import com.tt.reptool.javaClasses.DailyReport;
+import com.tt.reptool.javaClasses.DateAndTime;
+import com.tt.reptool.javaClasses.Job;
+import com.tt.reptool.javaClasses.Manager;
+import com.tt.reptool.javaClasses.Type;
+import com.tt.reptool.javaClasses.WorkReport;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class DailyReportActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
@@ -193,9 +197,14 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
                 c.get(Calendar.YEAR);
     }
     public String showDateBackwards (DateAndTime c){
+        String format = "%1$02d";
+
+        String month = String.format(format, c.getMonth());
+        String day = String.format(format, c.getDay());
+
         return (c.getYear())+"_"+
-                (c.getMonth())+"_"+
-                (c.getDay());
+                month + "_"+
+                day;
     }
 
     public String showTime(Calendar c){
@@ -213,7 +222,8 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         DateAndTime endTime = new DateAndTime();
         endTime.setDateAndTime(calendarEnd);
 
-        DailyReport dailyReport = new DailyReport(startTime,endTime,job,desc,jInfo,acc);
+        DailyReport dailyReport = new DailyReport(startTime,endTime, Type.TRAINING);
+        dailyReport.setWorkReport(new WorkReport(job,desc,jInfo,acc));
         databaseReferenceWeeklyReports=firebaseDatabase.getReference(getString(R.string.firebasepath_weekly_reports));
         databaseReferenceWeeklyReports
                 .child(showDateBackwards(dailyReport.getStartTime()))

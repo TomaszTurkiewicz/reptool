@@ -1,4 +1,4 @@
-package com.tt.reptool;
+package com.tt.reptool.fragments;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -19,6 +19,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tt.reptool.R;
+import com.tt.reptool.javaClasses.Manager;
 
 public class ManagerDialog extends AppCompatDialogFragment {
     private EditText editTextManagerName;
