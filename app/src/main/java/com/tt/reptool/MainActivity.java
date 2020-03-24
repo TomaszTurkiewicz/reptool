@@ -26,11 +26,13 @@ public class MainActivity extends AppCompatActivity {
     public void onJobClick(View view) {
         Intent intent = new Intent(this, JobActivity.class);
         startActivity(intent);
+
     }
 
     public void dailyReportOnClick(View view) {
         Intent intent = new Intent(this,DailyReportActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void allReportsActivityClick(View view) {

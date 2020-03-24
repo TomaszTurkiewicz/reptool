@@ -6,7 +6,9 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -275,38 +278,54 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
 
         DateAndTime endTime = new DateAndTime();
         endTime.setDateAndTime(calendarEnd);
-        DailyReport dailyReport = new DailyReport(startTime,endTime,null);
+        String jInfo = info.getText().toString().trim();
+        String acc = accidents.getText().toString().trim();
+        String desc = jobDescription.getText().toString().trim();
 
-            String jInfo = info.getText().toString().trim();
-            String acc = accidents.getText().toString().trim();
-
-            String desc;
-            if(type==Type.BANK_HOLIDAY){
-                desc = getString(R.string.BANK_HOLIDAY);
-            }
-            else if(type==Type.DAY_OFF){
-                desc = getString(R.string.DAY_OFF);
-            }
-            else if(type==Type.TRAINING){
-                desc = getString(R.string.TRAINING)+": "+jobDescription.getText().toString().trim();
-            }
-            else{
+        if(type==Type.BANK_HOLIDAY){
+            desc = getString(R.string.BANK_HOLIDAY);
+            storeData(startTime,endTime,desc,jInfo,acc);
+        }
+        else if(type==Type.DAY_OFF){
+            desc = getString(R.string.DAY_OFF);
+            storeData(startTime,endTime,desc,jInfo,acc);
+        }
+        else if(type==Type.TRAINING){
+                if(!TextUtils.isEmpty(desc)) {
+                    desc = getString(R.string.TRAINING)+": "+jobDescription.getText().toString().trim();
+                    storeData(startTime,endTime,desc,jInfo,acc);
+                }else{
+                    Toast.makeText(this,R.string.empty_fields,Toast.LENGTH_LONG).show();
+                }
+        }
+        else{
+            if(!TextUtils.isEmpty(desc)&&!job.getJobNumber().isEmpty()){
                 desc = jobDescription.getText().toString().trim();
+                storeData(startTime,endTime,desc,jInfo,acc);
+            }else{
+                Toast.makeText(this,R.string.empty_fields,Toast.LENGTH_LONG).show();
             }
+        }
 
-            dailyReport.setWorkReport(new WorkReport(type, job, desc, jInfo, acc));
+
+
+
+    }
+    public void storeData(DateAndTime startTime, DateAndTime endTime, String desc, String jInfo, String acc){
+        DailyReport dailyReport = new DailyReport(startTime,endTime,new WorkReport(type, job, desc, jInfo, acc));
 
         databaseReferenceWeeklyReports=firebaseDatabase.getReference(getString(R.string.firebasepath_weekly_reports));
         databaseReferenceWeeklyReports
                 .child(showDateBackwards(dailyReport.getStartTime()))
                 .setValue(dailyReport);
-
         databaseReferenceAllReports=firebaseDatabase.getReference(getString(R.string.firebasepath_all_reports));
         databaseReferenceAllReports
                 .child(showDateBackwards(dailyReport.getStartTime()))
                 .setValue(dailyReport);
-
-
+        Toast.makeText(this,R.string.daily_report_saved,Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void setWorkReportLayout(){
@@ -339,7 +358,6 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
     }
 }
 
-// TODO change day of week from int to string (names)
-// TODO empty fields
+
 // TODO check if already exists
 // TODO change picking up job (filtering), maybe different activity?
