@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void weeklyReportOnClick(View view) {
-  //      Intent intent = new Intent(this,WeeklyReportsActivity.class);
-  //      startActivity(intent);
+        Intent intent = new Intent(this,WeeklyReportsActivity.class);
+        startActivity(intent);
     }
 }

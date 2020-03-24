@@ -59,10 +59,8 @@ public class RecyclerViewAdapterReport extends RecyclerView.Adapter<RecyclerView
         else{
             holder.reportAddress.setVisibility(View.GONE);
         }
-        
+
             holder.reportDescription.setText(repList.get(position).getWorkReport().getDescription());
-
-
 
     }
 

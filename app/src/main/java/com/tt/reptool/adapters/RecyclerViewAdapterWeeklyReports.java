@@ -49,6 +49,30 @@ public class RecyclerViewAdapterWeeklyReports extends RecyclerView.Adapter<Recyc
         holder.reportDate.setText(wRepList.get(position).dateToString());
         holder.reportTimeIn.setText(wRepList.get(position).showTimeInToString());
         holder.reportTimeOut.setText(wRepList.get(position).showTimeOutToString());
+
+        if(wRepList.get(position).getWorkReport().getType()== Type.WORK){
+            holder.reportJobNumber.setText(wRepList.get(position).getWorkReport().getJob().getJobNumber());
+        }
+        else{
+            holder.reportJobNumber.setVisibility(View.GONE);
+        }
+
+        if(wRepList.get(position).getWorkReport().getType()== Type.WORK){
+            holder.reportName.setText(wRepList.get(position).getWorkReport().getJob().getAddress().getName());
+        }
+        else{
+            holder.reportName.setVisibility(View.GONE);
+        }
+
+        if(wRepList.get(position).getWorkReport().getType()== Type.WORK){
+            holder.reportAddress.setText(wRepList.get(position).getWorkReport().getJob().getAddress().fullAddress());
+        }
+        else{
+            holder.reportAddress.setVisibility(View.GONE);
+        }
+
+        holder.reportDescription.setText(wRepList.get(position).getWorkReport().getDescription());
+
 //        holder.reportJobNumber.setText(wRepList.get(position).getJob().getJobNumber());
 
  /*       if(wRepList.get(position).getType()== Type.WORK){

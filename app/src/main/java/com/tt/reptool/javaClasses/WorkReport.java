@@ -57,4 +57,15 @@ public class WorkReport {
     public void setAccident(String accident) {
         this.accident = accident;
     }
+
+    public String toString(){
+        if(type==Type.WORK){
+            return job.getJobNumber()+" "+job.getAddress().getName()+"\n"+
+                    job.getAddress().fullAddress()+"\n"+
+                    description;
+        }
+        else{
+            return description;
+        }
+    }
 }

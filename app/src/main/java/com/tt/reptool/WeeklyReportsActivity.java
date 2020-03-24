@@ -110,10 +110,10 @@ public class WeeklyReportsActivity extends AppCompatActivity {
         String message = "Hi"+"\n"+"\n";
 
         for(int i = 0; i<wRepList.size();i++){
-            message = message + wRepList.get(i).reportToString();
+            message = message + wRepList.get(i).reportToString()+"\n"+"\n";
         }
 
-        message = message + "\n"+"\n"+"Kind Regards"+"\n"+"Tomasz Turkiewicz";
+        message = message + "Kind Regards"+"\n"+"Tomasz Turkiewicz";
 
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.putExtra(Intent.EXTRA_SUBJECT,subject);
@@ -122,7 +122,7 @@ public class WeeklyReportsActivity extends AppCompatActivity {
 
             intent.setType("message/rfc822");
             startActivity(Intent.createChooser(intent, "choose an email client"));
-            databaseReferenceWeeklyReport.removeValue();
+ //           databaseReferenceWeeklyReport.removeValue();
             finish();
         }
         else;
