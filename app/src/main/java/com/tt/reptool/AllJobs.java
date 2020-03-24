@@ -87,6 +87,3 @@ public class AllJobs extends AppCompatActivity {
         initJobList();
     }
 }
-
-
-//TODO add more spaces, margins in recyclerView

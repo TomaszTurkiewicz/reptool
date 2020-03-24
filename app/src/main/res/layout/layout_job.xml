@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/constraintLayoutLayoutJob"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/marginHalf">
 
   <LinearLayout
       android:layout_width="wrap_content"
@@ -17,7 +18,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/jobNumberLayoutJob"
-        android:text="@string/job_number"/>
+        android:text="@string/job_number"
+        android:layout_marginEnd="@dimen/marginHalf"/>
 
     <TextView
         android:layout_width="wrap_content"

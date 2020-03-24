@@ -68,5 +68,3 @@ public class DateAndTime {
         setMinute(c.get(Calendar.MINUTE));
     }
 }
-
-// TODO add methods to set time and date (calendar)
