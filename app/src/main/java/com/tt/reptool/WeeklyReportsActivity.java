@@ -150,5 +150,3 @@ public class WeeklyReportsActivity extends AppCompatActivity {
     }
 }
 
-// TODO finish this activity - recyclerview plus boolean DailyReport (to send)
-// TODO sending email with reports!!!

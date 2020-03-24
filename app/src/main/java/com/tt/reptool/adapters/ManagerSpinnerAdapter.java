@@ -48,8 +48,13 @@ public class ManagerSpinnerAdapter extends ArrayAdapter<Manager> {
         TextView managerSpinnerSurname = (TextView)convertView.findViewById(R.id.spinner_manager_surname);
         Manager currentItem = getItem(position);
         if(currentItem!=null) {
+            managerSpinnerName.setVisibility(View.VISIBLE);
+            managerSpinnerSurname.setVisibility(View.VISIBLE);
             managerSpinnerName.setText(currentItem.getName());
             managerSpinnerSurname.setText(currentItem.getSurname());
+        }else{
+            managerSpinnerName.setVisibility(View.GONE);
+            managerSpinnerSurname.setVisibility(View.GONE);
         }
         return convertView;
     }
