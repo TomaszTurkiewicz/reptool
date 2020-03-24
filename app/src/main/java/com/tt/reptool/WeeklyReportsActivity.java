@@ -1,10 +1,12 @@
 package com.tt.reptool;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -103,27 +105,46 @@ public class WeeklyReportsActivity extends AppCompatActivity {
     public void sendWeeklyReports(View view) {
         if(wRepList.size()>0){
 
-        String subject = "Weekly Report " +
-                wRepList.get(0).dateToString() +
-                " - " +
-                wRepList.get(wRepList.size()-1).dateToString();
-        String message = "Hi"+"\n"+"\n";
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(true);
+            builder.setTitle(getString(R.string.sending));
+            builder.setMessage(getString(R.string.are_you_sure));
+            builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String subject = "Weekly Report " +
+                            wRepList.get(0).dateToString() +
+                            " - " +
+                            wRepList.get(wRepList.size()-1).dateToString();
+                    String message = "Hi"+"\n"+"\n";
 
-        for(int i = 0; i<wRepList.size();i++){
-            message = message + wRepList.get(i).reportToString()+"\n"+"\n";
-        }
+                    for(int i = 0; i<wRepList.size();i++){
+                        message = message + wRepList.get(i).reportToString()+"\n"+"\n";
+                    }
 
-        message = message + "Kind Regards"+"\n"+"Tomasz Turkiewicz";
+                    message = message + "Kind Regards"+"\n"+"Tomasz Turkiewicz";
 
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.putExtra(Intent.EXTRA_SUBJECT,subject);
-            intent.putExtra(Intent.EXTRA_TEXT,message);
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.putExtra(Intent.EXTRA_SUBJECT,subject);
+                    intent.putExtra(Intent.EXTRA_TEXT,message);
 
 
-            intent.setType("message/rfc822");
-            startActivity(Intent.createChooser(intent, "choose an email client"));
- //           databaseReferenceWeeklyReport.removeValue();
-            finish();
+                    intent.setType("message/rfc822");
+                    startActivity(Intent.createChooser(intent, "choose an email client"));
+                    databaseReferenceWeeklyReport.removeValue();
+                    finish();
+                }
+            });
+            builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+
         }
         else;
     }
