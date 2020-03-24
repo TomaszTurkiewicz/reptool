@@ -1,10 +1,12 @@
 package com.tt.reptool;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -63,8 +65,30 @@ public class AllJobs extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.setOnItemClickListener(new RecyclerViewAdapterJob.OnItemClickListener() {
             @Override
-            public void onDeleteClick(int position) {
-                removeJob(position);
+            public void onDeleteClick(final int position) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(AllJobs.this);
+                builder.setCancelable(true);
+                builder.setTitle(R.string.deleting);
+                builder.setMessage(getString(R.string.are_you_sure_you_want_delete)+"\n"+
+                        jList.get(position).getJobNumber()+" "+
+                        jList.get(position).getAddress().getName()+"?");
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        removeJob(position);
+                    }
+                });
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+
+
             }
 
             @Override
