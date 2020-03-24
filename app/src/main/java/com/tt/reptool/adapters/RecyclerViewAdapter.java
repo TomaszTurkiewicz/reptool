@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -66,7 +67,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         TextView managerName;
         TextView managerSurname;
-        LinearLayout managerLayout;
+        RelativeLayout managerLayout;
         ImageView managerDeleteImage;
         ImageView managerEditImage;
 
@@ -106,4 +107,3 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 }
-//TODO change single item in recylerview (frame, background color etc)

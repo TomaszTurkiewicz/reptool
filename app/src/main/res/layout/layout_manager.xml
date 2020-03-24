@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/manager_layout">
+    android:id="@+id/manager_layout"
+    android:layout_margin="@dimen/marginHalf">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/managerNameLayoutManager"
         android:textSize="@dimen/TextSize"
-        android:layout_margin="8dp" />
+        android:layout_margin="8dp"
+        android:text="@string/name"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/managerSurnameLayoutManager"
         android:textSize="@dimen/TextSize"
-        android:layout_margin="8dp" />
+        android:layout_margin="8dp"
+        android:text="@string/surname"
+        android:layout_toRightOf="@id/managerNameLayoutManager"/>
 
     <ImageView
         android:id="@+id/imageEditLayoutManager"
@@ -26,7 +30,8 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_edit"
         android:layout_gravity="center_vertical"
-        android:layout_margin="8dp"/>
+        android:layout_margin="8dp"
+        android:layout_toRightOf="@id/managerSurnameLayoutManager"/>
 
     <ImageView
         android:id="@+id/imageDeleteLayoutManager"
@@ -34,6 +39,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_delete"
         android:layout_gravity="center_vertical"
-        android:layout_margin="8dp"/>
+        android:layout_margin="8dp"
+        android:layout_alignParentRight="true"/>
 
-</LinearLayout>
+</RelativeLayout>
