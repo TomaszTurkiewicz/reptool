@@ -31,15 +31,34 @@ public class Manager {
     }
 
     public void setName(String name) {
+        if(name.isEmpty())
+        {
+            this.name = "";
+        }
+        else if(name.length() == 1)
+        {
+            this.name = name.toUpperCase();
+        }
+        else
+            {
         this.name = name.substring(0,1).toUpperCase()+name.substring(1).toLowerCase();
+        }
     }
+
 
     public String getSurname() {
         return surname;
     }
 
     public void setSurname(String surname) {
-        this.surname = surname.substring(0,1).toUpperCase()+surname.substring(1).toLowerCase();
+        if (surname.isEmpty()) {
+            this.surname = "";
+        } else if (surname.length() == 1) {
+            this.surname = surname.toUpperCase();
+        } else {
+
+            this.surname = surname.substring(0, 1).toUpperCase() + surname.substring(1).toLowerCase();
+        }
     }
 
     public String getEmailAddress() {

@@ -17,11 +17,8 @@ public class DailyReport {
 
     private DateAndTime startTime;
     private DateAndTime endTime;
-    private Type type;
     private WorkReport workReport;
-    private DayOffReport dayOffReport;
-    private BankHolidayReport bankHolidayReport;
-    private TrainingReport trainingReport;
+
 //    private Job job;
 //    private String description;
 //    private String info;
@@ -30,87 +27,37 @@ public class DailyReport {
     public DailyReport() {
     }
 
-    public Type getType() {
-        return type;
-    }
 
-    public DailyReport(DateAndTime startTime, DateAndTime endTime, Type type) {
+
+    public DailyReport(DateAndTime startTime, DateAndTime endTime, WorkReport workReport) {
         this.startTime = startTime;
         this.endTime = endTime;
-        this.type = type;
-        if(type==Type.WORK){
-            workReport = new WorkReport();
-        }
-        else if(type == Type.DAY_OFF){
-            dayOffReport = new DayOffReport();
-        }
-        else if(type == Type.BANK_HOLIDAY){
-            bankHolidayReport = new BankHolidayReport();
-        }
-        else if(type == Type.TRAINING){
-            trainingReport = new TrainingReport();
-        }
-    }
-
-    public void setWorkReport(WorkReport workReport) {
-        if(type==Type.WORK){
         this.workReport = workReport;
-        }
-        else{
-            this.workReport=null;
-        }
-    }
 
-    public void setTrainingReport(TrainingReport trainingReport) {
-        if(type==Type.TRAINING){
-            this.trainingReport = trainingReport;
-        }
-        else{
-            this.workReport=null;
-        }
     }
 
     public WorkReport getWorkReport() {
-        if(type==Type.WORK){
         return workReport;
-        }
-        else return null;
     }
 
-    public DayOffReport getDayOffReport() {
-        if(type==Type.DAY_OFF){
-            return dayOffReport;
-        }
-        else return null;
-    }
-
-    public BankHolidayReport getBankHolidayReport(){
-        if(type==Type.BANK_HOLIDAY){
-            return bankHolidayReport;
-        }
-        else return null;
-    }
-    public TrainingReport getTrainingReport(){
-        if(type==Type.TRAINING){
-            return trainingReport;
-        }
-        else return null;
+    public void setWorkReport(WorkReport workReport) {
+        this.workReport = workReport;
     }
 
     /*   public DailyReport(DateAndTime startTime,
-                                   DateAndTime endTime,
-                                   Job job,
-                                   String description,
-                                   String info,
-                                   String accident) {
-                    this.startTime = startTime;
-                    this.endTime = endTime;
-                    this.job = job;
-                    this.description = description;
-                    this.info = info;
-                    this.accident = accident;
-                }
-            */
+                                       DateAndTime endTime,
+                                       Job job,
+                                       String description,
+                                       String info,
+                                       String accident) {
+                        this.startTime = startTime;
+                        this.endTime = endTime;
+                        this.job = job;
+                        this.description = description;
+                        this.info = info;
+                        this.accident = accident;
+                    }
+                */
     public DateAndTime getStartTime() {
         return startTime;
     }

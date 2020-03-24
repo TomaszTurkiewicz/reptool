@@ -30,7 +30,6 @@ import com.tt.reptool.javaClasses.DailyReport;
 import com.tt.reptool.javaClasses.DateAndTime;
 import com.tt.reptool.javaClasses.Job;
 import com.tt.reptool.javaClasses.Manager;
-import com.tt.reptool.javaClasses.TrainingReport;
 import com.tt.reptool.javaClasses.Type;
 import com.tt.reptool.javaClasses.WorkReport;
 
@@ -120,6 +119,7 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReferenceJob=firebaseDatabase.getReference(getString(R.string.firebasepath_job));
         jobList.clear();
+        jobList.add(null);
         databaseReferenceJob.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -134,6 +134,8 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         Job clickedItem = (Job)parent.getItemAtPosition(position);
+
+                        if (clickedItem!=null){
                         job.setJobNumber(clickedItem.getJobNumber());
                         job.setAddress(new Address(clickedItem.getAddress().getName(),
                                 clickedItem.getAddress().getStreet(),
@@ -149,6 +151,25 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
                         +job.getAddress().getStreet()+" "
                         +job.getAddress().getPostCode());
                     }
+                        else{
+                            job.setJobNumber("");
+                            job.setAddress(new Address("",
+                                    "",
+                                    ""));
+                            job.setShortDescription("");
+                            job.setProjectManager(new Manager("",
+                                    "",
+                                    ""));
+                            jobOverview.setText(job.getJobNumber()+" "
+                                    +job.getProjectManager().getName()+" "
+                                    +job.getProjectManager().getSurname()+" "
+                                    +job.getAddress().getName()+" "
+                                    +job.getAddress().getStreet()+" "
+                                    +job.getAddress().getPostCode());
+                        }
+
+                    }
+
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
@@ -254,21 +275,12 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
 
         DateAndTime endTime = new DateAndTime();
         endTime.setDateAndTime(calendarEnd);
-        DailyReport dailyReport = new DailyReport(startTime,endTime, type);
+        DailyReport dailyReport = new DailyReport(startTime,endTime,null);
 
-        if(type==Type.WORK) {
             String desc = jobDescription.getText().toString().trim();
             String jInfo = info.getText().toString().trim();
             String acc = accidents.getText().toString().trim();
             dailyReport.setWorkReport(new WorkReport(job, desc, jInfo, acc));
-        }
-        else if (type==Type.TRAINING){
-            String desc = jobDescription.getText().toString().trim();
-            dailyReport.setTrainingReport(new TrainingReport(desc));
-        }
-
-
-
 
         databaseReferenceWeeklyReports=firebaseDatabase.getReference(getString(R.string.firebasepath_weekly_reports));
         databaseReferenceWeeklyReports

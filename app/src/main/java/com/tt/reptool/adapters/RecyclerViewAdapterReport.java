@@ -40,40 +40,40 @@ public class RecyclerViewAdapterReport extends RecyclerView.Adapter<RecyclerView
         holder.reportTimeOut.setText(repList.get(position).showTimeOutToString());
  //       holder.reportJobNumber.setText(repList.get(position).getJob().getJobNumber());
 
-        if(repList.get(position).getType()== Type.WORK){
-            holder.reportJobNumber.setText(repList.get(position).getWorkReport().getJob().getJobNumber());
-        }
-        else{
-            holder.reportJobNumber.setVisibility(View.GONE);
-        }
+ //       if(repList.get(position).getType()== Type.WORK){
+ //           holder.reportJobNumber.setText(repList.get(position).getWorkReport().getJob().getJobNumber());
+ //       }
+ //       else{
+ //           holder.reportJobNumber.setVisibility(View.GONE);
+ //       }
 
  //       holder.reportName.setText(repList.get(position).getJob().getAddress().getName());
 
-        if(repList.get(position).getType()== Type.WORK){
+ /*       if(repList.get(position).getType()== Type.WORK){
             holder.reportName.setText(repList.get(position).getWorkReport().getJob().getAddress().getName());
         }
         else{
             holder.reportName.setVisibility(View.GONE);
         }
-
+*/
  //       holder.reportAddress.setText(repList.get(position).getJob().getAddress().getFullAddress());
 
-        if(repList.get(position).getType()== Type.WORK){
+ /*       if(repList.get(position).getType()== Type.WORK){
             holder.reportAddress.setText(repList.get(position).getWorkReport().getJob().getAddress().getFullAddress());
         }
         else{
             holder.reportAddress.setVisibility(View.GONE);
         }
-
+*/
  //       holder.reportDescription.setText(repList.get(position).getDescription());
 
-        if(repList.get(position).getType()== Type.WORK){
+  /*      if(repList.get(position).getType()== Type.WORK){
             holder.reportDescription.setText(repList.get(position).getWorkReport().getDescription());
         }
         else{
             holder.reportDescription.setVisibility(View.GONE);
         }
-
+*/
     }
 
     @Override

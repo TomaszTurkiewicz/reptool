@@ -41,7 +41,9 @@ public class AllReportsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ps : dataSnapshot.getChildren()){
 
+
                     DailyReport dr = ps.getValue(DailyReport.class);
+
                     rList.add(dr);
                 }
                 Collections.reverse(rList);

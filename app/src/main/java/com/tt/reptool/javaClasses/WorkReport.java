@@ -5,6 +5,7 @@ public class WorkReport {
     private String description;
     private String info;
     private String accident;
+    private Type type;
 
     public WorkReport() {
     }

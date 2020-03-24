@@ -39,6 +39,7 @@ public class JobSpinnerAdapter extends ArrayAdapter<Job> {
             );
         }
         TextView jobNumberSpinner = (TextView)convertView.findViewById(R.id.spinner_job_number);
+
         Job currentItem = getItem(position);
         if(currentItem!=null){
             jobNumberSpinner.setText(currentItem.getJobNumber());

@@ -51,7 +51,7 @@ public class RecyclerViewAdapterWeeklyReports extends RecyclerView.Adapter<Recyc
         holder.reportTimeOut.setText(wRepList.get(position).showTimeOutToString());
 //        holder.reportJobNumber.setText(wRepList.get(position).getJob().getJobNumber());
 
-        if(wRepList.get(position).getType()== Type.WORK){
+ /*       if(wRepList.get(position).getType()== Type.WORK){
             holder.reportJobNumber.setText(wRepList.get(position).getWorkReport().getJob().getJobNumber());
         }
         else{
@@ -85,7 +85,7 @@ public class RecyclerViewAdapterWeeklyReports extends RecyclerView.Adapter<Recyc
         else{
             holder.reportDescription.setVisibility(View.GONE);
         }
-
+*/
     }
 
     @Override

@@ -24,31 +24,34 @@ public class Address {
         this.street = street;
         this.postCode = postCode;
     }
-    public String getFullAddress(){
-        return street + " " + postCode;
-    }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String name1) {
+
+            this.name = name1;
+
     }
 
     public String getStreet() {
         return street;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setStreet(String street1) {
+
+        this.street = street1;
+
     }
 
     public String getPostCode() {
         return postCode;
     }
 
-    public void setPostCode(String postCode) {
-        this.postCode = postCode.toUpperCase();
+    public void setPostCode(String postCode1) {
+
+        this.postCode = postCode1.toUpperCase();
+
     }
 }
