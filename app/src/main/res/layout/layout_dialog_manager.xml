@@ -7,15 +7,21 @@
     <EditText
         android:id="@+id/editManagerName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:maxLines="1"/>
 
     <EditText
         android:id="@+id/editManagerSurname"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:maxLines="1"/>
 
     <EditText
         android:id="@+id/editManagerEmail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"/>
 </LinearLayout>

@@ -165,4 +165,3 @@ public class ManagerDialog extends AppCompatDialogFragment {
     }
 
 }
-// TODO inputs only single line
