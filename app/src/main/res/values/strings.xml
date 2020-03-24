@@ -58,7 +58,7 @@
     <string name="WORK">WORK</string>
     <string name="DAY_OFF">DAY OFF</string>
     <string name="TRAINING">TRAINING</string>
-    <string name="BANK_HOLIDAY">WORK</string>
+    <string name="BANK_HOLIDAY">BANK HOLIDAY</string>
 
     <string-array name="spinnerDailyReport">
         <item>WORK</item>

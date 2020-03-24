@@ -54,4 +54,8 @@ public class Address {
         this.postCode = postCode1.toUpperCase();
 
     }
+
+    public String fullAddress(){
+        return postCode+" "+street;
+    }
 }

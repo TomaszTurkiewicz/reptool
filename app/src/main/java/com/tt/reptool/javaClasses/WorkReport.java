@@ -7,12 +7,21 @@ public class WorkReport {
     private String accident;
     private Type type;
 
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
     public WorkReport() {
     }
 
-    public WorkReport(Job job, String description, String info, String accident) {
+    public WorkReport(Type type,Job job, String description, String info, String accident) {
+        this.type = type;
         this.job = job;
-        this.description = description;
+        this.description=description;
         this.info = info;
         this.accident = accident;
     }
