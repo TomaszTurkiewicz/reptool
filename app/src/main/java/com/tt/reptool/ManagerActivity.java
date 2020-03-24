@@ -1,10 +1,12 @@
 package com.tt.reptool;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -76,8 +78,31 @@ public class ManagerActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onDeleteClick(int position) {
-                removeManager(position);
+            public void onDeleteClick(final int position) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ManagerActivity.this);
+                builder.setCancelable(true);
+                builder.setTitle(R.string.deleting);
+                builder.setMessage(getString(R.string.are_you_sure_you_want_delete)+"\n"+
+                        mList.get(position).getName()+" "+
+                        mList.get(position).getSurname()+"?");
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        removeManager(position);
+                    }
+                });
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+
+
+
             }
 
             @Override
@@ -117,7 +142,7 @@ public class ManagerActivity extends AppCompatActivity {
         databaseReference.child(dName + " " + dSurname + " " + drEmail).removeValue();
         initManagerList();
     }
-//TODO remove with confirmation using new manager delete dialog fragment
+
     // add new manager
 
     public void saveManager(View view) {
@@ -171,4 +196,3 @@ public class ManagerActivity extends AppCompatActivity {
 
     }
 }
-//TODO inputs only single line

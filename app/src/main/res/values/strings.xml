@@ -61,7 +61,9 @@
     <string name="TRAINING">TRAINING</string>
     <string name="BANK_HOLIDAY">BANK HOLIDAY</string>
     <string name="sending">sending</string>
+    <string name="deleting">deleting</string>
     <string name="are_you_sure">are you sure?</string>
+    <string name="are_you_sure_you_want_delete">Are you sure you want delete: </string>
     <string name="yes">YES</string>
     <string name="no">NO</string>
     <string name="daily_report_saved">DAILY REPORT SAVED</string>
