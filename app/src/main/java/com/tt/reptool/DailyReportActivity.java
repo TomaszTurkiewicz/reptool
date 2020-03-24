@@ -309,23 +309,43 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
 
 
 
-
     }
     public void storeData(DateAndTime startTime, DateAndTime endTime, String desc, String jInfo, String acc){
-        DailyReport dailyReport = new DailyReport(startTime,endTime,new WorkReport(type, job, desc, jInfo, acc));
+        final DailyReport dailyReport = new DailyReport(startTime,endTime,new WorkReport(type, job, desc, jInfo, acc));
 
         databaseReferenceWeeklyReports=firebaseDatabase.getReference(getString(R.string.firebasepath_weekly_reports));
-        databaseReferenceWeeklyReports
-                .child(showDateBackwards(dailyReport.getStartTime()))
-                .setValue(dailyReport);
         databaseReferenceAllReports=firebaseDatabase.getReference(getString(R.string.firebasepath_all_reports));
-        databaseReferenceAllReports
-                .child(showDateBackwards(dailyReport.getStartTime()))
-                .setValue(dailyReport);
-        Toast.makeText(this,R.string.daily_report_saved,Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
-        finish();
+
+        databaseReferenceAllReports.child(showDateBackwards(dailyReport.getStartTime()))
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()){
+                            Toast.makeText(DailyReportActivity.this,getString(R.string.report_exists),Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            databaseReferenceWeeklyReports
+                                    .child(showDateBackwards(dailyReport.getStartTime()))
+                                    .setValue(dailyReport);
+
+                            databaseReferenceAllReports
+                                    .child(showDateBackwards(dailyReport.getStartTime()))
+                                    .setValue(dailyReport);
+                            Toast.makeText(DailyReportActivity.this,R.string.daily_report_saved,Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(DailyReportActivity.this,MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
     }
 
     public void setWorkReportLayout(){

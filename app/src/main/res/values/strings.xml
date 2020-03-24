@@ -41,6 +41,7 @@
     <string name="firebasepath_manager">Manager</string>
     <string name="empty" />
     <string name="job_exists">Job already exists</string>
+    <string name="report_exists">Report already exists</string>
     <string name="empty_fields">Fields empty</string>
     <string name="already_exists">Already exists</string>
     <string name="change">Change</string>
