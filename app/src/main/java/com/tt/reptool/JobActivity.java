@@ -59,6 +59,7 @@ public class JobActivity extends AppCompatActivity {
 
         //initialize list
         mList.clear();
+        mList.add(null);
         databaseReferenceManager.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
 
@@ -79,9 +80,11 @@ public class JobActivity extends AppCompatActivity {
 
                         //Item selected from spinner
                         Manager clickedItem = (Manager) parent.getItemAtPosition(position);
+                        if(clickedItem!=null){
                         pm.setName(clickedItem.getName());
                         pm.setSurname(clickedItem.getSurname());
                         pm.setEmailAddress(clickedItem.getEmailAddress());
+                    }
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
@@ -111,7 +114,8 @@ public class JobActivity extends AppCompatActivity {
         if(!TextUtils.isEmpty(jNumber)&&
                 !TextUtils.isEmpty(jAddress.getPostCode())&&
                 !TextUtils.isEmpty(jAddress.getStreet())&&
-                !TextUtils.isEmpty(jDescription)) {
+                !TextUtils.isEmpty(jDescription)&&
+                pm.getName()!=null) {
             job.setJobNumber(jNumber);
             job.setAddress(jAddress);
             job.setShortDescription(jDescription);
@@ -154,4 +158,3 @@ public class JobActivity extends AppCompatActivity {
 
 }
 
-//TODO spinner default null selection at position 0

@@ -379,5 +379,4 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
 }
 
 
-// TODO check if already exists
 // TODO change picking up job (filtering), maybe different activity?
