@@ -75,8 +75,11 @@ public class FindJobActivity extends AppCompatActivity {
                             pm.setSurname(clickedItem.getSurname());
                             pm.setEmailAddress(clickedItem.getEmailAddress());
                             projectManagerEmail = clickedItem.getEmailAddress();
-                            checkJobsWithCriteria();
+
+                        }else{
+                            projectManagerEmail = "";
                         }
+                        checkJobsWithCriteria();
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
@@ -154,8 +157,8 @@ public class FindJobActivity extends AppCompatActivity {
         for(int i=0;i<jList.size();i++){
             if(jList.get(i).getJobNumber().contains(jobNumber)&&
                 jList.get(i).getAddress().getPostCode().contains(postCode)&&
-                jList.get(i).getAddress().getName().contains(name)&&
-                jList.get(i).getProjectManager().getEmailAddress().contains(projectManagerEmail)){
+                jList.get(i).getAddress().getName().contains(name)
+                    && jList.get(i).getProjectManager().getEmailAddress().contains(projectManagerEmail)){
                 jobTempList.add(jList.get(i));
             }
         }
@@ -231,9 +234,6 @@ public class FindJobActivity extends AppCompatActivity {
         initJobList();
     }
 
-    public void showAllOnClick(View view) {
-        Intent intent = new Intent(this, AllJobs.class);
-        startActivity(intent);
-    }
+
 
 }

@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -160,7 +161,7 @@ public class EditJob extends AppCompatActivity {
     }
 
     public void onClickCancel(View view) {
-        Intent intent = new Intent(this, AllJobs.class);
+        Intent intent = new Intent(this, FindJobActivity.class);
         startActivity(intent);
         finish();
     }
@@ -185,13 +186,15 @@ public class EditJob extends AppCompatActivity {
 
                 if(dataSnapshot.exists()){
                     databaseReference.child(oJob.getJobNumber()).setValue(oJob);
+                    Toast.makeText(EditJob.this,getString(R.string.already_exists),Toast.LENGTH_LONG).show();
                 }
                 else {
                     databaseReference.child(nJob.getJobNumber()).setValue(nJob);
+                    Intent i = new Intent(getApplicationContext(),FindJobActivity.class);
+                    startActivity(i);
+                    finish();
                 }
-                Intent i = new Intent(getApplicationContext(),AllJobs.class);
-                startActivity(i);
-                finish();
+
             }
 
             @Override
