@@ -173,8 +173,8 @@
             android:layout_marginTop="@dimen/marginHalf"
             android:layout_marginBottom="@dimen/marginHalf"
             android:textSize="@dimen/smallText"/>
-        <TextView
-            android:id="@+id/jobPMEditJob"
+        <Spinner
+            android:id="@+id/jobPMSpinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             tools:ignore="Suspicious0dp"
