@@ -83,11 +83,30 @@ public class WeeklyReportsActivity extends AppCompatActivity {
         });
     }
 
-    private void removeWeeklyReport(int position) {
-        DateAndTime tempDate = wRepList.get(position).getStartTime();
-        databaseReferenceWeeklyReport.child(showDateBackwards(tempDate)).removeValue();
-        databaseReferenceAllReport.child(showDateBackwards(tempDate)).removeValue();
-        initReportList();
+    private void removeWeeklyReport(final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(WeeklyReportsActivity.this);
+        builder.setCancelable(true);
+        builder.setTitle(R.string.deleting);
+        builder.setMessage(getString(R.string.are_you_sure_you_want_delete)+"\n"+
+                wRepList.get(position).dateToString()+" "+wRepList.get(position).getWorkReport().getJob().getAddress().getName()+"?");
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DateAndTime tempDate = wRepList.get(position).getStartTime();
+                databaseReferenceWeeklyReport.child(showDateBackwards(tempDate)).removeValue();
+                databaseReferenceAllReport.child(showDateBackwards(tempDate)).removeValue();
+                initReportList();
+            }
+        });
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
     }
 
     public String showDateBackwards (DateAndTime c){
