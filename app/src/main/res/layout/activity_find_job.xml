@@ -104,14 +104,14 @@
                 android:layout_height="wrap_content"
                 tools:ignore="Suspicious0dp"
                 android:layout_weight="1"
-                android:text="@string/jobAddress"
+                android:text="@string/name"
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/marginHalf"
                 android:layout_marginTop="@dimen/marginHalf"
                 android:layout_marginBottom="@dimen/marginHalf"
                 android:textSize="@dimen/smallText"/>
             <EditText
-                android:id="@+id/jobAddressFindJobActivity"
+                android:id="@+id/jobNameFindJobActivity"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 tools:ignore="Suspicious0dp"
@@ -153,16 +153,6 @@
                 />
 
         </LinearLayout>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
-            android:layout_marginTop="@dimen/marginHalf"
-            android:layout_marginBottom="@dimen/margin"
-            android:text="@string/find"
-            android:onClick="findJobWithCriteria"/>
 
     </LinearLayout>
 

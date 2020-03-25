@@ -139,6 +139,7 @@ public class JobActivity extends AppCompatActivity {
                         jobStreet.setText(getString(R.string.empty));
                         jobPostcode.setText(getString(R.string.empty));
                         jobDescription.setText(getString(R.string.empty));
+                        jobPMSpinner.setAdapter(managerSpinnerAdapter);
                     }
                 }
 

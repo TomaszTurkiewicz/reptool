@@ -49,6 +49,7 @@ public class RecyclerViewAdapterJob extends RecyclerView.Adapter<RecyclerViewAda
     public void onBindViewHolder(@NonNull RecyclerViewAdapterJob.ViewHolder holder, int position) {
         holder.jobNumber.setText(mList.get(position).getJobNumber());
         holder.jobManager.setText(mList.get(position).getProjectManager().nameAndSurnameToString());
+        holder.jobName.setText(mList.get(position).getAddress().getName());
         holder.jobPostcode.setText(mList.get(position).getAddress().getPostCode());
         holder.jobAddress.setText(mList.get(position).getAddress().getStreet());
         holder.jobDescription.setText(mList.get(position).getShortDescription());
@@ -70,11 +71,13 @@ public class RecyclerViewAdapterJob extends RecyclerView.Adapter<RecyclerViewAda
         ConstraintLayout jobLayout;
         ImageView jobEditImage;
         ImageView jobDeleteImage;
+        TextView jobName;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             jobNumber = itemView.findViewById(R.id.jobNumberLayoutJob);
             jobManager = itemView.findViewById(R.id.jobManagerLayoutJob);
+            jobName = itemView.findViewById(R.id.jobNameLayoutJob);
             jobPostcode = itemView.findViewById(R.id.jobPostcodeLayoutJob);
             jobAddress = itemView.findViewById(R.id.jobAddressLayoutJob);
             jobDescription = itemView.findViewById(R.id.jobDescriptionLayoutJob);

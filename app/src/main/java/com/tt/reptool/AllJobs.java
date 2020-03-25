@@ -81,16 +81,12 @@ public class AllJobs extends AppCompatActivity {
                 builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                     }
                 });
                 AlertDialog dialog = builder.create();
                 dialog.show();
 
-
-
             }
-
             @Override
             public void onEditClick(int position) {
                 editJob(position);
