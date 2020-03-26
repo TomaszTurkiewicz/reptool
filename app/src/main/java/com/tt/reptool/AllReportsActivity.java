@@ -25,6 +25,7 @@ import com.tt.reptool.adapters.RecyclerViewAdapterReport;
 import com.tt.reptool.fragments.DatePickerFragment;
 import com.tt.reptool.javaClasses.Address;
 import com.tt.reptool.javaClasses.DailyReport;
+import com.tt.reptool.javaClasses.DateAndTime;
 import com.tt.reptool.javaClasses.Job;
 import com.tt.reptool.javaClasses.Manager;
 
@@ -38,6 +39,7 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private List<DailyReport> rList = new ArrayList<>();
+    private List<DailyReport> rFilterList = new ArrayList<>();
     private TextView dateTextView;
     private Spinner jobSpinner;
     private Calendar calendar;
@@ -45,6 +47,8 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
     private List<Job> jobList = new ArrayList<>();
     private JobSpinnerAdapter jobSpinnerAdapter;
     private Job job = new Job();
+    private String jobNumber;
+    private DateAndTime date = new DateAndTime();
 
 
     @Override
@@ -56,12 +60,12 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
         databaseReferenceJob=firebaseDatabase.getReference(getString(R.string.firebasepath_job));
         dateTextView = findViewById(R.id.startDateAllReport);
         jobSpinner = findViewById(R.id.jobNumberSpinnerAllReports);
-        initReportList();
+        final DialogFragment datePicker = new DatePickerFragment();
+        initReportList(rList);
         calendar = Calendar.getInstance();
         dateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePicker = new DatePickerFragment();
                 datePicker.show(getSupportFragmentManager(),"date picker");
             }
         });
@@ -69,7 +73,7 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
         jobList.add(null);
         databaseReferenceJob.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                 for (DataSnapshot ps : dataSnapshot.getChildren()) {
                     Job jobTemp = ps.getValue(Job.class);
                     jobList.add(jobTemp);
@@ -89,6 +93,12 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
                             job.setProjectManager(new Manager(clickedItem.getProjectManager().getName(),
                                     clickedItem.getProjectManager().getSurname(),
                                     clickedItem.getProjectManager().getEmailAddress()));
+                            jobNumber=clickedItem.getJobNumber();
+                            date.setYear(0);
+                            date.setMonth(0);
+                            date.setMinute(0);
+                            dateTextView.setText(getString(R.string.choose_date));
+                            reloadList();
                         }else{
 
                         }
@@ -118,8 +128,8 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
                 calendar.get(Calendar.YEAR);
     }
 
-    private void initReportList() {
-        rList.clear();
+    private void initReportList(final List<DailyReport> list) {
+        list.clear();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -128,10 +138,10 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
 
                     DailyReport dr = ps.getValue(DailyReport.class);
 
-                    rList.add(dr);
+                    list.add(dr);
                 }
-                Collections.reverse(rList);
-                initRecyclerView();
+                Collections.reverse(list);
+                initRecyclerView(list);
             }
 
             @Override
@@ -141,9 +151,9 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
         });
     }
 
-    private void initRecyclerView() {
+    private void initRecyclerView(List<DailyReport> list) {
         RecyclerView recyclerView = findViewById(R.id.recyclerViewAllReportsActivity);
-        RecyclerViewAdapterReport adapter = new RecyclerViewAdapterReport(this,rList);
+        RecyclerViewAdapterReport adapter = new RecyclerViewAdapterReport(this,list);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -152,5 +162,30 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         calendar.set(year,month,dayOfMonth);
         dateTextView.setText(showDate(calendar));
+        jobSpinner.setSelection(0);
+        date.setDateAndTime(calendar);
+        reloadList();
+    }
+
+    private void reloadList() {
+        rFilterList.clear();
+
+        if(date.getYear()==0){
+            for(int i = 0; i<rList.size();i++){
+                if(rList.get(i).getWorkReport().getJob().getJobNumber().equals(jobNumber)){
+                    rFilterList.add(rList.get(i));
+                }
+            }
+        }
+        else{
+            for(int i = 0; i<rList.size();i++){
+                if(rList.get(i).getStartTime().getYear()==date.getYear()&&
+                rList.get(i).getStartTime().getMonth()==date.getMonth()&&
+                rList.get(i).getStartTime().getDay()==date.getDay()){
+                    rFilterList.add(rList.get(i));
+                }
+            }
+        }
+        initRecyclerView(rFilterList);
     }
 }
