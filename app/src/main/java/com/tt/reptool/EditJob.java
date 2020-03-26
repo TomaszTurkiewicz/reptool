@@ -119,7 +119,6 @@ public class EditJob extends AppCompatActivity {
             }
         });
         managerList.clear();
-        managerList.add(oManager);
         databaseReferenceManager.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -129,6 +128,14 @@ public class EditJob extends AppCompatActivity {
                 }
                 managerSpinnerAdapter = new ManagerSpinnerAdapter(EditJob.this, managerList);
                 jobManager.setAdapter(managerSpinnerAdapter);
+                int position=-1;
+                for(int i=0; i<managerList.size(); i++){
+                    if(managerList.get(i).getEmailAddress().equals(oManager.getEmailAddress())){
+                        position=i;
+                    }
+                }
+                jobManager.setSelection(position);
+
                 jobManager.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

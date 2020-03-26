@@ -18,7 +18,7 @@ import java.util.List;
 public class ManagerSpinnerAdapter extends ArrayAdapter<Manager> {
 
 
-    //spiner for choosing manager for work
+    //spinner for choosing manager for work
 
     public ManagerSpinnerAdapter(Context context, List<Manager> spinnerData) {
         super(context, 0, spinnerData);
