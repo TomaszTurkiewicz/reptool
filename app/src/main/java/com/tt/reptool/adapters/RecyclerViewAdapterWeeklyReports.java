@@ -71,8 +71,15 @@ public class RecyclerViewAdapterWeeklyReports extends RecyclerView.Adapter<Recyc
             holder.reportAddress.setVisibility(View.GONE);
         }
 
-        holder.reportDescription.setText(wRepList.get(position).getWorkReport().getDescription());
-
+        if(wRepList.get(position).getWorkReport().getType()==Type.WORK) {
+            holder.reportDescription.setText(wRepList.get(position).getWorkReport().getDescription());
+        }
+        else if(wRepList.get(position).getWorkReport().getType()==Type.TRAINING){
+            holder.reportDescription.setText(wRepList.get(position).getWorkReport().getType().name()+"\n"+
+                    wRepList.get(position).getWorkReport().getDescription());
+        }else{
+            holder.reportDescription.setText(wRepList.get(position).getWorkReport().getType().name());
+        }
 //        holder.reportJobNumber.setText(wRepList.get(position).getJob().getJobNumber());
 
  /*       if(wRepList.get(position).getType()== Type.WORK){

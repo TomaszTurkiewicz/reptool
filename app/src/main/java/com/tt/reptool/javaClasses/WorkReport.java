@@ -64,8 +64,9 @@ public class WorkReport {
                     job.getAddress().fullAddress()+"\n"+
                     description;
         }
-        else{
-            return description;
+        else if(type==Type.TRAINING){
+            return type.name()+ "\n" +description;
         }
+        else return type.name();
     }
 }

@@ -282,16 +282,14 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         String desc = jobDescription.getText().toString().trim();
 
         if(type==Type.BANK_HOLIDAY){
-            desc = getString(R.string.BANK_HOLIDAY);
             storeData(startTime,endTime,desc,jInfo,acc);
         }
         else if(type==Type.DAY_OFF){
-            desc = getString(R.string.DAY_OFF);
             storeData(startTime,endTime,desc,jInfo,acc);
         }
         else if(type==Type.TRAINING){
                 if(!TextUtils.isEmpty(desc)) {
-                    desc = getString(R.string.TRAINING)+": "+jobDescription.getText().toString().trim();
+                    desc = jobDescription.getText().toString().trim();
                     storeData(startTime,endTime,desc,jInfo,acc);
                 }else{
                     Toast.makeText(this,R.string.empty_fields,Toast.LENGTH_LONG).show();

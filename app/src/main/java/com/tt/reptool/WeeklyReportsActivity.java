@@ -79,7 +79,6 @@ public class WeeklyReportsActivity extends AppCompatActivity {
             @Override
             public void onEditWeeklyReportClick(int position) {
                 editWeeklyReport(wRepList,position);
-                // TODO add editing daily report activity
             }
         });
     }
