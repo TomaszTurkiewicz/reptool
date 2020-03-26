@@ -3,6 +3,7 @@ package com.tt.reptool;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,28 +13,42 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tt.reptool.adapters.JobSpinnerAdapter;
+import com.tt.reptool.fragments.TimeStartPickerFragment;
+import com.tt.reptool.javaClasses.Address;
 import com.tt.reptool.javaClasses.DailyReport;
 import com.tt.reptool.javaClasses.DateAndTime;
+import com.tt.reptool.javaClasses.Job;
+import com.tt.reptool.javaClasses.Manager;
 import com.tt.reptool.javaClasses.Type;
 
-public class EditDailyReport extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+public class EditDailyReport extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
 
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReferenceWeeklyReport;
     private DatabaseReference databaseReferenceAllReports;
+    private DatabaseReference databaseReferenceJob;
     private DailyReport dailyReport = new DailyReport();
     private Spinner typeSpinner, jobNumberSpinner;
     private TextView dayTextView, startTimeTextView, endTimeTextView, jobOverviewTextView;
     private LinearLayout jobSpinnerLinearLayout, jobOverviewLinearLayout, descriptionLinearLayout, jobInfoLinearLayout, accidentsLinearLayout;
     private EditText jobDescription, jobInfo, jobAccidents;
     private Type type;
+    private JobSpinnerAdapter jobSpinnerAdapter;
+    private List<Job> jobList = new ArrayList();
+    private Job job = new Job();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +77,11 @@ public class EditDailyReport extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReferenceAllReports = firebaseDatabase.getReference(getString(R.string.firebasepath_all_reports));
         databaseReferenceWeeklyReport = firebaseDatabase.getReference(getString(R.string.firebasepath_weekly_reports));
+        databaseReferenceJob = firebaseDatabase.getReference(getString(R.string.firebasepath_job));
+        jobList.clear();
+        jobList.add(null);
+
+
         databaseReferenceWeeklyReport.child(date).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -86,6 +106,42 @@ public class EditDailyReport extends AppCompatActivity {
                 dayTextView.setText(showDate(dailyReport));
                 startTimeTextView.setText(showTime(dailyReport.getStartTime()));
                 endTimeTextView.setText(showTime(dailyReport.getEndTime()));
+                jobDescription.setText(dailyReport.getWorkReport().getDescription());
+                jobInfo.setText(dailyReport.getWorkReport().getInfo());
+                jobAccidents.setText(dailyReport.getWorkReport().getAccident());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        databaseReferenceJob.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ps : dataSnapshot.getChildren()) {
+                    Job jobTemp = ps.getValue(Job.class);
+                    jobList.add(jobTemp);
+                }
+                jobSpinnerAdapter = new JobSpinnerAdapter(EditDailyReport.this, jobList);
+                jobNumberSpinner.setAdapter(jobSpinnerAdapter);
+
+                if(type==Type.WORK){
+                int position = -1;
+                for (int i = 1; i < jobList.size(); i++) {
+                    if (jobList.get(i).getJobNumber().equals(dailyReport.getWorkReport().getJob().getJobNumber())) {
+                        position = i;
+                    }
+                }
+                jobNumberSpinner.setSelection(position);
+                jobOverviewTextView.setText(dailyReport.getWorkReport().getJob().getJobNumber() + " "
+                        + dailyReport.getWorkReport().getJob().getProjectManager().getName() + " "
+                        + dailyReport.getWorkReport().getJob().getProjectManager().getSurname() + " "
+                        + dailyReport.getWorkReport().getJob().getAddress().getName() + " "
+                        + dailyReport.getWorkReport().getJob().getAddress().getStreet() + " "
+                        + dailyReport.getWorkReport().getJob().getAddress().getPostCode());
+            }
             }
 
             @Override
@@ -115,6 +171,69 @@ public class EditDailyReport extends AppCompatActivity {
             }
         });
 
+        jobNumberSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Job clickedItem = (Job)parent.getItemAtPosition(position);
+                if(clickedItem!=null){
+                job.setJobNumber(clickedItem.getJobNumber());
+                job.setAddress(new Address(clickedItem.getAddress().getName(),
+                        clickedItem.getAddress().getStreet(),
+                        clickedItem.getAddress().getPostCode()));
+                job.setShortDescription(clickedItem.getShortDescription());
+                job.setProjectManager(new Manager(clickedItem.getProjectManager().getName(),
+                        clickedItem.getProjectManager().getSurname(),
+                        clickedItem.getProjectManager().getEmailAddress()));
+                jobOverviewTextView.setText(job.getJobNumber()+" "
+                        +job.getProjectManager().getName()+" "
+                        +job.getProjectManager().getSurname()+" "
+                        +job.getAddress().getName()+" "
+                        +job.getAddress().getStreet()+" "
+                        +job.getAddress().getPostCode());
+            }else {
+                    job.setJobNumber("");
+                    job.setAddress(new Address("",
+                            "",
+                            ""));
+                    job.setShortDescription("");
+                    job.setProjectManager(new Manager("",
+                            "",
+                            ""));
+                    jobOverviewTextView.setText(job.getJobNumber()+" "
+                            +job.getProjectManager().getName()+" "
+                            +job.getProjectManager().getSurname()+" "
+                            +job.getAddress().getName()+" "
+                            +job.getAddress().getStreet()+" "
+                            +job.getAddress().getPostCode());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        startTimeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimeStartPickerFragment timeStartPicker = new TimeStartPickerFragment();
+                timeStartPicker.setHour(dailyReport.getStartTime().getHour());
+                timeStartPicker.setMin(dailyReport.getStartTime().getMinute());
+                timeStartPicker.show(getSupportFragmentManager(),"time picker");
+
+            }
+        });
+        endTimeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimeStartPickerFragment timeStartPicker = new TimeStartPickerFragment();
+                timeStartPicker.setHour(dailyReport.getEndTime().getHour());
+                timeStartPicker.setMin(dailyReport.getEndTime().getMinute());
+                timeStartPicker.show(getSupportFragmentManager(),"time picker");
+
+            }
+        });
 
     }
 
@@ -168,5 +287,18 @@ public class EditDailyReport extends AppCompatActivity {
     }
 
     public void onClickSaveEditing(View view) {
+
+        // TODO saving daily report!!!!
+
+
+
+
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        dailyReport.getStartTime().setHour(hourOfDay);
+        dailyReport.getStartTime().setMinute(minute);
+        startTimeTextView.setText(showTime(dailyReport.getStartTime()));
     }
 }

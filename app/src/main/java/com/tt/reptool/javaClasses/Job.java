@@ -52,4 +52,6 @@ public class Job {
     public void setProjectManager(Manager projectManager) {
         this.projectManager = projectManager;
     }
+
+
 }
