@@ -67,6 +67,7 @@
     <string name="yes">YES</string>
     <string name="no">NO</string>
     <string name="daily_report_saved">DAILY REPORT SAVED</string>
+    <string name="choose_date">choose date</string>
 
 
     <string-array name="spinnerDailyReport">

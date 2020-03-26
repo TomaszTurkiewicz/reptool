@@ -42,7 +42,11 @@ public class JobSpinnerAdapter extends ArrayAdapter<Job> {
 
         Job currentItem = getItem(position);
         if(currentItem!=null){
+            jobNumberSpinner.setVisibility(View.VISIBLE);
             jobNumberSpinner.setText(currentItem.getJobNumber());
+        }
+        else{
+            jobNumberSpinner.setVisibility(View.GONE);
         }
         return convertView;
     }

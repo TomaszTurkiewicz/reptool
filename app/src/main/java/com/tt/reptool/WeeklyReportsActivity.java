@@ -78,7 +78,7 @@ public class WeeklyReportsActivity extends AppCompatActivity {
 
             @Override
             public void onEditWeeklyReportClick(int position) {
-
+                // TODO add editing daily report activity
             }
         });
     }

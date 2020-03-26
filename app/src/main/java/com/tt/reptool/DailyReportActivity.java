@@ -140,13 +140,13 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
 
                         if (clickedItem!=null){
                         job.setJobNumber(clickedItem.getJobNumber());
-                        job.setAddress(new Address(clickedItem.getAddress().getName(),
-                                clickedItem.getAddress().getStreet(),
-                                clickedItem.getAddress().getPostCode()));
-                        job.setShortDescription(clickedItem.getShortDescription());
-                        job.setProjectManager(new Manager(clickedItem.getProjectManager().getName(),
-                                clickedItem.getProjectManager().getSurname(),
-                                clickedItem.getProjectManager().getEmailAddress()));
+                            job.setAddress(new Address(clickedItem.getAddress().getName(),
+                                    clickedItem.getAddress().getStreet(),
+                                    clickedItem.getAddress().getPostCode()));
+                            job.setShortDescription(clickedItem.getShortDescription());
+                            job.setProjectManager(new Manager(clickedItem.getProjectManager().getName(),
+                                    clickedItem.getProjectManager().getSurname(),
+                                    clickedItem.getProjectManager().getEmailAddress()));
                         jobOverview.setText(job.getJobNumber()+" "
                                 +job.getProjectManager().getName()+" "
                         +job.getProjectManager().getSurname()+" "
@@ -234,7 +234,6 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
            endTime.setText(showTime(calendarEnd));
         }
     }
-
 
     @Override
     public void onDateSet(DatePicker view, int yearPicker, int monthPicker, int dayOfMonthPicker) {
