@@ -39,14 +39,18 @@ public class JobSpinnerAdapter extends ArrayAdapter<Job> {
             );
         }
         TextView jobNumberSpinner = (TextView)convertView.findViewById(R.id.spinner_job_number);
+        TextView jobName = (TextView)convertView.findViewById(R.id.spinner_job_name);
 
         Job currentItem = getItem(position);
         if(currentItem!=null){
             jobNumberSpinner.setVisibility(View.VISIBLE);
+            jobName.setVisibility(View.VISIBLE);
             jobNumberSpinner.setText(currentItem.getJobNumber());
+            jobName.setText(currentItem.getAddress().getName());
         }
         else{
             jobNumberSpinner.setVisibility(View.GONE);
+            jobName.setVisibility(View.GONE);
         }
         return convertView;
     }
