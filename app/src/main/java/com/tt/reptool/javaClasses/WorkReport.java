@@ -60,9 +60,19 @@ public class WorkReport {
 
     public String toString(){
         if(type==Type.WORK){
-            return job.getJobNumber()+" "+job.getAddress().getName()+"\n"+
+            String fullDescription = job.getJobNumber()+" "+job.getAddress().getName()+"\n"+
                     job.getAddress().fullAddress()+"\n"+
                     description;
+
+            if(!accident.isEmpty()){
+                fullDescription = fullDescription+"\n"+"Accidents: "+accident;
+            }
+
+            if(!info.isEmpty()){
+                fullDescription=fullDescription+"\n"+"Info: "+info;
+            }
+            
+            return fullDescription;
         }
         else if(type==Type.TRAINING){
             return type.name()+ "\n" +description;

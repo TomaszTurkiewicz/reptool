@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,13 +51,17 @@ public class EditDailyReport extends AppCompatActivity implements TimePickerDial
     private JobSpinnerAdapter jobSpinnerAdapter;
     private List<Job> jobList = new ArrayList();
     private Job job = new Job();
+    private static final int START_TIME = 0;
+    private static final int END_TIME = 1;
+    private int flag;
+    private String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_daily_report);
         Bundle extras = getIntent().getExtras();
-        String date = extras.getString("Date");
+        date = extras.getString("Date");
 
         typeSpinner = findViewById(R.id.spinnerDayTypeEditReport);
         dayTextView = findViewById(R.id.startDateEditReport);
@@ -154,14 +160,18 @@ public class EditDailyReport extends AppCompatActivity implements TimePickerDial
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 type = (Type)parent.getItemAtPosition(position);
+
                 if(type==Type.WORK){
                     workLayout();
                 }else if(type==Type.DAY_OFF){
                     dayOffLayout();
+                    setJobEmpty();
                 }else if(type==Type.BANK_HOLIDAY){
                     bankHolidayLayout();
+                    setJobEmpty();
                 }else if(type==Type.TRAINING){
                     trainingLayout();
+                    setJobEmpty();
                 }else;
             }
 
@@ -191,14 +201,8 @@ public class EditDailyReport extends AppCompatActivity implements TimePickerDial
                         +job.getAddress().getStreet()+" "
                         +job.getAddress().getPostCode());
             }else {
-                    job.setJobNumber("");
-                    job.setAddress(new Address("",
-                            "",
-                            ""));
-                    job.setShortDescription("");
-                    job.setProjectManager(new Manager("",
-                            "",
-                            ""));
+                    setJobEmpty();
+
                     jobOverviewTextView.setText(job.getJobNumber()+" "
                             +job.getProjectManager().getName()+" "
                             +job.getProjectManager().getSurname()+" "
@@ -218,6 +222,7 @@ public class EditDailyReport extends AppCompatActivity implements TimePickerDial
             @Override
             public void onClick(View v) {
                 TimeStartPickerFragment timeStartPicker = new TimeStartPickerFragment();
+                flag=START_TIME;
                 timeStartPicker.setHour(dailyReport.getStartTime().getHour());
                 timeStartPicker.setMin(dailyReport.getStartTime().getMinute());
                 timeStartPicker.show(getSupportFragmentManager(),"time picker");
@@ -228,6 +233,7 @@ public class EditDailyReport extends AppCompatActivity implements TimePickerDial
             @Override
             public void onClick(View v) {
                 TimeStartPickerFragment timeStartPicker = new TimeStartPickerFragment();
+                flag=END_TIME;
                 timeStartPicker.setHour(dailyReport.getEndTime().getHour());
                 timeStartPicker.setMin(dailyReport.getEndTime().getMinute());
                 timeStartPicker.show(getSupportFragmentManager(),"time picker");
@@ -235,6 +241,17 @@ public class EditDailyReport extends AppCompatActivity implements TimePickerDial
             }
         });
 
+    }
+
+    private void setJobEmpty() {
+        job.setJobNumber("");
+        job.setAddress(new Address("",
+                "",
+                ""));
+        job.setShortDescription("");
+        job.setProjectManager(new Manager("",
+                "",
+                ""));
     }
 
     private String showTime(DateAndTime startTime) {
@@ -288,17 +305,61 @@ public class EditDailyReport extends AppCompatActivity implements TimePickerDial
 
     public void onClickSaveEditing(View view) {
 
-        // TODO saving daily report!!!!
+        String desc = jobDescription.getText().toString().trim();
+        String acc = jobAccidents.getText().toString().trim();
+        String info = jobInfo.getText().toString().trim();
+        dailyReport.getWorkReport().setType(type);
 
+        if(type==Type.WORK) {
+            if(!TextUtils.isEmpty(desc)&&!job.getJobNumber().isEmpty()) {
+                dailyReport.getWorkReport().setJob(job);
+                dailyReport.getWorkReport().setDescription(desc);
+                dailyReport.getWorkReport().setAccident(acc);
+                dailyReport.getWorkReport().setInfo(info);
+                storeDailyReport();
+            }else{
+                Toast.makeText(this,R.string.empty_fields,Toast.LENGTH_LONG).show();
+            }
 
+        }else if(type==Type.TRAINING){
+            if(!TextUtils.isEmpty(desc)) {
+                dailyReport.getWorkReport().setJob(job);
+                dailyReport.getWorkReport().setDescription(desc);
+                dailyReport.getWorkReport().setAccident("");
+                dailyReport.getWorkReport().setInfo("");
+                storeDailyReport();
+            }else{
+                Toast.makeText(this,R.string.empty_fields,Toast.LENGTH_LONG).show();
+            }
+        }else{
+            dailyReport.getWorkReport().setJob(job);
+            dailyReport.getWorkReport().setDescription("");
+            dailyReport.getWorkReport().setAccident("");
+            dailyReport.getWorkReport().setInfo("");
+            storeDailyReport();
+        }
 
+    }
 
+    private void storeDailyReport() {
+        databaseReferenceWeeklyReport.child(date).setValue(dailyReport);
+        databaseReferenceAllReports.child(date).setValue(dailyReport);
+        Intent intent = new Intent(EditDailyReport.this,WeeklyReportsActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        if(flag==START_TIME){
         dailyReport.getStartTime().setHour(hourOfDay);
         dailyReport.getStartTime().setMinute(minute);
         startTimeTextView.setText(showTime(dailyReport.getStartTime()));
+        }
+        else if(flag==END_TIME){
+            dailyReport.getEndTime().setHour(hourOfDay);
+            dailyReport.getEndTime().setMinute(minute);
+            endTimeTextView.setText(showTime(dailyReport.getEndTime()));
+        }
     }
 }
