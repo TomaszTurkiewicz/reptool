@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/constraintLayoutLayoutWeeklyReport">
+    android:id="@+id/constraintLayoutLayoutWeeklyReport"
+    android:layout_margin="@dimen/margin">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/dateAndTimeLinearLayoutLayoutWeeklyReport"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/marginHalf"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent">
         <TextView
@@ -79,7 +79,8 @@
         android:src="@drawable/ic_edit"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/imageDeleteLayoutWeeklyReport"
-        android:layout_margin="@dimen/marginHalf"/>
+        android:layout_marginTop="@dimen/marginHalf"
+        android:layout_marginEnd="@dimen/margin2"/>
 
     <ImageView
         android:id="@+id/imageDeleteLayoutWeeklyReport"

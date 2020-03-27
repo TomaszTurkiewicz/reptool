@@ -70,6 +70,25 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_report);
+
+        final int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
+        getWindow().getDecorView().setSystemUiVisibility(flags);
+        final View decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener(){
+
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                if((visibility&View.SYSTEM_UI_FLAG_FULLSCREEN)==0){
+                    decorView.setSystemUiVisibility(flags);
+                }
+            }
+        });
+
+
         startDate = findViewById(R.id.startDate);
         startTime = findViewById(R.id.startTime);
         endTime = findViewById(R.id.endTime);
@@ -372,6 +391,12 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         descriptionLinearLayout.setVisibility(View.VISIBLE);
         jobInfoLinearLayout.setVisibility(View.GONE);
         accidentsLinearLayout.setVisibility(View.GONE);
+    }
+
+    public void backToMainMenuOnClick(View view) {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
 
