@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/constraintLayoutLayoutReport">
-
+    android:id="@+id/constraintLayoutLayoutReport"
+    android:layout_margin="@dimen/margin">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -12,23 +13,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/marginHalf"
 >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/dateLayoutReport"
-            android:layout_marginEnd="@dimen/marginHalf"/>
+            android:layout_marginEnd="@dimen/marginHalf"
+            android:text="@string/day"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/timeInLayoutReport"
-            android:layout_marginHorizontal="@dimen/marginHalf"/>
+            android:layout_marginHorizontal="@dimen/marginHalf"
+            android:text="@string/startTime"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/timeOutLayoutReport"
-            android:layout_marginStart="@dimen/marginHalf"/>
+            android:layout_marginStart="@dimen/marginHalf"
+            android:text="@string/endTime"/>
     </LinearLayout>
 
     <LinearLayout
@@ -42,12 +45,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/jobNumberLayoutReport"
+            android:text="@string/job_number"
             android:layout_marginEnd="@dimen/marginHalf"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/nameLayoutReport"
-            android:layout_marginStart="@dimen/marginHalf"/>
+            android:layout_marginStart="@dimen/marginHalf"
+            android:text="@string/name"/>
     </LinearLayout>
 
     <TextView
@@ -56,7 +61,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/jobNumberAndNameLinearLayoutLayoutReport"
-        android:id="@+id/addressLayoutReport"/>
+        android:id="@+id/addressLayoutReport"
+        android:text="@string/jobAddress"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -64,6 +70,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/addressLayoutReport"
         android:id="@+id/descriptionLayoutReport"
-        android:layout_marginBottom="@dimen/marginHalf"/>
+        android:text="@string/jobDescription"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

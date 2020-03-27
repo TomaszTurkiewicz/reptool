@@ -71,7 +71,7 @@ public class WorkReport {
             if(!info.isEmpty()){
                 fullDescription=fullDescription+"\n"+"Info: "+info;
             }
-            
+
             return fullDescription;
         }
         else if(type==Type.TRAINING){

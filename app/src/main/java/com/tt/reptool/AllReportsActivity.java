@@ -3,6 +3,7 @@ package com.tt.reptool;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -116,7 +117,6 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
             }
         });
 
-
     }
 
 
@@ -153,6 +153,7 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
 
     private void initRecyclerView(List<DailyReport> list) {
         RecyclerView recyclerView = findViewById(R.id.recyclerViewAllReportsActivity);
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),DividerItemDecoration.VERTICAL));
         RecyclerViewAdapterReport adapter = new RecyclerViewAdapterReport(this,list);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
