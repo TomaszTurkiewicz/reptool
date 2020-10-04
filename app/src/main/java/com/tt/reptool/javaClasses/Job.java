@@ -17,6 +17,15 @@ public class Job {
     private Address address;
     private String shortDescription;
     private Manager projectManager;
+    private JobType jobType;
+
+    public JobType getJobType() {
+        return jobType;
+    }
+
+    public void setJobType(JobType jobType) {
+        this.jobType = jobType;
+    }
 
     public Job() {
     }

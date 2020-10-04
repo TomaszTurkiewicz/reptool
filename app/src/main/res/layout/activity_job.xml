@@ -35,7 +35,45 @@
             android:layout_marginBottom="@dimen/marginHalf"
             />
 
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/instRadioButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="INST"
+                android:onClick="onRadioButtonClicked"/>
+            <RadioButton
+                android:id="@+id/maintRadioButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="MAINT"
+                android:onClick="onRadioButtonClicked"/>
+            <RadioButton
+                android:id="@+id/servRadioButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="SERV"
+                android:onClick="onRadioButtonClicked"/>
+            <RadioButton
+                android:id="@+id/callRadioButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="CALL"
+                android:onClick="onRadioButtonClicked"/>
+
+
+        </RadioGroup>
+
         <LinearLayout
+            android:id="@+id/jobNumberLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -64,6 +102,7 @@
                 />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,6 +132,7 @@
                 />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -122,6 +162,7 @@
                 />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -151,6 +192,7 @@
                 />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -182,6 +224,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/pmLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">

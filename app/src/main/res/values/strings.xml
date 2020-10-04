@@ -27,6 +27,9 @@
     <string name="find">FIND</string>
     <string name="cancel">CANCEL</string>
     <string name="firebasepath_job">Job</string>
+    <string name="firebasepath_job_service">Service</string>
+    <string name="firebasepath_job_maintenance">Maintenance</string>
+    <string name="firebasepath_job_callout">Call_Out</string>
     <string name="extra_jobNumber">jobNumber</string>
     <string name="firebasepath_job_jobNumber">jobNumber</string>
     <string name="firebasepath_job_description">shortDescription</string>
