@@ -32,6 +32,7 @@ import com.tt.reptool.javaClasses.Address;
 import com.tt.reptool.javaClasses.DailyReport;
 import com.tt.reptool.javaClasses.DateAndTime;
 import com.tt.reptool.javaClasses.Job;
+import com.tt.reptool.javaClasses.JobType;
 import com.tt.reptool.javaClasses.Manager;
 import com.tt.reptool.javaClasses.Type;
 import com.tt.reptool.javaClasses.WorkReport;
@@ -52,6 +53,9 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         private Spinner jobNumberSpinner, dayTypeSpinner;
         private FirebaseDatabase firebaseDatabase;
         private DatabaseReference databaseReferenceJob;
+        private DatabaseReference databaseReferenceJobMaintenance;
+        private DatabaseReference databaseReferenceJobService;
+        private DatabaseReference databaseReferenceJobCallOut;
         private DatabaseReference databaseReferenceWeeklyReports;
         private DatabaseReference databaseReferenceAllReports;
         private Calendar calendar, calendarEnd;
@@ -142,6 +146,9 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         endTime.setText(showTime(calendarEnd));
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReferenceJob=firebaseDatabase.getReference(getString(R.string.firebasepath_job));
+        databaseReferenceJobMaintenance=firebaseDatabase.getReference(getString(R.string.firebasepath_job_maintenance));
+        databaseReferenceJobService=firebaseDatabase.getReference(getString(R.string.firebasepath_job_service));
+        databaseReferenceJobCallOut=firebaseDatabase.getReference(getString(R.string.firebasepath_job_callout));
         jobList.clear();
         jobList.add(null);
         databaseReferenceJob.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -151,55 +158,114 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
                     Job jobTemp = ps.getValue(Job.class);
                     jobList.add(jobTemp);
                 }
-                jobNumberSpinner = (Spinner)findViewById(R.id.jobNumberSpinner);
-                jobSpinnerAdapter = new JobSpinnerAdapter(DailyReportActivity.this,jobList);
-                jobNumberSpinner.setAdapter(jobSpinnerAdapter);
-                jobNumberSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        Job clickedItem = (Job)parent.getItemAtPosition(position);
 
-                        if (clickedItem!=null){
-                        job.setJobNumber(clickedItem.getJobNumber());
-                            job.setAddress(new Address(clickedItem.getAddress().getName(),
-                                    clickedItem.getAddress().getStreet(),
-                                    clickedItem.getAddress().getPostCode()));
-                            job.setShortDescription(clickedItem.getShortDescription());
-                            job.setProjectManager(new Manager(clickedItem.getProjectManager().getName(),
-                                    clickedItem.getProjectManager().getSurname(),
-                                    clickedItem.getProjectManager().getEmailAddress()));
-                        jobOverview.setText(job.getJobNumber()+" "
-                                +job.getProjectManager().getName()+" "
-                        +job.getProjectManager().getSurname()+" "
-                        +job.getAddress().getName()+" "
-                        +job.getAddress().getStreet()+" "
-                        +job.getAddress().getPostCode());
-                    }
-                        else{
-                            job.setJobNumber("");
-                            job.setAddress(new Address("",
-                                    "",
-                                    ""));
-                            job.setShortDescription("");
-                            job.setProjectManager(new Manager("",
-                                    "",
-                                    ""));
-                            jobOverview.setText(job.getJobNumber()+" "
-                                    +job.getProjectManager().getName()+" "
-                                    +job.getProjectManager().getSurname()+" "
-                                    +job.getAddress().getName()+" "
-                                    +job.getAddress().getStreet()+" "
-                                    +job.getAddress().getPostCode());
-                        }
+             databaseReferenceJobMaintenance.addListenerForSingleValueEvent(new ValueEventListener() {
+                 @Override
+                 public void onDataChange(@NonNull DataSnapshot dataSnapshotMaintenance) {
+                     for(DataSnapshot ps : dataSnapshotMaintenance.getChildren()){
+                         Job jobTemp = ps.getValue(Job.class);
+                         jobList.add(jobTemp);
+                     }
 
-                    }
+                     databaseReferenceJobService.addListenerForSingleValueEvent(new ValueEventListener() {
+                         @Override
+                         public void onDataChange(@NonNull DataSnapshot dataSnapshotService) {
+                             for(DataSnapshot ps : dataSnapshotService.getChildren()){
+                                 Job jobTemp = ps.getValue(Job.class);
+                                 jobList.add(jobTemp);
+                             }
+
+                             databaseReferenceJobCallOut.addListenerForSingleValueEvent(new ValueEventListener() {
+                                 @Override
+                                 public void onDataChange(@NonNull DataSnapshot dataSnapshotCallOut) {
+                                     for(DataSnapshot ps : dataSnapshotCallOut.getChildren()){
+                                         Job jobTemp = ps.getValue(Job.class);
+                                         jobList.add(jobTemp);
+                                     }
+
+                                     jobNumberSpinner = (Spinner)findViewById(R.id.jobNumberSpinner);
+                                     jobSpinnerAdapter = new JobSpinnerAdapter(DailyReportActivity.this,jobList);
+                                     jobNumberSpinner.setAdapter(jobSpinnerAdapter);
+                                     jobNumberSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                         @Override
+                                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                             Job clickedItem = (Job)parent.getItemAtPosition(position);
+
+                                             if (clickedItem!=null){
+
+                                                 job=clickedItem;
+
+                                                 String overview = "";
+                                                 if(job.getJobNumber()!=null){
+                                                     overview=overview+job.getJobNumber()+" ";
+                                                 }
+                                                 if(job.getProjectManager()!=null){
+                                                     overview=overview+job.getProjectManager().getName()+" "+job.getProjectManager().getSurname()+" ";
+                                                 }
+                                                 overview = overview+job.getAddress().getName()+" "
+                                                         +job.getAddress().getStreet()+" "
+                                                         +job.getAddress().getPostCode()+" ";
+                                                 if(job.getJobType()!=null&&job.getJobType()!=JobType.INSTALLATION){
+                                                     overview=overview+job.getJobType();
+                                                 }
 
 
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
+                                                 jobOverview.setText(overview);
+                                             }
+                                             else{
+                                                 job.setJobNumber("");
+                                                 job.setAddress(new Address("",
+                                                         "",
+                                                         ""));
+                                                 job.setShortDescription("");
+                                                 job.setProjectManager(new Manager("",
+                                                         "",
+                                                         ""));
+                                                 jobOverview.setText(job.getJobNumber()+" "
+                                                         +job.getProjectManager().getName()+" "
+                                                         +job.getProjectManager().getSurname()+" "
+                                                         +job.getAddress().getName()+" "
+                                                         +job.getAddress().getStreet()+" "
+                                                         +job.getAddress().getPostCode());
+                                             }
 
-                    }
-                });
+                                         }
+
+
+                                         @Override
+                                         public void onNothingSelected(AdapterView<?> parent) {
+
+                                         }
+                                     });
+
+                                 }
+
+                                 @Override
+                                 public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                 }
+                             });
+                         }
+
+                         @Override
+                         public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                         }
+                     });
+
+
+
+
+
+                 }
+
+                 @Override
+                 public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                 }
+             });
+
+
             }
 
             @Override
@@ -317,7 +383,7 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
                 }
         }
         else{
-            if(!TextUtils.isEmpty(desc)&&!job.getJobNumber().isEmpty()){
+            if(!TextUtils.isEmpty(desc)&&!job.getAddress().getName().isEmpty()){
                 desc = jobDescription.getText().toString().trim();
                 storeData(startTime,endTime,desc,jInfo,acc);
             }else{

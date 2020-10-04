@@ -27,7 +27,10 @@ public class Manager {
     }
 
     public String getName() {
+        if(name!=null){
         return name;
+        }
+        return null;
     }
 
     public void setName(String name) {

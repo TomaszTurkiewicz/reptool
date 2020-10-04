@@ -43,7 +43,9 @@ public class Job {
     }
 
     public void setJobNumber(String jobNumber) {
-        this.jobNumber = jobNumber.toUpperCase();
+        if(jobNumber!=null) {
+            this.jobNumber = jobNumber.toUpperCase();
+        }
     }
 
     public Address getAddress() {

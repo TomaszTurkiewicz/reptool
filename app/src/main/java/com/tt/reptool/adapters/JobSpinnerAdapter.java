@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.tt.reptool.R;
 import com.tt.reptool.javaClasses.Job;
+import com.tt.reptool.javaClasses.JobType;
 
 import java.util.List;
 
@@ -45,8 +46,14 @@ public class JobSpinnerAdapter extends ArrayAdapter<Job> {
         if(currentItem!=null){
             jobNumberSpinner.setVisibility(View.VISIBLE);
             jobName.setVisibility(View.VISIBLE);
+            if(currentItem.getJobType()==null||currentItem.getJobType()== JobType.INSTALLATION){
             jobNumberSpinner.setText(currentItem.getJobNumber());
             jobName.setText(currentItem.getAddress().getName());
+            }
+            else{
+                jobNumberSpinner.setText(currentItem.getJobType().toString());
+                jobName.setText(currentItem.getAddress().getName());
+            }
         }
         else{
             jobNumberSpinner.setVisibility(View.GONE);
