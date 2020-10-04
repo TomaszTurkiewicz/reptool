@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tt.reptool.R;
 import com.tt.reptool.javaClasses.Job;
+import com.tt.reptool.javaClasses.JobType;
 
 import java.util.List;
 
@@ -47,8 +48,14 @@ public class RecyclerViewAdapterJob extends RecyclerView.Adapter<RecyclerViewAda
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapterJob.ViewHolder holder, int position) {
-        holder.jobNumber.setText(mList.get(position).getJobNumber());
-        holder.jobManager.setText(mList.get(position).getProjectManager().nameAndSurnameToString());
+        if(mList.get(position).getJobType()==null||mList.get(position).getJobType()== JobType.INSTALLATION) {
+            holder.jobNumber.setText(mList.get(position).getJobNumber());
+            holder.jobManager.setVisibility(View.VISIBLE);
+            holder.jobManager.setText(mList.get(position).getProjectManager().nameAndSurnameToString());
+        }else{
+            holder.jobNumber.setText(mList.get(position).getJobType().toString());
+            holder.jobManager.setVisibility(View.GONE);
+        }
         holder.jobName.setText(mList.get(position).getAddress().getName());
         holder.jobPostcode.setText(mList.get(position).getAddress().getPostCode());
         holder.jobAddress.setText(mList.get(position).getAddress().getStreet());

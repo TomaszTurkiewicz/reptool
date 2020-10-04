@@ -24,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.tt.reptool.adapters.ManagerSpinnerAdapter;
 import com.tt.reptool.adapters.RecyclerViewAdapterJob;
 import com.tt.reptool.javaClasses.Job;
+import com.tt.reptool.javaClasses.JobType;
 import com.tt.reptool.javaClasses.Manager;
 
 import java.util.ArrayList;
@@ -37,6 +38,9 @@ public class FindJobActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReferenceManager;
     private DatabaseReference databaseReferenceJob;
+    private DatabaseReference databaseReferenceJobMaintenance;
+    private DatabaseReference databaseReferenceJobService;
+    private DatabaseReference databaseReferenceJobCallOut;
     private ManagerSpinnerAdapter managerSpinnerAdapter;
     private Manager pm = new Manager();
     private List<Job> jList = new ArrayList<>();
@@ -54,6 +58,9 @@ public class FindJobActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReferenceManager = firebaseDatabase.getReference(getString(R.string.firebasepath_manager));
         databaseReferenceJob = firebaseDatabase.getReference(getString(R.string.firebasepath_job));
+        databaseReferenceJobMaintenance = firebaseDatabase.getReference(getString(R.string.firebasepath_job_maintenance));
+        databaseReferenceJobService = firebaseDatabase.getReference(getString(R.string.firebasepath_job_service));
+        databaseReferenceJobCallOut = firebaseDatabase.getReference(getString(R.string.firebasepath_job_callout));
         initJobList();
         mList.clear();
         mList.add(null);
@@ -175,7 +182,51 @@ public class FindJobActivity extends AppCompatActivity {
                     Job job = ps.getValue(Job.class);
                     jList.add(job);
                 }
-                initRecycleView(jList);
+                databaseReferenceJobMaintenance.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshotMaintenance) {
+                        for(DataSnapshot ps : dataSnapshotMaintenance.getChildren()){
+                            Job job = ps.getValue(Job.class);
+                            jList.add(job);
+                        }
+
+                        databaseReferenceJobService.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshotService) {
+                                for (DataSnapshot ps : dataSnapshotService.getChildren()){
+                                    Job job = ps.getValue(Job.class);
+                                    jList.add(job);
+                                }
+                                databaseReferenceJobCallOut.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshotCallOut) {
+                                        for (DataSnapshot ps : dataSnapshotCallOut.getChildren()){
+                                            Job job = ps.getValue(Job.class);
+                                            jList.add(job);
+                                        }
+                                        initRecycleView(jList);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
             }
 
             @Override
@@ -222,14 +273,28 @@ public class FindJobActivity extends AppCompatActivity {
     }
 
     private void editJob(List<Job> list, int position) {
-        String jobNumber = list.get(position).getJobNumber();
-        Intent intent = new Intent(this,EditJob.class);
-        intent.putExtra(getString(R.string.extra_jobNumber),jobNumber);
-        startActivity(intent);
-        finish();
+        JobType jobType = list.get(position).getJobType();
+        if(jobType==null||jobType==JobType.INSTALLATION) {
+            String jobNumber = list.get(position).getJobNumber();
+            Intent intent = new Intent(this, EditJob.class);
+            intent.putExtra(getString(R.string.extra_jobNumber), jobNumber);
+            intent.putExtra("jobType",JobType.INSTALLATION.toString());
+            startActivity(intent);
+            finish();
+        }
+        else{
+            String jobName = list.get(position).getAddress().getName();
+            Intent intent = new Intent(this, EditJob.class);
+            intent.putExtra("jobName", jobName);
+            intent.putExtra("jobType",jobType.toString());
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void removeJob(List<Job> list, int position) {
+
+        // todo różne sposoby usuwania w zależności od rodzaju pracy
         databaseReferenceJob.child(list.get(position).getJobNumber()).removeValue();
         initJobList();
     }

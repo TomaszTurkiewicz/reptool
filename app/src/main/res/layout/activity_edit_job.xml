@@ -11,7 +11,46 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     android:orientation="vertical">
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/instRadioButtonEditJob"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="INST"
+            android:onClick="onRadioButtonEditJobClicked"/>
+        <RadioButton
+            android:id="@+id/maintRadioButtonEditJob"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="MAINT"
+            android:onClick="onRadioButtonEditJobClicked"/>
+        <RadioButton
+            android:id="@+id/servRadioButtonEditJob"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="SERV"
+            android:onClick="onRadioButtonEditJobClicked"/>
+        <RadioButton
+            android:id="@+id/callRadioButtonEditJob"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="CALL"
+            android:onClick="onRadioButtonEditJobClicked"/>
+
+
+    </RadioGroup>
+
     <LinearLayout
+        android:id="@+id/jobNumberLinearLayoutEditJob"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -158,6 +197,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/managerLinearLayoutEditJob"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
