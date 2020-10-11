@@ -14,8 +14,45 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/instRadioButtonFindJob"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="INST"
+            android:onClick="onRadioButtonFindJobClicked"/>
+        <RadioButton
+            android:id="@+id/maintRadioButtonFindJob"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="MAINT"
+            android:onClick="onRadioButtonFindJobClicked"/>
+        <RadioButton
+            android:id="@+id/servRadioButtonFindJob"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="SERV"
+            android:onClick="onRadioButtonFindJobClicked"/>
+        <RadioButton
+            android:id="@+id/callRadioButtonFindJob"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="CALL"
+            android:onClick="onRadioButtonFindJobClicked"/>
+
+        </RadioGroup>
+
 
         <LinearLayout
+            android:id="@+id/jobNumberLinearLayoutFindJob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -45,6 +82,7 @@
 
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/postcodeLinearLayoutFindJob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -74,6 +112,7 @@
 
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/nameLinearLayoutFindJob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -104,6 +143,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/projectManagerLinearLayoutFindJob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">

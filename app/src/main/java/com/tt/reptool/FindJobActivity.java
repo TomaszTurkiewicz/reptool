@@ -14,6 +14,8 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import com.google.firebase.database.DataSnapshot;
@@ -45,7 +47,10 @@ public class FindJobActivity extends AppCompatActivity {
     private Manager pm = new Manager();
     private List<Job> jList = new ArrayList<>();
     private List<Job> jobTempList = new ArrayList<>();
+    private List<Job> jobTList = new ArrayList<>();
     private String jobNumber, postCode, name, projectManagerEmail;
+    private LinearLayout jobNumberLinearLayout, postcodeLinearLayout, nameLinearLayout, projectManagerLinearLayout;
+    private JobType jType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +66,15 @@ public class FindJobActivity extends AppCompatActivity {
         databaseReferenceJobMaintenance = firebaseDatabase.getReference(getString(R.string.firebasepath_job_maintenance));
         databaseReferenceJobService = firebaseDatabase.getReference(getString(R.string.firebasepath_job_service));
         databaseReferenceJobCallOut = firebaseDatabase.getReference(getString(R.string.firebasepath_job_callout));
+        jobNumberLinearLayout = findViewById(R.id.jobNumberLinearLayoutFindJob);
+        postcodeLinearLayout = findViewById(R.id.postcodeLinearLayoutFindJob);
+        nameLinearLayout = findViewById(R.id.nameLinearLayoutFindJob);
+        projectManagerLinearLayout = findViewById(R.id.projectManagerLinearLayoutFindJob);
         initJobList();
+        jobNumberLinearLayout.setVisibility(View.GONE);
+        postcodeLinearLayout.setVisibility(View.GONE);
+        nameLinearLayout.setVisibility(View.GONE);
+        projectManagerLinearLayout.setVisibility(View.GONE);
         mList.clear();
         mList.add(null);
         databaseReferenceManager.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -97,7 +110,6 @@ public class FindJobActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-
         jobNumberEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -114,7 +126,6 @@ public class FindJobActivity extends AppCompatActivity {
                 checkJobsWithCriteria();
             }
         });
-
         jobPostCodeEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -147,9 +158,14 @@ public class FindJobActivity extends AppCompatActivity {
                 checkJobsWithCriteria();
             }
         });
+
+
+
     }
 
     private void checkJobsWithCriteria() {
+
+        if(jType==JobType.INSTALLATION){
         jobTempList.clear();
         jobNumber = jobNumberEditText.getText().toString().trim();
         if(!jobNumber.isEmpty()){
@@ -161,15 +177,33 @@ public class FindJobActivity extends AppCompatActivity {
         }
         name = jobNameEditText.getText().toString().trim();
 
-        for(int i=0;i<jList.size();i++){
-            if(jList.get(i).getJobNumber().contains(jobNumber)&&
-                jList.get(i).getAddress().getPostCode().contains(postCode)&&
-                jList.get(i).getAddress().getName().contains(name)
+        for(int i=0;i<jobTList.size();i++){
+            if(jobTList.get(i).getJobNumber().contains(jobNumber)&&
+                jobTList.get(i).getAddress().getPostCode().contains(postCode)&&
+                jobTList.get(i).getAddress().getName().contains(name)
                     && jList.get(i).getProjectManager().getEmailAddress().contains(projectManagerEmail)){
-                jobTempList.add(jList.get(i));
+                jobTempList.add(jobTList.get(i));
             }
         }
         initRecycleView(jobTempList);
+    }
+
+    else{
+            jobTempList.clear();
+            postCode = jobPostCodeEditText.getText().toString().trim();
+            if(!postCode.isEmpty()){
+                postCode = postCode.toUpperCase();
+            }
+            name = jobNameEditText.getText().toString().trim();
+
+            for(int i=0;i<jobTList.size();i++){
+                if(jobTList.get(i).getAddress().getPostCode().contains(postCode)&&
+                        jobTList.get(i).getAddress().getName().contains(name)){
+                    jobTempList.add(jobTList.get(i));
+                }
+            }
+            initRecycleView(jobTempList);
+    }
     }
 
     private void initJobList() {
@@ -294,11 +328,129 @@ public class FindJobActivity extends AppCompatActivity {
 
     private void removeJob(List<Job> list, int position) {
 
-        // todo różne sposoby usuwania w zależności od rodzaju pracy
-        databaseReferenceJob.child(list.get(position).getJobNumber()).removeValue();
-        initJobList();
+        if(list.get(position).getJobType()!=null) {
+            JobType jt = list.get(position).getJobType();
+
+            switch (jt) {
+
+                case MAINTENANCE: {
+                    databaseReferenceJobMaintenance.child(list.get(position).getAddress().getName()).removeValue();
+                    Intent intent = new Intent(this, FindJobActivity.class);
+                    startActivity(intent);
+                    finish();
+                    break;
+                }
+                case SERVICE: {
+                    databaseReferenceJobService.child(list.get(position).getAddress().getName()).removeValue();
+                    Intent intent = new Intent(this, FindJobActivity.class);
+                    startActivity(intent);
+                    finish();
+                    break;
+                }
+                case CALL_OUT: {
+                    databaseReferenceJobCallOut.child(list.get(position).getAddress().getName()).removeValue();
+                    Intent intent = new Intent(this, FindJobActivity.class);
+                    startActivity(intent);
+                    finish();
+                    break;
+                }
+                case INSTALLATION: {
+                    databaseReferenceJob.child(list.get(position).getJobNumber()).removeValue();
+                    Intent intent = new Intent(this, FindJobActivity.class);
+                    startActivity(intent);
+                    finish();
+                    break;
+                }
+            }
+        }
+        else{
+            databaseReferenceJob.child(list.get(position).getJobNumber()).removeValue();
+            Intent intent = new Intent(this, FindJobActivity.class);
+            startActivity(intent);
+            finish();
+
+        }
+
+    }
+
+    private void initlist(JobType jType) {
+
     }
 
 
+    public void onRadioButtonFindJobClicked(View view) {
+        boolean checked = ((RadioButton)view).isChecked();
 
+
+
+        switch (view.getId()){
+            case R.id.instRadioButtonFindJob:{
+                if(checked){
+                jType=JobType.INSTALLATION;
+                createList(jType);
+                jobNumberLinearLayout.setVisibility(View.VISIBLE);
+                postcodeLinearLayout.setVisibility(View.VISIBLE);
+                nameLinearLayout.setVisibility(View.VISIBLE);
+                projectManagerLinearLayout.setVisibility(View.VISIBLE);
+                }
+                break;
+            }
+            case R.id.maintRadioButtonFindJob:{
+                if(checked){
+                jType=JobType.MAINTENANCE;
+                createList(jType);
+                    jobNumberLinearLayout.setVisibility(View.GONE);
+                    postcodeLinearLayout.setVisibility(View.VISIBLE);
+                    nameLinearLayout.setVisibility(View.VISIBLE);
+                    projectManagerLinearLayout.setVisibility(View.GONE);
+                }
+                break;
+            }
+            case R.id.servRadioButtonFindJob:{
+                if(checked){
+                jType=JobType.SERVICE;
+                createList(jType);
+                    jobNumberLinearLayout.setVisibility(View.GONE);
+                    postcodeLinearLayout.setVisibility(View.VISIBLE);
+                    nameLinearLayout.setVisibility(View.VISIBLE);
+                    projectManagerLinearLayout.setVisibility(View.GONE);
+                }
+                break;
+            }
+            case R.id.callRadioButtonFindJob:{
+                if(checked){
+                jType=JobType.CALL_OUT;
+                createList(jType);
+                    jobNumberLinearLayout.setVisibility(View.GONE);
+                    postcodeLinearLayout.setVisibility(View.VISIBLE);
+                    nameLinearLayout.setVisibility(View.VISIBLE);
+                    projectManagerLinearLayout.setVisibility(View.GONE);
+                }
+                break;
+            }
+
+        }
+
+    }
+
+    private void createList(JobType jType) {
+        jobTList.clear();
+
+        if(jType==JobType.INSTALLATION){
+
+        for(int i = 0; i<jList.size();i++){
+            if(jList.get(i).getJobType()==jType||jList.get(i).getJobType()==null){
+                jobTList.add(jList.get(i));
+            }
+        }
+        }
+        else{
+            for(int i = 0; i<jList.size();i++){
+                if(jList.get(i).getJobType()==jType){
+                    jobTList.add(jList.get(i));
+                }
+            }
+        }
+        initRecycleView(jobTList);
+    }
 }
