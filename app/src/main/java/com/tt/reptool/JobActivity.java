@@ -136,6 +136,7 @@ public class JobActivity extends AppCompatActivity {
 
         if (jobType==JobType.INSTALLATION){
             if (!TextUtils.isEmpty(jNumber) &&
+                    !TextUtils.isEmpty(jAddress.getName())&&
                     !TextUtils.isEmpty(jAddress.getPostCode()) &&
                     !TextUtils.isEmpty(jAddress.getStreet()) &&
                     !TextUtils.isEmpty(jDescription) &&
@@ -178,7 +179,8 @@ public class JobActivity extends AppCompatActivity {
             }
     }
         else{
-            if (!TextUtils.isEmpty(jAddress.getPostCode()) &&
+            if (!TextUtils.isEmpty(jAddress.getName()) &&
+                    !TextUtils.isEmpty(jAddress.getPostCode()) &&
                     !TextUtils.isEmpty(jAddress.getStreet()) &&
                     !TextUtils.isEmpty(jDescription)) {
   //              job.setJobNumber(jNumber);

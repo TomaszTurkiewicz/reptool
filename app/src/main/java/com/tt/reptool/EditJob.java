@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -430,14 +431,49 @@ public class EditJob extends AppCompatActivity {
 
     public void onClickSave(View view) {
 
-        //todo check empty fields
-        // todo sprawdzić czy nowa już nie istnieje
-        // todo jeżeli nie to zapisać nową
-        // todo jeżeli tak to przywrócić starą
-        removeOldJob();
-        createNewJobObject();
-        checkIfNewJobAlreadyExistsAndSave();
+        if(jobType==JobType.INSTALLATION){
+            String jNumber = jobNumber.getText().toString().trim();
+            Address jAddress = new Address();
+            jAddress.setName(jobClientName.getText().toString().trim());
+            jAddress.setPostCode(jobPostcode.getText().toString().trim());
+            jAddress.setStreet(jobStreet.getText().toString().trim());
+            String jDescription = jobDescription.getText().toString().trim();
 
+        if(!TextUtils.isEmpty(jNumber)&&
+        !TextUtils.isEmpty(jAddress.getName())&&
+        !TextUtils.isEmpty(jAddress.getPostCode())&&
+        !TextUtils.isEmpty(jAddress.getStreet())&&
+        !TextUtils.isEmpty(jDescription)&&
+            nManager.getName() != null) {
+            removeOldJob();
+            createNewJobObject();
+            checkIfNewJobAlreadyExistsAndSave();
+        }
+        else{
+            Toast.makeText(EditJob.this, getString(R.string.empty_fields),
+                    Toast.LENGTH_LONG).show();
+        }
+        }
+        else{
+            Address jAddress = new Address();
+            jAddress.setName(jobClientName.getText().toString().trim());
+            jAddress.setPostCode(jobPostcode.getText().toString().trim());
+            jAddress.setStreet(jobStreet.getText().toString().trim());
+            String jDescription = jobDescription.getText().toString().trim();
+
+            if(!TextUtils.isEmpty(jAddress.getName())&&
+                    !TextUtils.isEmpty(jAddress.getPostCode())&&
+                    !TextUtils.isEmpty(jAddress.getStreet())&&
+                    !TextUtils.isEmpty(jDescription)) {
+                removeOldJob();
+                createNewJobObject();
+                checkIfNewJobAlreadyExistsAndSave();
+            }
+            else{
+                Toast.makeText(EditJob.this, getString(R.string.empty_fields),
+                        Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     public void onRadioButtonEditJobClicked(View view) {
