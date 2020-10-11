@@ -13,11 +13,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin"
-        android:id="@+id/spinnerDayType"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -71,11 +66,17 @@
 
     </LinearLayout>
 
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:id="@+id/spinnerDayType1"/>
+
     <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-        android:id="@+id/jobSpinnerLinearLayout">
+        android:id="@+id/jobSpinnerLinearLayout1">
 
 
     <TextView
@@ -88,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin"
-        android:id="@+id/jobNumberSpinner"/>
+        android:id="@+id/jobNumberSpinner1"/>
 
 
 </LinearLayout>
@@ -96,13 +97,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/jobOverviewLinearLayout">
+        android:id="@+id/jobOverviewLinearLayout1">
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/jobOverview"
+            android:id="@+id/jobOverview1"
             android:layout_margin="@dimen/margin"/>
 
     </LinearLayout>
@@ -111,7 +112,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/descriptionLinearLayout">
+        android:id="@+id/descriptionLinearLayout1">
 
         <TextView
             android:layout_width="wrap_content"
@@ -119,7 +120,7 @@
             android:text="@string/jobDescription"
             android:layout_margin="@dimen/margin"/>
         <EditText
-            android:id="@+id/jobDescriptionActivityDailyReport"
+            android:id="@+id/jobDescriptionActivityDailyReport1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -131,7 +132,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/jobInfoLinearLayout">
+        android:id="@+id/jobInfoLinearLayout1">
 
         <TextView
             android:layout_width="wrap_content"
@@ -139,7 +140,7 @@
             android:text="@string/job_info"
             android:layout_margin="@dimen/margin"/>
         <EditText
-            android:id="@+id/jobInfoActivityDailyReport"
+            android:id="@+id/jobInfoActivityDailyReport1"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -151,7 +152,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/accidentsLinearLayout">
+        android:id="@+id/accidentsLinearLayout1">
 
         <TextView
             android:layout_width="wrap_content"
@@ -159,7 +160,7 @@
             android:text="@string/accidents"
             android:layout_margin="@dimen/margin"/>
         <EditText
-            android:id="@+id/jobAccidentsActivityDailyReport"
+            android:id="@+id/jobAccidentsActivityDailyReport1"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"

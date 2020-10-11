@@ -18,6 +18,10 @@ public class DailyReport {
     private DateAndTime startTime;
     private DateAndTime endTime;
     private WorkReport workReport;
+//    private WorkReport workReport2;
+//    private WorkReport workReport3;
+//    private WorkReport workReport4;
+//    private WorkReport workReport5;
 
     public DailyReport() {
     }

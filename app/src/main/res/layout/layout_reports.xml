@@ -37,20 +37,20 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/jobNumberAndNameLinearLayoutLayoutReport"
+        android:id="@+id/jobNumberAndNameLinearLayoutLayoutReport1"
         app:layout_constraintTop_toBottomOf="@id/dateAndTimeLinearLayoutLayoutReport"
         app:layout_constraintStart_toStartOf="parent"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/jobNumberLayoutReport"
+            android:id="@+id/jobNumberLayoutReport1"
             android:text="@string/job_number"
             android:layout_marginEnd="@dimen/marginHalf"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/nameLayoutReport"
+            android:id="@+id/nameLayoutReport1"
             android:layout_marginStart="@dimen/marginHalf"
             android:text="@string/name"/>
     </LinearLayout>
@@ -60,16 +60,168 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/jobNumberAndNameLinearLayoutLayoutReport"
-        android:id="@+id/addressLayoutReport"
+        app:layout_constraintTop_toBottomOf="@id/jobNumberAndNameLinearLayoutLayoutReport1"
+        android:id="@+id/addressLayoutReport1"
         android:text="@string/jobAddress"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/addressLayoutReport"
-        android:id="@+id/descriptionLayoutReport"
+        app:layout_constraintTop_toBottomOf="@id/addressLayoutReport1"
+        android:id="@+id/descriptionLayoutReport1"
+        android:text="@string/jobDescription"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/jobNumberAndNameLinearLayoutLayoutReport2"
+        app:layout_constraintTop_toBottomOf="@id/descriptionLayoutReport1"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/jobNumberLayoutReport2"
+            android:text="@string/job_number"
+            android:layout_marginEnd="@dimen/marginHalf"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nameLayoutReport2"
+            android:layout_marginStart="@dimen/marginHalf"
+            android:text="@string/name"/>
+    </LinearLayout>
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/jobNumberAndNameLinearLayoutLayoutReport2"
+        android:id="@+id/addressLayoutReport2"
+        android:text="@string/jobAddress"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addressLayoutReport2"
+        android:id="@+id/descriptionLayoutReport2"
+        android:text="@string/jobDescription"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/jobNumberAndNameLinearLayoutLayoutReport3"
+        app:layout_constraintTop_toBottomOf="@id/descriptionLayoutReport2"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/jobNumberLayoutReport3"
+            android:text="@string/job_number"
+            android:layout_marginEnd="@dimen/marginHalf"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nameLayoutReport3"
+            android:layout_marginStart="@dimen/marginHalf"
+            android:text="@string/name"/>
+    </LinearLayout>
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/jobNumberAndNameLinearLayoutLayoutReport3"
+        android:id="@+id/addressLayoutReport3"
+        android:text="@string/jobAddress"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addressLayoutReport3"
+        android:id="@+id/descriptionLayoutReport3"
+        android:text="@string/jobDescription"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/jobNumberAndNameLinearLayoutLayoutReport4"
+        app:layout_constraintTop_toBottomOf="@id/descriptionLayoutReport3"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/jobNumberLayoutReport4"
+            android:text="@string/job_number"
+            android:layout_marginEnd="@dimen/marginHalf"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nameLayoutReport4"
+            android:layout_marginStart="@dimen/marginHalf"
+            android:text="@string/name"/>
+    </LinearLayout>
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/jobNumberAndNameLinearLayoutLayoutReport4"
+        android:id="@+id/addressLayoutReport4"
+        android:text="@string/jobAddress"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addressLayoutReport4"
+        android:id="@+id/descriptionLayoutReport4"
+        android:text="@string/jobDescription"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/jobNumberAndNameLinearLayoutLayoutReport5"
+        app:layout_constraintTop_toBottomOf="@id/descriptionLayoutReport4"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/jobNumberLayoutReport5"
+            android:text="@string/job_number"
+            android:layout_marginEnd="@dimen/marginHalf"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nameLayoutReport5"
+            android:layout_marginStart="@dimen/marginHalf"
+            android:text="@string/name"/>
+    </LinearLayout>
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/jobNumberAndNameLinearLayoutLayoutReport5"
+        android:id="@+id/addressLayoutReport5"
+        android:text="@string/jobAddress"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addressLayoutReport5"
+        android:id="@+id/descriptionLayoutReport5"
         android:text="@string/jobDescription"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

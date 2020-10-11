@@ -40,35 +40,39 @@ public class RecyclerViewAdapterReport extends RecyclerView.Adapter<RecyclerView
         holder.reportTimeOut.setText(repList.get(position).showTimeOutToString());
 
         if(repList.get(position).getWorkReport().getType()== Type.WORK){
-            holder.reportJobNumber.setText(repList.get(position).getWorkReport().getJob().getJobNumber());
+            holder.reportJobNumber1.setText(repList.get(position).getWorkReport().getJob().getJobNumber());
+            holder.reportName1.setText(repList.get(position).getWorkReport().getJob().getAddress().getName());
+            holder.reportAddress1.setText(repList.get(position).getWorkReport().getJob().getAddress().fullAddress());
+            holder.reportDescription1.setText(repList.get(position).getWorkReport().getDescription());
         }
-        else{
-            holder.reportJobNumber.setVisibility(View.GONE);
-        }
-
-        if(repList.get(position).getWorkReport().getType()== Type.WORK){
-            holder.reportName.setText(repList.get(position).getWorkReport().getJob().getAddress().getName());
-        }
-        else{
-            holder.reportName.setVisibility(View.GONE);
-        }
-
-        if(repList.get(position).getWorkReport().getType()== Type.WORK){
-            holder.reportAddress.setText(repList.get(position).getWorkReport().getJob().getAddress().fullAddress());
-        }
-        else{
-            holder.reportAddress.setVisibility(View.GONE);
-        }
-
-        if(repList.get(position).getWorkReport().getType()==Type.WORK) {
-            holder.reportDescription.setText(repList.get(position).getWorkReport().getDescription());
-        }
-        else if(repList.get(position).getWorkReport().getType()==Type.TRAINING){
-            holder.reportDescription.setText(repList.get(position).getWorkReport().getType().name()+"\n"+
+        else {
+            holder.reportJobNumber1.setVisibility(View.GONE);
+            holder.reportName1.setVisibility(View.GONE);
+            holder.reportAddress1.setVisibility(View.GONE);
+        if(repList.get(position).getWorkReport().getType()==Type.TRAINING){
+            holder.reportDescription1.setText(repList.get(position).getWorkReport().getType().name()+"\n"+
                     repList.get(position).getWorkReport().getDescription());
         }else{
-            holder.reportDescription.setText(repList.get(position).getWorkReport().getType().name());
+            holder.reportDescription1.setText(repList.get(position).getWorkReport().getType().name());
         }
+        }
+
+        holder.reportAddress2.setVisibility(View.GONE);
+        holder.reportAddress3.setVisibility(View.GONE);
+        holder.reportAddress4.setVisibility(View.GONE);
+        holder.reportAddress5.setVisibility(View.GONE);
+        holder.reportDescription2.setVisibility(View.GONE);
+        holder.reportDescription3.setVisibility(View.GONE);
+        holder.reportDescription4.setVisibility(View.GONE);
+        holder.reportDescription5.setVisibility(View.GONE);
+        holder.reportJobNumber2.setVisibility(View.GONE);
+        holder.reportJobNumber3.setVisibility(View.GONE);
+        holder.reportJobNumber4.setVisibility(View.GONE);
+        holder.reportJobNumber5.setVisibility(View.GONE);
+        holder.reportName2.setVisibility(View.GONE);
+        holder.reportName3.setVisibility(View.GONE);
+        holder.reportName4.setVisibility(View.GONE);
+        holder.reportName5.setVisibility(View.GONE);
     }
 
     @Override
@@ -79,7 +83,11 @@ public class RecyclerViewAdapterReport extends RecyclerView.Adapter<RecyclerView
 
 public class VH extends RecyclerView.ViewHolder{
     ConstraintLayout reportLayout;
-    TextView reportDate,reportTimeIn, reportTimeOut, reportJobNumber, reportName, reportAddress, reportDescription;
+    TextView reportDate,reportTimeIn, reportTimeOut, reportJobNumber1, reportName1, reportAddress1, reportDescription1,
+    reportJobNumber2, reportName2, reportAddress2, reportDescription2,
+            reportJobNumber3, reportName3, reportAddress3, reportDescription3,
+            reportJobNumber4, reportName4, reportAddress4, reportDescription4,
+            reportJobNumber5, reportName5, reportAddress5, reportDescription5;
 
 
     public VH(@NonNull View itemView) {
@@ -88,11 +96,31 @@ public class VH extends RecyclerView.ViewHolder{
         reportDate = itemView.findViewById(R.id.dateLayoutReport);
         reportTimeIn = itemView.findViewById(R.id.timeInLayoutReport);
         reportTimeOut = itemView.findViewById(R.id.timeOutLayoutReport);
-        reportJobNumber = itemView.findViewById(R.id.jobNumberLayoutReport);
-        reportName = itemView.findViewById(R.id.nameLayoutReport);
-        reportAddress = itemView.findViewById(R.id.addressLayoutReport);
-        reportDescription = itemView.findViewById(R.id.descriptionLayoutReport);
 
+        reportJobNumber1 = itemView.findViewById(R.id.jobNumberLayoutReport1);
+        reportName1 = itemView.findViewById(R.id.nameLayoutReport1);
+        reportAddress1 = itemView.findViewById(R.id.addressLayoutReport1);
+        reportDescription1 = itemView.findViewById(R.id.descriptionLayoutReport1);
+
+        reportJobNumber2 = itemView.findViewById(R.id.jobNumberLayoutReport2);
+        reportName2 = itemView.findViewById(R.id.nameLayoutReport2);
+        reportAddress2 = itemView.findViewById(R.id.addressLayoutReport2);
+        reportDescription2 = itemView.findViewById(R.id.descriptionLayoutReport2);
+
+        reportJobNumber3 = itemView.findViewById(R.id.jobNumberLayoutReport3);
+        reportName3 = itemView.findViewById(R.id.nameLayoutReport3);
+        reportAddress3 = itemView.findViewById(R.id.addressLayoutReport3);
+        reportDescription3 = itemView.findViewById(R.id.descriptionLayoutReport3);
+
+        reportJobNumber4 = itemView.findViewById(R.id.jobNumberLayoutReport4);
+        reportName4 = itemView.findViewById(R.id.nameLayoutReport4);
+        reportAddress4 = itemView.findViewById(R.id.addressLayoutReport4);
+        reportDescription4 = itemView.findViewById(R.id.descriptionLayoutReport4);
+
+        reportJobNumber5 = itemView.findViewById(R.id.jobNumberLayoutReport5);
+        reportName5 = itemView.findViewById(R.id.nameLayoutReport5);
+        reportAddress5 = itemView.findViewById(R.id.addressLayoutReport5);
+        reportDescription5 = itemView.findViewById(R.id.descriptionLayoutReport5);
     }
 }
 }

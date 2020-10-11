@@ -48,9 +48,9 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
 {
         private static final int START_TIME = 0;
         private static final int END_TIME = 1;
-        private TextView startDate, startTime, endTime, jobOverview;
-        private EditText jobDescription, info, accidents;
-        private Spinner jobNumberSpinner, dayTypeSpinner;
+        private TextView startDate, startTime, endTime, jobOverview1;
+        private EditText jobDescription1, info1, accidents1;
+        private Spinner jobNumberSpinner1, dayTypeSpinner1;
         private FirebaseDatabase firebaseDatabase;
         private DatabaseReference databaseReferenceJob;
         private DatabaseReference databaseReferenceJobMaintenance;
@@ -64,8 +64,8 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         private JobSpinnerAdapter jobSpinnerAdapter;
         private Job job = new Job();
         private Type type;
-        private LinearLayout jobSpinnerLinearLayout, jobOverviewLinearLayout, descriptionLinearLayout,
-                jobInfoLinearLayout, accidentsLinearLayout;
+        private LinearLayout jobSpinnerLinearLayout1, jobOverviewLinearLayout1, descriptionLinearLayout1,
+                jobInfoLinearLayout1, accidentsLinearLayout1;
 
 
 
@@ -98,18 +98,18 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         startDate = findViewById(R.id.startDate);
         startTime = findViewById(R.id.startTime);
         endTime = findViewById(R.id.endTime);
-        jobOverview = findViewById(R.id.jobOverview);
-        jobDescription = findViewById(R.id.jobDescriptionActivityDailyReport);
-        info = findViewById(R.id.jobInfoActivityDailyReport);
-        accidents = findViewById(R.id.jobAccidentsActivityDailyReport);
-        dayTypeSpinner = findViewById(R.id.spinnerDayType);
-        jobSpinnerLinearLayout = findViewById(R.id.jobSpinnerLinearLayout);
-        jobOverviewLinearLayout = findViewById(R.id.jobOverviewLinearLayout);
-        descriptionLinearLayout = findViewById(R.id.descriptionLinearLayout);
-        jobInfoLinearLayout = findViewById(R.id.jobInfoLinearLayout);
-        accidentsLinearLayout = findViewById(R.id.accidentsLinearLayout);
-        dayTypeSpinner.setAdapter(new ArrayAdapter<Type>(this, android.R.layout.simple_spinner_item, Type.values()));
-        dayTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        jobOverview1 = findViewById(R.id.jobOverview1);
+        jobDescription1 = findViewById(R.id.jobDescriptionActivityDailyReport1);
+        info1 = findViewById(R.id.jobInfoActivityDailyReport1);
+        accidents1 = findViewById(R.id.jobAccidentsActivityDailyReport1);
+        dayTypeSpinner1 = findViewById(R.id.spinnerDayType1);
+        jobSpinnerLinearLayout1 = findViewById(R.id.jobSpinnerLinearLayout1);
+        jobOverviewLinearLayout1 = findViewById(R.id.jobOverviewLinearLayout1);
+        descriptionLinearLayout1 = findViewById(R.id.descriptionLinearLayout1);
+        jobInfoLinearLayout1 = findViewById(R.id.jobInfoLinearLayout1);
+        accidentsLinearLayout1 = findViewById(R.id.accidentsLinearLayout1);
+        dayTypeSpinner1.setAdapter(new ArrayAdapter<Type>(this, android.R.layout.simple_spinner_item, Type.values()));
+        dayTypeSpinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 type = (Type)parent.getItemAtPosition(position);
@@ -183,10 +183,10 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
                                          jobList.add(jobTemp);
                                      }
 
-                                     jobNumberSpinner = (Spinner)findViewById(R.id.jobNumberSpinner);
+                                     jobNumberSpinner1 = (Spinner)findViewById(R.id.jobNumberSpinner1);
                                      jobSpinnerAdapter = new JobSpinnerAdapter(DailyReportActivity.this,jobList);
-                                     jobNumberSpinner.setAdapter(jobSpinnerAdapter);
-                                     jobNumberSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                     jobNumberSpinner1.setAdapter(jobSpinnerAdapter);
+                                     jobNumberSpinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                          @Override
                                          public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                              Job clickedItem = (Job)parent.getItemAtPosition(position);
@@ -210,7 +210,7 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
                                                  }
 
 
-                                                 jobOverview.setText(overview);
+                                                 jobOverview1.setText(overview);
                                              }
                                              else{
                                                  job.setJobNumber("");
@@ -221,7 +221,7 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
                                                  job.setProjectManager(new Manager("",
                                                          "",
                                                          ""));
-                                                 jobOverview.setText(job.getJobNumber()+" "
+                                                 jobOverview1.setText(job.getJobNumber()+" "
                                                          +job.getProjectManager().getName()+" "
                                                          +job.getProjectManager().getSurname()+" "
                                                          +job.getAddress().getName()+" "
@@ -364,9 +364,9 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
 
         DateAndTime endTime = new DateAndTime();
         endTime.setDateAndTime(calendarEnd);
-        String jInfo = info.getText().toString().trim();
-        String acc = accidents.getText().toString().trim();
-        String desc = jobDescription.getText().toString().trim();
+        String jInfo = info1.getText().toString().trim();
+        String acc = accidents1.getText().toString().trim();
+        String desc = jobDescription1.getText().toString().trim();
 
         if(type==Type.BANK_HOLIDAY){
             storeData(startTime,endTime,desc,jInfo,acc);
@@ -376,7 +376,7 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         }
         else if(type==Type.TRAINING){
                 if(!TextUtils.isEmpty(desc)) {
-                    desc = jobDescription.getText().toString().trim();
+                    desc = jobDescription1.getText().toString().trim();
                     storeData(startTime,endTime,desc,jInfo,acc);
                 }else{
                     Toast.makeText(this,R.string.empty_fields,Toast.LENGTH_LONG).show();
@@ -384,7 +384,7 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         }
         else{
             if(!TextUtils.isEmpty(desc)&&!job.getAddress().getName().isEmpty()){
-                desc = jobDescription.getText().toString().trim();
+                desc = jobDescription1.getText().toString().trim();
                 storeData(startTime,endTime,desc,jInfo,acc);
             }else{
                 Toast.makeText(this,R.string.empty_fields,Toast.LENGTH_LONG).show();
@@ -395,7 +395,7 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
 
     }
     public void storeData(DateAndTime startTime, DateAndTime endTime, String desc, String jInfo, String acc){
-        final DailyReport dailyReport = new DailyReport(startTime,endTime,new WorkReport(type, job, desc, jInfo, acc));
+        final DailyReport dailyReport = new DailyReport(startTime,endTime,new WorkReport(type, job, desc, jInfo, acc,true));
 
         databaseReferenceWeeklyReports=firebaseDatabase.getReference(getString(R.string.firebasepath_weekly_reports));
         databaseReferenceAllReports=firebaseDatabase.getReference(getString(R.string.firebasepath_all_reports));
@@ -433,32 +433,32 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
     }
 
     public void setWorkReportLayout(){
-        jobSpinnerLinearLayout.setVisibility(View.VISIBLE);
-        jobOverviewLinearLayout.setVisibility(View.VISIBLE);
-        descriptionLinearLayout.setVisibility(View.VISIBLE);
-        jobInfoLinearLayout.setVisibility(View.VISIBLE);
-        accidentsLinearLayout.setVisibility(View.VISIBLE);
+        jobSpinnerLinearLayout1.setVisibility(View.VISIBLE);
+        jobOverviewLinearLayout1.setVisibility(View.VISIBLE);
+        descriptionLinearLayout1.setVisibility(View.VISIBLE);
+        jobInfoLinearLayout1.setVisibility(View.VISIBLE);
+        accidentsLinearLayout1.setVisibility(View.VISIBLE);
     }
     public void setDayOffReportLayout(){
-        jobSpinnerLinearLayout.setVisibility(View.GONE);
-        jobOverviewLinearLayout.setVisibility(View.GONE);
-        descriptionLinearLayout.setVisibility(View.GONE);
-        jobInfoLinearLayout.setVisibility(View.GONE);
-        accidentsLinearLayout.setVisibility(View.GONE);
+        jobSpinnerLinearLayout1.setVisibility(View.GONE);
+        jobOverviewLinearLayout1.setVisibility(View.GONE);
+        descriptionLinearLayout1.setVisibility(View.GONE);
+        jobInfoLinearLayout1.setVisibility(View.GONE);
+        accidentsLinearLayout1.setVisibility(View.GONE);
     }
     public void setBankHolidayReportLayout(){
-        jobSpinnerLinearLayout.setVisibility(View.GONE);
-        jobOverviewLinearLayout.setVisibility(View.GONE);
-        descriptionLinearLayout.setVisibility(View.GONE);
-        jobInfoLinearLayout.setVisibility(View.GONE);
-        accidentsLinearLayout.setVisibility(View.GONE);
+        jobSpinnerLinearLayout1.setVisibility(View.GONE);
+        jobOverviewLinearLayout1.setVisibility(View.GONE);
+        descriptionLinearLayout1.setVisibility(View.GONE);
+        jobInfoLinearLayout1.setVisibility(View.GONE);
+        accidentsLinearLayout1.setVisibility(View.GONE);
     }
     public void setTrainingReportLayout(){
-        jobSpinnerLinearLayout.setVisibility(View.GONE);
-        jobOverviewLinearLayout.setVisibility(View.GONE);
-        descriptionLinearLayout.setVisibility(View.VISIBLE);
-        jobInfoLinearLayout.setVisibility(View.GONE);
-        accidentsLinearLayout.setVisibility(View.GONE);
+        jobSpinnerLinearLayout1.setVisibility(View.GONE);
+        jobOverviewLinearLayout1.setVisibility(View.GONE);
+        descriptionLinearLayout1.setVisibility(View.VISIBLE);
+        jobInfoLinearLayout1.setVisibility(View.GONE);
+        accidentsLinearLayout1.setVisibility(View.GONE);
     }
 
     public void backToMainMenuOnClick(View view) {
@@ -468,5 +468,6 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
     }
 }
 
-
+// todo add floating button to add another job
+// todo check if first job is complited before adding new one
 // TODO change picking up job (filtering), maybe different activity?
