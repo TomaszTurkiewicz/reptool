@@ -45,4 +45,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    // todo sending daily reports
+    // todo daily report with list of jobs
+
 }

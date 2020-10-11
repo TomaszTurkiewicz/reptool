@@ -33,7 +33,10 @@ public class EditJob extends AppCompatActivity {
     private EditText jobNumber, jobClientName, jobStreet, jobPostcode, jobDescription;
     private Spinner jobManager;
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReferenceJob;
+    private DatabaseReference databaseReferenceMaintenance;
+    private DatabaseReference databaseReferenceService;
+    private DatabaseReference databaseReferenceCallOut;
     private DatabaseReference databaseReferenceManager;
     private ManagerSpinnerAdapter managerSpinnerAdapter;
     private Manager oManager = new Manager();
@@ -67,19 +70,22 @@ public class EditJob extends AppCompatActivity {
         managerLinearLayout = findViewById(R.id.managerLinearLayoutEditJob);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReferenceManager = firebaseDatabase.getReference(getString(R.string.firebasepath_manager));
+        databaseReferenceJob = firebaseDatabase.getReference(getString(R.string.firebasepath_job));
+        databaseReferenceMaintenance = firebaseDatabase.getReference(getString(R.string.firebasepath_job_maintenance));
+        databaseReferenceService = firebaseDatabase.getReference(getString(R.string.firebasepath_job_service));
+        databaseReferenceCallOut = firebaseDatabase.getReference(getString(R.string.firebasepath_job_callout));
 
         switch(jobType){
             case INSTALLATION:{
                 jNumber = extras.getString(getString(R.string.extra_jobNumber));
 
-                databaseReference = firebaseDatabase.getReference(getString(R.string.firebasepath_job));
-
-                databaseReference.child(jNumber).addListenerForSingleValueEvent(new ValueEventListener() {
+                databaseReferenceJob.child(jNumber).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             oJob=dataSnapshot.getValue(Job.class);
                             oManager=oJob.getProjectManager();
+                            oJob.setJobType(jobType);
                             show(oJob);
                         }
                     }
@@ -96,8 +102,7 @@ public class EditJob extends AppCompatActivity {
                 jName = extras.getString("jobName");
 
                 firebaseDatabase = FirebaseDatabase.getInstance();
-                databaseReference = firebaseDatabase.getReference(getString(R.string.firebasepath_job_maintenance));
-                databaseReference.child(jName).addListenerForSingleValueEvent(new ValueEventListener() {
+                databaseReferenceMaintenance.child(jName).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
@@ -116,8 +121,7 @@ public class EditJob extends AppCompatActivity {
                 jName = extras.getString("jobName");
 
                 firebaseDatabase = FirebaseDatabase.getInstance();
-                databaseReference = firebaseDatabase.getReference(getString(R.string.firebasepath_job_service));
-                databaseReference.child(jName).addListenerForSingleValueEvent(new ValueEventListener() {
+                databaseReferenceService.child(jName).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
@@ -136,8 +140,7 @@ public class EditJob extends AppCompatActivity {
                 jName = extras.getString("jobName");
 
                 firebaseDatabase = FirebaseDatabase.getInstance();
-                databaseReference = firebaseDatabase.getReference(getString(R.string.firebasepath_job_callout));
-                databaseReference.child(jName).addListenerForSingleValueEvent(new ValueEventListener() {
+                databaseReferenceCallOut.child(jName).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
@@ -246,50 +249,194 @@ public class EditJob extends AppCompatActivity {
         finish();
     }
 
+    public void removeOldJob(){
+        switch (oJob.getJobType()){
+            case INSTALLATION:{
+                databaseReferenceJob.child(oJob.getJobNumber()).removeValue();
+                break;
+            }
+            case MAINTENANCE:{
+                databaseReferenceMaintenance.child(oJob.getAddress().getName()).removeValue();
+                break;
+            }
+            case SERVICE:{
+                databaseReferenceService.child(oJob.getAddress().getName()).removeValue();
+                break;
+            }
+            case CALL_OUT:{
+                databaseReferenceCallOut.child(oJob.getAddress().getName()).removeValue();
+                break;
+            }
+        }
+    }
+
+    public void createNewJobObject(){
+        if (jobType == JobType.INSTALLATION) {
+            nJob.setJobNumber(jobNumber.getText().toString().trim());
+            nJob.setShortDescription(jobDescription.getText().toString().trim());
+            nAddress.setName(jobClientName.getText().toString().trim());
+            nAddress.setStreet(jobStreet.getText().toString().trim());
+            nAddress.setPostCode(jobPostcode.getText().toString().trim());
+            nJob.setAddress(nAddress);
+            nJob.setProjectManager(nManager);
+        } else {
+            nJob.setShortDescription(jobDescription.getText().toString().trim());
+            nAddress.setName(jobClientName.getText().toString().trim());
+            nAddress.setStreet(jobStreet.getText().toString().trim());
+            nAddress.setPostCode(jobPostcode.getText().toString().trim());
+            nJob.setAddress(nAddress);
+        }
+        nJob.setJobType(jobType);
+    }
+
+    public void checkIfNewJobAlreadyExistsAndSave(){
+        switch (jobType){
+            case INSTALLATION:{
+
+                databaseReferenceJob.child(nJob.getJobNumber()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if(dataSnapshot.exists()){
+
+                            saveOldJob();
+
+                            Toast.makeText(EditJob.this,getString(R.string.already_exists),Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            databaseReferenceJob.child(nJob.getJobNumber()).setValue(nJob);
+                            Intent i = new Intent(getApplicationContext(),FindJobActivity.class);
+                            startActivity(i);
+                            finish();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                break;
+            }
+            case MAINTENANCE:{
+
+                databaseReferenceMaintenance.child(nJob.getAddress().getName()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if(dataSnapshot.exists()){
+                            saveOldJob();
+
+                            Toast.makeText(EditJob.this,getString(R.string.already_exists),Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            databaseReferenceMaintenance.child(nJob.getAddress().getName()).setValue(nJob);
+                            Intent i = new Intent(getApplicationContext(),FindJobActivity.class);
+                            startActivity(i);
+                            finish();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                break;
+            }
+            case SERVICE:{
+
+                databaseReferenceService.child(nJob.getAddress().getName()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if(dataSnapshot.exists()){
+                            saveOldJob();
+
+                            Toast.makeText(EditJob.this,getString(R.string.already_exists),Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            databaseReferenceService.child(nJob.getAddress().getName()).setValue(nJob);
+                            Intent i = new Intent(getApplicationContext(),FindJobActivity.class);
+                            startActivity(i);
+                            finish();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                break;
+            }
+            case CALL_OUT:{
+
+                databaseReferenceCallOut.child(nJob.getAddress().getName()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if(dataSnapshot.exists()){
+                            saveOldJob();
+
+                            Toast.makeText(EditJob.this,getString(R.string.already_exists),Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            databaseReferenceCallOut.child(nJob.getAddress().getName()).setValue(nJob);
+                            Intent i = new Intent(getApplicationContext(),FindJobActivity.class);
+                            startActivity(i);
+                            finish();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                break;
+            }
+        }
+    }
+
+    private void saveOldJob() {
+        switch (oJob.getJobType()){
+            case INSTALLATION:{
+                databaseReferenceJob.child(oJob.getJobNumber()).setValue(oJob);
+                break;
+            }
+            case MAINTENANCE:{
+                databaseReferenceMaintenance.child(oJob.getAddress().getName()).setValue(oJob);
+                break;
+            }
+            case SERVICE:{
+                databaseReferenceService.child(oJob.getAddress().getName()).setValue(oJob);
+                break;
+            }
+            case CALL_OUT:{
+                databaseReferenceCallOut.child(oJob.getAddress().getName()).setValue(oJob);
+                break;
+            }
+        }
+    }
+
     public void onClickSave(View view) {
 
-        //todo cztery przypadki zapisu inst, serv, maint, call
-        //todo usunąć starą pracę
+        //todo check empty fields
         // todo sprawdzić czy nowa już nie istnieje
         // todo jeżeli nie to zapisać nową
         // todo jeżeli tak to przywrócić starą
-
-
-        databaseReference.child(jNumber).removeValue();
-        nJob.setJobNumber(jobNumber.getText().toString().trim());
-        nJob.setShortDescription(jobDescription.getText().toString().trim());
-        nAddress.setName(jobClientName.getText().toString().trim());
-        nAddress.setStreet(jobStreet.getText().toString().trim());
-        nAddress.setPostCode(jobPostcode.getText().toString().trim());
-        nJob.setAddress(nAddress);
-
-//        nManager.setName(oManager.getName());
-//        nManager.setSurname(oManager.getSurname());
-//        nManager.setEmailAddress(oManager.getEmailAddress());
-        nJob.setProjectManager(nManager);
-
-        databaseReference.child(nJob.getJobNumber()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                if(dataSnapshot.exists()){
-                    databaseReference.child(oJob.getJobNumber()).setValue(oJob);
-                    Toast.makeText(EditJob.this,getString(R.string.already_exists),Toast.LENGTH_LONG).show();
-                }
-                else {
-                    databaseReference.child(nJob.getJobNumber()).setValue(nJob);
-                    Intent i = new Intent(getApplicationContext(),FindJobActivity.class);
-                    startActivity(i);
-                    finish();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        removeOldJob();
+        createNewJobObject();
+        checkIfNewJobAlreadyExistsAndSave();
 
     }
 
