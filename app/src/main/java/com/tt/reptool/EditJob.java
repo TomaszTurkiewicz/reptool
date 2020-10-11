@@ -300,6 +300,7 @@ public class EditJob extends AppCompatActivity {
                 managerLinearLayout.setVisibility(View.VISIBLE);
                 jobType=JobType.INSTALLATION;
                 managerList.clear();
+                managerList.add(null);
                 databaseReferenceManager.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -310,7 +311,7 @@ public class EditJob extends AppCompatActivity {
                         managerSpinnerAdapter = new ManagerSpinnerAdapter(EditJob.this, managerList);
                         jobManager.setAdapter(managerSpinnerAdapter);
                         int position = -1;
-                        for (int i = 0; i < managerList.size(); i++) {
+                        for (int i = 1; i < managerList.size(); i++) {
                             if (managerList.get(i).getName().equals(oManager.getName())
                                     &&managerList.get(i).getSurname().equals(oManager.getSurname())) {
                                 position = i;
@@ -322,9 +323,11 @@ public class EditJob extends AppCompatActivity {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 Manager clickedItem = (Manager) parent.getItemAtPosition(position);
+                                if(clickedItem!=null){
                                 nManager.setName(clickedItem.getName());
                                 nManager.setSurname(clickedItem.getSurname());
                                 nManager.setEmailAddress(clickedItem.getEmailAddress());
+                                }
                             }
 
                             @Override
