@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -47,10 +48,11 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
 
         private static final int START_TIME = 0;
         private static final int END_TIME = 1;
-        private TextView startDate, startTime, endTime, jobOverview1;
+        private TextView startDate, startTime, endTime, jobOverview1, jobOverview2;
         private EditText jobDescription1, info1, accidents1;
-        private Spinner jobNumberSpinner1, dayTypeSpinner1;
-        private Spinner jobNumberSpinner2, dayTypeSpinner2;
+        private EditText jobDescription2, info2, accidents2;
+        private Spinner jobNumberSpinner1;
+        private Spinner jobNumberSpinner2;
         private FirebaseDatabase firebaseDatabase;
         private DatabaseReference databaseReferenceJob;
         private DatabaseReference databaseReferenceJobMaintenance;
@@ -62,13 +64,16 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         private int flag;
         private List<Job> jobList = new ArrayList<>();
         private JobSpinnerAdapter jobSpinnerAdapter;
+        private JobSpinnerAdapter jobSpinnerAdapter2;
         private Job job1 = new Job();
-        private Type type1;
+        private Job job2 = new Job();
+        private Type type1, type2;
         private LinearLayout jobSpinnerLinearLayout1, jobOverviewLinearLayout1, descriptionLinearLayout1,
                 jobInfoLinearLayout1, accidentsLinearLayout1;
         private LinearLayout workReport2, workReport3, workReport4, workReport5;
         private Button addWorkReport;
         private int workReportCounter;
+        private RadioButton radioButtonWork1, radioButtonWork2;
 
 
 
@@ -105,12 +110,12 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         jobDescription1 = findViewById(R.id.jobDescriptionActivityDailyReport1);
         info1 = findViewById(R.id.jobInfoActivityDailyReport1);
         accidents1 = findViewById(R.id.jobAccidentsActivityDailyReport1);
-        dayTypeSpinner1 = findViewById(R.id.spinnerDayType1);
         jobSpinnerLinearLayout1 = findViewById(R.id.jobSpinnerLinearLayout1);
         jobOverviewLinearLayout1 = findViewById(R.id.jobOverviewLinearLayout1);
         descriptionLinearLayout1 = findViewById(R.id.descriptionLinearLayout1);
         jobInfoLinearLayout1 = findViewById(R.id.jobInfoLinearLayout1);
         accidentsLinearLayout1 = findViewById(R.id.accidentsLinearLayout1);
+        radioButtonWork1 = findViewById(R.id.workRadioButtonWorkReport1);
         workReport2 = findViewById(R.id.workReport2);
         workReport3 = findViewById(R.id.workReport3);
         workReport4 = findViewById(R.id.workReport4);
@@ -121,33 +126,9 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         workReport4.setVisibility(View.GONE);
         workReport5.setVisibility(View.GONE);
         workReportCounter=1;
+        radioButtonWork1.setChecked(true);
+        type1=Type.WORK;
 
-
-        dayTypeSpinner1.setAdapter(new ArrayAdapter<Type>(this, android.R.layout.simple_spinner_item, Type.values()));
-        dayTypeSpinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                type1 = (Type)parent.getItemAtPosition(position);
-                if (type1==Type.WORK){
-                    setWorkReportLayout();
-                }
-                else if(type1 == Type.DAY_OFF){
-                    setDayOffReportLayout();
-                }
-                else if(type1 == Type.TRAINING){
-                    setTrainingReportLayout();
-                }
-                else if(type1 == Type.BANK_HOLIDAY){
-                    setBankHolidayReportLayout();
-                }
-                else;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         calendar = Calendar.getInstance();
         calendarEnd = Calendar.getInstance();
@@ -492,12 +473,14 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
             if(type1==Type.TRAINING){
                 if(!TextUtils.isEmpty(desc)) {
                     enableWorkReport2();
+                    workReportCounter=2;
                 }else{
                     Toast.makeText(this,R.string.empty_fields,Toast.LENGTH_LONG).show();
                 }
             }else if(type1==Type.WORK){
                 if(!TextUtils.isEmpty(desc)&&!job1.getAddress().getName().isEmpty()){
                     enableWorkReport2();
+                    workReportCounter=2;
                 }else{
                     Toast.makeText(this,R.string.empty_fields,Toast.LENGTH_LONG).show();
                 }
@@ -507,11 +490,129 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
 
     private void enableWorkReport2() {
         workReport2.setVisibility(View.VISIBLE);
+        type2=Type.WORK;
+        radioButtonWork2 = findViewById(R.id.workRadioButtonWorkReport2);
+        radioButtonWork2.setChecked(true);
+        jobOverview2 = findViewById(R.id.jobOverview2);
+
+        jobNumberSpinner2 = (Spinner)findViewById(R.id.jobNumberSpinner2);
+        jobSpinnerAdapter2 = new JobSpinnerAdapter(DailyReportActivity.this,jobList);
+        jobNumberSpinner2.setAdapter(jobSpinnerAdapter2);
+        jobNumberSpinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Job clickedItem = (Job)parent.getItemAtPosition(position);
+
+                if (clickedItem!=null){
+
+                    job2=clickedItem;
+
+                    String overview = "";
+                    if(job2.getJobNumber()!=null){
+                        overview=overview+job2.getJobNumber()+" ";
+                    }
+                    if(job2.getProjectManager()!=null){
+                        overview=overview+job2.getProjectManager().getName()+" "+job2.getProjectManager().getSurname()+" ";
+                    }
+                    overview = overview+job2.getAddress().getName()+" "
+                            +job2.getAddress().getStreet()+" "
+                            +job2.getAddress().getPostCode()+" ";
+                    if(job2.getJobType()!=null&&job2.getJobType()!=JobType.INSTALLATION){
+                        overview=overview+job2.getJobType();
+                    }
+
+
+                    jobOverview2.setText(overview);
+                }
+                else{
+                    job2.setJobNumber("");
+                    job2.setAddress(new Address("",
+                            "",
+                            ""));
+                    job2.setShortDescription("");
+                    job2.setProjectManager(new Manager("",
+                            "",
+                            ""));
+                    jobOverview2.setText(job2.getJobNumber()+" "
+                            +job2.getProjectManager().getName()+" "
+                            +job2.getProjectManager().getSurname()+" "
+                            +job2.getAddress().getName()+" "
+                            +job2.getAddress().getStreet()+" "
+                            +job2.getAddress().getPostCode());
+                }
+
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
         //todo finish
         // to do change spinner type to radio buttons
         // todo only two buttons when work report 2 and above
     }
+
+    public void onRadioButtonClickedWorkReport1(View view) {
+        boolean checked = ((RadioButton)view).isChecked();
+        switch (view.getId()){
+            case R.id.workRadioButtonWorkReport1:
+                if(checked){
+                    type1=Type.WORK;
+                    setWorkReportLayout();
+                }
+                break;
+            case R.id.trainingRadioButtonWorkReport1:
+                if(checked){
+                    type1=Type.TRAINING;
+                    setTrainingReportLayout();
+                }
+                break;
+            case R.id.dayOffRadioButtonWorkReport1:
+                if(checked){
+                    type1=Type.DAY_OFF;
+                    setDayOffReportLayout();
+                }
+                break;
+            case R.id.bankHolidayRadioButtonWorkReport1:
+                if(checked){
+                    type1=Type.BANK_HOLIDAY;
+                    setBankHolidayReportLayout();
+                }
+                break;
+        }
+    }
+
+    public void onRadioButtonClickedWorkReport2(View view) {
+        boolean checked = ((RadioButton)view).isChecked();
+        switch (view.getId()){
+            case R.id.workRadioButtonWorkReport2:
+                if(checked){
+                    type2=Type.WORK;
+                    setWorkReportLayout2();
+                }
+                break;
+            case R.id.trainingRadioButtonWorkReport2:
+                if(checked){
+                    type2=Type.TRAINING;
+                    setTrainingReportLayout2();
+                }
+                break;
+        }
+    }
+
+    private void setTrainingReportLayout2() {
+//todo
+    }
+
+    private void setWorkReportLayout2() {
+// todo
+    }
 }
+
 
 // todo add floating button to add another job
 // todo check if first job is complited before adding new one
