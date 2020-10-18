@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -80,43 +81,50 @@ public class RecyclerViewAdapterWeeklyReports extends RecyclerView.Adapter<Recyc
         }else{
             holder.reportDescription.setText(wRepList.get(position).getWorkReport().getType().name());
         }
-//        holder.reportJobNumber.setText(wRepList.get(position).getJob().getJobNumber());
 
- /*       if(wRepList.get(position).getType()== Type.WORK){
-            holder.reportJobNumber.setText(wRepList.get(position).getWorkReport().getJob().getJobNumber());
-        }
-        else{
-            holder.reportJobNumber.setVisibility(View.GONE);
-        }
-
-//        holder.reportName.setText(wRepList.get(position).getJob().getAddress().getName());
-
-        if(wRepList.get(position).getType()== Type.WORK){
-            holder.reportName.setText(wRepList.get(position).getWorkReport().getJob().getAddress().getName());
-        }
-        else{
-            holder.reportName.setVisibility(View.GONE);
-        }
+        if(wRepList.get(position).getWorkReport2()!=null){
 
 
-//        holder.reportAddress.setText(wRepList.get(position).getJob().getAddress().getFullAddress());
+            if(wRepList.get(position).getWorkReport2().getType()== Type.WORK){
+                holder.reportJobNumber2.setText(wRepList.get(position).getWorkReport2().getJob().getJobNumber());
+            }
+            else{
+                holder.reportJobNumber2.setVisibility(View.GONE);
+            }
 
-        if(wRepList.get(position).getType()== Type.WORK){
-            holder.reportAddress.setText(wRepList.get(position).getWorkReport().getJob().getAddress().getFullAddress());
-        }
-        else{
-            holder.reportAddress.setVisibility(View.GONE);
-        }
+            if(wRepList.get(position).getWorkReport2().getType()== Type.WORK){
+                holder.reportName2.setText(wRepList.get(position).getWorkReport2().getJob().getAddress().getName());
+            }
+            else{
+                holder.reportName2.setVisibility(View.GONE);
+            }
 
-//        holder.reportDescription.setText(wRepList.get(position).getDescription());
+            if(wRepList.get(position).getWorkReport2().getType()== Type.WORK){
+                holder.reportAddress2.setText(wRepList.get(position).getWorkReport2().getJob().getAddress().fullAddress());
+            }
+            else{
+                holder.reportAddress2.setVisibility(View.GONE);
+            }
 
-        if(wRepList.get(position).getType()== Type.WORK){
-            holder.reportDescription.setText(wRepList.get(position).getWorkReport().getDescription());
+            if(wRepList.get(position).getWorkReport2().getType()==Type.WORK) {
+                holder.reportDescription2.setText(wRepList.get(position).getWorkReport2().getDescription());
+            }
+            else if(wRepList.get(position).getWorkReport2().getType()==Type.TRAINING){
+                holder.reportDescription2.setText(wRepList.get(position).getWorkReport2().getType().name()+"\n"+
+                        wRepList.get(position).getWorkReport2().getDescription());
+            }else{
+                holder.reportDescription.setText(wRepList.get(position).getWorkReport().getType().name());
+            }
+
+
+
+
+
+        }else{
+            holder.jobNumberAndName2.setVisibility(View.GONE);
+            holder.reportAddress2.setVisibility(View.GONE);
+            holder.reportDescription2.setVisibility(View.GONE);
         }
-        else{
-            holder.reportDescription.setVisibility(View.GONE);
-        }
-*/
     }
 
     @Override
@@ -129,6 +137,8 @@ public class RecyclerViewAdapterWeeklyReports extends RecyclerView.Adapter<Recyc
         ConstraintLayout reportLayout;
         TextView reportDate, reportTimeIn, reportTimeOut, reportJobNumber, reportName, reportAddress, reportDescription;
         ImageView reportDeleteImage, reportEditImage;
+        LinearLayout jobNumberAndName2;
+        TextView reportJobNumber2, reportName2, reportAddress2, reportDescription2;
 
         public ViewH(@NonNull View itemView) {
             super(itemView);
@@ -142,6 +152,11 @@ public class RecyclerViewAdapterWeeklyReports extends RecyclerView.Adapter<Recyc
             reportDescription = itemView.findViewById(R.id.descriptionLayoutWeeklyReport);
             reportDeleteImage = itemView.findViewById(R.id.imageDeleteLayoutWeeklyReport);
             reportEditImage = itemView.findViewById(R.id.imageEditLayoutWeeklyReport);
+            jobNumberAndName2 = itemView.findViewById(R.id.jobNumberAndNameLinearLayoutLayoutWeeklyReport2);
+            reportJobNumber2 = itemView.findViewById(R.id.jobNumberLayoutWeeklyReport2);
+            reportName2 = itemView.findViewById(R.id.nameLayoutWeeklyReport2);
+            reportAddress2 = itemView.findViewById(R.id.addressLayoutWeeklyReport2);
+            reportDescription2 = itemView.findViewById(R.id.descriptionLayoutWeeklyReport2);
 
             reportDeleteImage.setOnClickListener(new View.OnClickListener(){
                 @Override
