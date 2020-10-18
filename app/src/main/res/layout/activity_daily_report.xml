@@ -117,11 +117,12 @@
         android:text="@string/job"
         android:layout_margin="@dimen/margin"/>
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin"
-        android:id="@+id/jobNumberSpinner1"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CHOOSE"
+            android:layout_margin="@dimen/margin"
+            android:onClick="chooseJobOnClick"/>
 
 
 </LinearLayout>
@@ -244,11 +245,12 @@
             android:text="@string/job"
             android:layout_margin="@dimen/margin"/>
 
-        <Spinner
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="CHOOSE"
             android:layout_margin="@dimen/margin"
-            android:id="@+id/jobNumberSpinner2"/>
+            android:onClick="chooseJobOnClick"/>
 
 
     </LinearLayout>

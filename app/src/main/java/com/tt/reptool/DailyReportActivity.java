@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tt.reptool.Singletons.JobSingleton;
 import com.tt.reptool.adapters.JobSpinnerAdapter;
 import com.tt.reptool.fragments.DatePickerFragment;
 import com.tt.reptool.fragments.TimeStartPickerFragment;
@@ -51,25 +52,20 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         private TextView startDate, startTime, endTime, jobOverview1, jobOverview2;
         private EditText jobDescription1, info1, accidents1;
         private EditText jobDescription2, info2, accidents2;
-        private Spinner jobNumberSpinner1;
-        private Spinner jobNumberSpinner2;
+
+
         private FirebaseDatabase firebaseDatabase;
-        private DatabaseReference databaseReferenceJob;
-        private DatabaseReference databaseReferenceJobMaintenance;
-        private DatabaseReference databaseReferenceJobService;
-        private DatabaseReference databaseReferenceJobCallOut;
         private DatabaseReference databaseReferenceWeeklyReports;
         private DatabaseReference databaseReferenceAllReports;
         private Calendar calendar, calendarEnd;
         private int flag;
         private List<Job> jobList = new ArrayList<>();
-        private JobSpinnerAdapter jobSpinnerAdapter;
-        private JobSpinnerAdapter jobSpinnerAdapter2;
         private Job job1 = new Job();
         private Job job2 = new Job();
         private Type type1, type2;
         private LinearLayout jobSpinnerLinearLayout1, jobOverviewLinearLayout1, descriptionLinearLayout1,
-                jobInfoLinearLayout1, accidentsLinearLayout1;
+                jobInfoLinearLayout1, accidentsLinearLayout1, jobOverviewLinearLayout2;
+
         private LinearLayout workReport2LinearLayout, workReport3LinearLayout, workReport4LinearLayout, workReport5LinearLayout;
         private Button addWorkReport;
         private int workReportCounter;
@@ -115,6 +111,7 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         accidents1 = findViewById(R.id.jobAccidentsActivityDailyReport1);
         jobSpinnerLinearLayout1 = findViewById(R.id.jobSpinnerLinearLayout1);
         jobOverviewLinearLayout1 = findViewById(R.id.jobOverviewLinearLayout1);
+        jobOverviewLinearLayout1.setVisibility(View.GONE);
         descriptionLinearLayout1 = findViewById(R.id.descriptionLinearLayout1);
         jobInfoLinearLayout1 = findViewById(R.id.jobInfoLinearLayout1);
         accidentsLinearLayout1 = findViewById(R.id.accidentsLinearLayout1);
@@ -144,134 +141,9 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         startTime.setText(showTime(calendar));
         endTime.setText(showTime(calendarEnd));
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReferenceJob=firebaseDatabase.getReference(getString(R.string.firebasepath_job));
-        databaseReferenceJobMaintenance=firebaseDatabase.getReference(getString(R.string.firebasepath_job_maintenance));
-        databaseReferenceJobService=firebaseDatabase.getReference(getString(R.string.firebasepath_job_service));
-        databaseReferenceJobCallOut=firebaseDatabase.getReference(getString(R.string.firebasepath_job_callout));
         jobList.clear();
         jobList.add(null);
-        databaseReferenceJob.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ps : dataSnapshot.getChildren()){
-                    Job jobTemp = ps.getValue(Job.class);
-                    jobList.add(jobTemp);
-                }
 
-             databaseReferenceJobMaintenance.addListenerForSingleValueEvent(new ValueEventListener() {
-                 @Override
-                 public void onDataChange(@NonNull DataSnapshot dataSnapshotMaintenance) {
-                     for(DataSnapshot ps : dataSnapshotMaintenance.getChildren()){
-                         Job jobTemp = ps.getValue(Job.class);
-                         jobList.add(jobTemp);
-                     }
-
-                     databaseReferenceJobService.addListenerForSingleValueEvent(new ValueEventListener() {
-                         @Override
-                         public void onDataChange(@NonNull DataSnapshot dataSnapshotService) {
-                             for(DataSnapshot ps : dataSnapshotService.getChildren()){
-                                 Job jobTemp = ps.getValue(Job.class);
-                                 jobList.add(jobTemp);
-                             }
-
-                             databaseReferenceJobCallOut.addListenerForSingleValueEvent(new ValueEventListener() {
-                                 @Override
-                                 public void onDataChange(@NonNull DataSnapshot dataSnapshotCallOut) {
-                                     for(DataSnapshot ps : dataSnapshotCallOut.getChildren()){
-                                         Job jobTemp = ps.getValue(Job.class);
-                                         jobList.add(jobTemp);
-                                     }
-
-                                     jobNumberSpinner1 = (Spinner)findViewById(R.id.jobNumberSpinner1);
-                                     jobSpinnerAdapter = new JobSpinnerAdapter(DailyReportActivity.this,jobList);
-                                     jobNumberSpinner1.setAdapter(jobSpinnerAdapter);
-                                     jobNumberSpinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                         @Override
-                                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                             Job clickedItem = (Job)parent.getItemAtPosition(position);
-
-                                             if (clickedItem!=null){
-
-                                                 job1=clickedItem;
-
-                                                 String overview = "";
-                                                 if(job1.getJobNumber()!=null){
-                                                     overview=overview+job1.getJobNumber()+" ";
-                                                 }
-                                                 if(job1.getProjectManager()!=null){
-                                                     overview=overview+job1.getProjectManager().getName()+" "+job1.getProjectManager().getSurname()+" ";
-                                                 }
-                                                 overview = overview+job1.getAddress().getName()+" "
-                                                         +job1.getAddress().getStreet()+" "
-                                                         +job1.getAddress().getPostCode()+" ";
-                                                 if(job1.getJobType()!=null&&job1.getJobType()!=JobType.INSTALLATION){
-                                                     overview=overview+job1.getJobType();
-                                                 }
-
-
-                                                 jobOverview1.setText(overview);
-                                             }
-                                             else{
-                                                 job1.setJobNumber("");
-                                                 job1.setAddress(new Address("",
-                                                         "",
-                                                         ""));
-                                                 job1.setShortDescription("");
-                                                 job1.setProjectManager(new Manager("",
-                                                         "",
-                                                         ""));
-                                                 jobOverview1.setText(job1.getJobNumber()+" "
-                                                         +job1.getProjectManager().getName()+" "
-                                                         +job1.getProjectManager().getSurname()+" "
-                                                         +job1.getAddress().getName()+" "
-                                                         +job1.getAddress().getStreet()+" "
-                                                         +job1.getAddress().getPostCode());
-                                             }
-
-                                         }
-
-
-                                         @Override
-                                         public void onNothingSelected(AdapterView<?> parent) {
-
-                                         }
-                                     });
-
-                                 }
-
-                                 @Override
-                                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                 }
-                             });
-                         }
-
-                         @Override
-                         public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                         }
-                     });
-
-
-
-
-
-                 }
-
-                 @Override
-                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                 }
-             });
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
 
         endTime.setOnClickListener(new View.OnClickListener() {
@@ -465,7 +337,7 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
 
     public void setWorkReportLayout(){
         jobSpinnerLinearLayout1.setVisibility(View.VISIBLE);
-        jobOverviewLinearLayout1.setVisibility(View.VISIBLE);
+        jobOverviewLinearLayout1.setVisibility(View.GONE);
         descriptionLinearLayout1.setVisibility(View.VISIBLE);
         jobInfoLinearLayout1.setVisibility(View.VISIBLE);
         accidentsLinearLayout1.setVisibility(View.VISIBLE);
@@ -539,63 +411,8 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         radioButtonWork2 = findViewById(R.id.workRadioButtonWorkReport2);
         radioButtonWork2.setChecked(true);
         jobOverview2 = findViewById(R.id.jobOverview2);
-
-        jobNumberSpinner2 = (Spinner)findViewById(R.id.jobNumberSpinner2);
-        jobSpinnerAdapter2 = new JobSpinnerAdapter(DailyReportActivity.this,jobList);
-        jobNumberSpinner2.setAdapter(jobSpinnerAdapter2);
-        jobNumberSpinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Job clickedItem = (Job)parent.getItemAtPosition(position);
-
-                if (clickedItem!=null){
-
-                    job2=clickedItem;
-
-                    String overview = "";
-                    if(job2.getJobNumber()!=null){
-                        overview=overview+job2.getJobNumber()+" ";
-                    }
-                    if(job2.getProjectManager()!=null){
-                        overview=overview+job2.getProjectManager().getName()+" "+job2.getProjectManager().getSurname()+" ";
-                    }
-                    overview = overview+job2.getAddress().getName()+" "
-                            +job2.getAddress().getStreet()+" "
-                            +job2.getAddress().getPostCode()+" ";
-                    if(job2.getJobType()!=null&&job2.getJobType()!=JobType.INSTALLATION){
-                        overview=overview+job2.getJobType();
-                    }
-
-
-                    jobOverview2.setText(overview);
-                }
-                else{
-                    job2.setJobNumber("");
-                    job2.setAddress(new Address("",
-                            "",
-                            ""));
-                    job2.setShortDescription("");
-                    job2.setProjectManager(new Manager("",
-                            "",
-                            ""));
-                    jobOverview2.setText(job2.getJobNumber()+" "
-                            +job2.getProjectManager().getName()+" "
-                            +job2.getProjectManager().getSurname()+" "
-                            +job2.getAddress().getName()+" "
-                            +job2.getAddress().getStreet()+" "
-                            +job2.getAddress().getPostCode());
-                }
-
-            }
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
+        jobOverviewLinearLayout2 = findViewById(R.id.jobOverviewLinearLayout2);
+        jobOverviewLinearLayout2.setVisibility(View.GONE);
         jobDescription2 = findViewById(R.id.jobDescriptionActivityDailyReport2);
         info2 = findViewById(R.id.jobInfoActivityDailyReport2);
         accidents2 = findViewById(R.id.jobAccidentsActivityDailyReport2);
@@ -660,6 +477,60 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
 
     private void setWorkReportLayout2() {
 // todo
+    }
+
+    public void chooseJobOnClick(View view) {
+        Intent intent = new Intent(this,JobsToChoose.class);
+        startActivityForResult(intent,1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            if(workReportCounter==1) {
+                job1 = JobSingleton.getInstance().readJobFromSingleton();
+                jobOverviewLinearLayout1.setVisibility(View.VISIBLE);
+                String overview = "";
+                if (job1.getJobNumber() != null) {
+                    overview = overview + job1.getJobNumber() + " ";
+                }
+                if (job1.getProjectManager() != null) {
+                    overview = overview + job1.getProjectManager().getName() + " " + job1.getProjectManager().getSurname() + " ";
+                }
+                overview = overview + job1.getAddress().getName() + " "
+                        + job1.getAddress().getStreet() + " "
+                        + job1.getAddress().getPostCode() + " ";
+                if (job1.getJobType() != null && job1.getJobType() != JobType.INSTALLATION) {
+                    overview = overview + job1.getJobType();
+                }
+
+
+                jobOverview1.setText(overview);
+            }
+            else if(workReportCounter==2){
+                job2 = JobSingleton.getInstance().readJobFromSingleton();
+                jobOverviewLinearLayout2.setVisibility(View.VISIBLE);
+                String overview = "";
+                if (job2.getJobNumber() != null) {
+                    overview = overview + job2.getJobNumber() + " ";
+                }
+                if (job2.getProjectManager() != null) {
+                    overview = overview + job2.getProjectManager().getName() + " " + job2.getProjectManager().getSurname() + " ";
+                }
+                overview = overview + job2.getAddress().getName() + " "
+                        + job2.getAddress().getStreet() + " "
+                        + job2.getAddress().getPostCode() + " ";
+                if (job2.getJobType() != null && job2.getJobType() != JobType.INSTALLATION) {
+                    overview = overview + job2.getJobType();
+                }
+
+
+                jobOverview2.setText(overview);
+            }
+
+
+        }
     }
 }
 
