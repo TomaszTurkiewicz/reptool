@@ -10,13 +10,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditDailyReport"
+        <activity android:name=".JobsToChoose"></activity>
+        <activity
+            android:name=".EditDailyReport"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".WeeklyReportsActivity"
+        <activity
+            android:name=".WeeklyReportsActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".AllReportsActivity"
+        <activity
+            android:name=".AllReportsActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
@@ -27,7 +31,6 @@
             android:name=".EditJob"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-
         <activity
             android:name=".FindJobActivity"
             android:screenOrientation="portrait"
