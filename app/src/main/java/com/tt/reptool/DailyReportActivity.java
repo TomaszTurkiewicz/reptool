@@ -70,10 +70,13 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         private Type type1, type2;
         private LinearLayout jobSpinnerLinearLayout1, jobOverviewLinearLayout1, descriptionLinearLayout1,
                 jobInfoLinearLayout1, accidentsLinearLayout1;
-        private LinearLayout workReport2, workReport3, workReport4, workReport5;
+        private LinearLayout workReport2LinearLayout, workReport3LinearLayout, workReport4LinearLayout, workReport5LinearLayout;
         private Button addWorkReport;
         private int workReportCounter;
         private RadioButton radioButtonWork1, radioButtonWork2;
+        private WorkReport workReport1 = new WorkReport();
+        private WorkReport workReport2 = new WorkReport();
+
 
 
 
@@ -116,15 +119,15 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         jobInfoLinearLayout1 = findViewById(R.id.jobInfoLinearLayout1);
         accidentsLinearLayout1 = findViewById(R.id.accidentsLinearLayout1);
         radioButtonWork1 = findViewById(R.id.workRadioButtonWorkReport1);
-        workReport2 = findViewById(R.id.workReport2);
-        workReport3 = findViewById(R.id.workReport3);
-        workReport4 = findViewById(R.id.workReport4);
-        workReport5 = findViewById(R.id.workReport5);
+        workReport2LinearLayout = findViewById(R.id.workReport2);
+        workReport3LinearLayout = findViewById(R.id.workReport3);
+        workReport4LinearLayout = findViewById(R.id.workReport4);
+        workReport5LinearLayout = findViewById(R.id.workReport5);
         addWorkReport = findViewById(R.id.addWorkReport);
-        workReport2.setVisibility(View.GONE);
-        workReport3.setVisibility(View.GONE);
-        workReport4.setVisibility(View.GONE);
-        workReport5.setVisibility(View.GONE);
+        workReport2LinearLayout.setVisibility(View.GONE);
+        workReport3LinearLayout.setVisibility(View.GONE);
+        workReport4LinearLayout.setVisibility(View.GONE);
+        workReport5LinearLayout.setVisibility(View.GONE);
         workReportCounter=1;
         radioButtonWork1.setChecked(true);
         type1=Type.WORK;
@@ -360,38 +363,70 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
 
         DateAndTime endTime = new DateAndTime();
         endTime.setDateAndTime(calendarEnd);
-        String jInfo = info1.getText().toString().trim();
-        String acc = accidents1.getText().toString().trim();
-        String desc = jobDescription1.getText().toString().trim();
 
-        if(type1==Type.BANK_HOLIDAY){
-            storeData(startTime,endTime,desc,jInfo,acc);
-        }
-        else if(type1==Type.DAY_OFF){
-            storeData(startTime,endTime,desc,jInfo,acc);
-        }
-        else if(type1==Type.TRAINING){
+        if(workReportCounter==1){
+            String jInfo = info1.getText().toString().trim();
+            String acc = accidents1.getText().toString().trim();
+            String desc = jobDescription1.getText().toString().trim();
+            if(type1==Type.BANK_HOLIDAY||type1==Type.DAY_OFF){
+                setWorkReport(workReport1,null,null,null,null,type1);
+                storeData(startTime,endTime,workReport1,null);
+            }
+            else if(type1==Type.TRAINING){
                 if(!TextUtils.isEmpty(desc)) {
-                    desc = jobDescription1.getText().toString().trim();
-                    storeData(startTime,endTime,desc,jInfo,acc);
+                    setWorkReport(workReport1,null,desc,null,null,type1);
+                    storeData(startTime,endTime,workReport1,null);
                 }else{
                     Toast.makeText(this,R.string.empty_fields,Toast.LENGTH_LONG).show();
                 }
-        }
-        else{
-            if(!TextUtils.isEmpty(desc)&&!job1.getAddress().getName().isEmpty()){
-                desc = jobDescription1.getText().toString().trim();
-                storeData(startTime,endTime,desc,jInfo,acc);
-            }else{
-                Toast.makeText(this,R.string.empty_fields,Toast.LENGTH_LONG).show();
             }
+            else{
+                if(!TextUtils.isEmpty(desc)&&!job1.getAddress().getName().isEmpty()){
+                    setWorkReport(workReport1,job1,desc,jInfo,acc,type1);
+                    storeData(startTime,endTime,workReport1,null);
+                }else{
+                    Toast.makeText(this,R.string.empty_fields,Toast.LENGTH_LONG).show();
+                }
+            }
+
         }
+
+        else if(workReportCounter==2){
+            String jInfo = info2.getText().toString().trim();
+            String acc = accidents2.getText().toString().trim();
+            String desc = jobDescription2.getText().toString().trim();
+            if(type2==Type.BANK_HOLIDAY||type2==Type.DAY_OFF){
+                setWorkReport(workReport2,null,null,null,null,type2);
+                storeData(startTime,endTime,workReport1, workReport2);
+            }
+            else if(type2==Type.TRAINING){
+                if(!TextUtils.isEmpty(desc)) {
+                    setWorkReport(workReport2,null,desc,null,null,type2);
+                    storeData(startTime,endTime,workReport1, workReport2);
+                }else{
+                    Toast.makeText(this,R.string.empty_fields,Toast.LENGTH_LONG).show();
+                }
+            }
+            else{
+                if(!TextUtils.isEmpty(desc)&&!job2.getAddress().getName().isEmpty()){
+                    setWorkReport(workReport2,job2,desc,jInfo,acc,type2);
+                    storeData(startTime,endTime,workReport1, workReport2);
+                }else{
+                    Toast.makeText(this,R.string.empty_fields,Toast.LENGTH_LONG).show();
+                }
+            }
+
+        }
+
+
+
+
 
 
 
     }
-    public void storeData(DateAndTime startTime, DateAndTime endTime, String desc, String jInfo, String acc){
-        final DailyReport dailyReport = new DailyReport(startTime,endTime,new WorkReport(type1, job1, desc, jInfo, acc,true));
+    public void storeData(DateAndTime startTime, DateAndTime endTime, WorkReport workReport1, WorkReport workReport2){
+        final DailyReport dailyReport = new DailyReport(startTime,endTime,workReport1,workReport2);
 
         databaseReferenceWeeklyReports=firebaseDatabase.getReference(getString(R.string.firebasepath_weekly_reports));
         databaseReferenceAllReports=firebaseDatabase.getReference(getString(R.string.firebasepath_all_reports));
@@ -474,6 +509,7 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
                 if(!TextUtils.isEmpty(desc)) {
                     enableWorkReport2();
                     workReportCounter=2;
+                    setWorkReport(workReport1,job1,desc,null,null,type1);
                 }else{
                     Toast.makeText(this,R.string.empty_fields,Toast.LENGTH_LONG).show();
                 }
@@ -481,6 +517,7 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
                 if(!TextUtils.isEmpty(desc)&&!job1.getAddress().getName().isEmpty()){
                     enableWorkReport2();
                     workReportCounter=2;
+                    setWorkReport(workReport1,job1,desc,info1.getText().toString().trim(),accidents1.getText().toString().trim(),type1);
                 }else{
                     Toast.makeText(this,R.string.empty_fields,Toast.LENGTH_LONG).show();
                 }
@@ -488,8 +525,16 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         }
     }
 
+    private void setWorkReport(WorkReport workReport, Job job, String description, String info, String accident, Type type){
+        workReport.setJob(job);
+        workReport.setDescription(description);
+        workReport.setInfo(info);
+        workReport.setAccident(accident);
+        workReport.setType(type);
+    }
+
     private void enableWorkReport2() {
-        workReport2.setVisibility(View.VISIBLE);
+        workReport2LinearLayout.setVisibility(View.VISIBLE);
         type2=Type.WORK;
         radioButtonWork2 = findViewById(R.id.workRadioButtonWorkReport2);
         radioButtonWork2.setChecked(true);
@@ -549,6 +594,11 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
 
             }
         });
+
+
+        jobDescription2 = findViewById(R.id.jobDescriptionActivityDailyReport2);
+        info2 = findViewById(R.id.jobInfoActivityDailyReport2);
+        accidents2 = findViewById(R.id.jobAccidentsActivityDailyReport2);
 
 
         //todo finish

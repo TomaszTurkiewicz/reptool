@@ -18,7 +18,7 @@ public class DailyReport {
     private DateAndTime startTime;
     private DateAndTime endTime;
     private WorkReport workReport;
-//    private WorkReport workReport2;
+    private WorkReport workReport2;
 //    private WorkReport workReport3;
 //    private WorkReport workReport4;
 //    private WorkReport workReport5;
@@ -26,11 +26,19 @@ public class DailyReport {
     public DailyReport() {
     }
 
-    public DailyReport(DateAndTime startTime, DateAndTime endTime, WorkReport workReport) {
+    public DailyReport(DateAndTime startTime, DateAndTime endTime, WorkReport workReport, WorkReport workReport2) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.workReport = workReport;
+        this.workReport2 = workReport2;
+    }
 
+    public WorkReport getWorkReport2() {
+        return workReport2;
+    }
+
+    public void setWorkReport2(WorkReport workReport2) {
+        this.workReport2 = workReport2;
     }
 
     public WorkReport getWorkReport() {

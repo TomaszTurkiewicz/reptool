@@ -1,7 +1,6 @@
 package com.tt.reptool.javaClasses;
 
 public class WorkReport {
-    private boolean isJob;
     private Job job;
     private String description;
     private String info;
@@ -19,13 +18,13 @@ public class WorkReport {
     public WorkReport() {
     }
 
-    public WorkReport(Type type,Job job, String description, String info, String accident, boolean isJob) {
+    public WorkReport(Type type,Job job, String description, String info, String accident) {
         this.type = type;
         this.job = job;
         this.description=description;
         this.info = info;
         this.accident = accident;
-        this.isJob = isJob;
+
     }
 
     public Job getJob() {
