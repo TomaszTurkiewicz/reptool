@@ -11,7 +11,9 @@ Job:
  */
 
 
-public class Job {
+import java.io.Serializable;
+
+public class Job implements Serializable {
 
     private String jobNumber;
     private Address address;

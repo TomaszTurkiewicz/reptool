@@ -2,19 +2,28 @@ package com.tt.reptool;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.tt.reptool.Singletons.JobSingleton;
+import com.tt.reptool.javaClasses.Job;
 
 public class MainActivity extends AppCompatActivity {
 
+    private TextView tv;
+    public final static int REQ_CODE_CHILD = 1;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tv = findViewById(R.id.textviewmainactivity);
+        tv.setText("NONE");
     }
 
 
@@ -49,7 +58,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToJobToChoose(View view) {
         Intent intent = new Intent(this,JobsToChoose.class);
-        startActivity(intent);
-        finish();
+        startActivityForResult(intent,REQ_CODE_CHILD);
+    }
+
+    @SuppressLint("MissingSuperCall")
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+
+          if (requestCode == REQ_CODE_CHILD&&resultCode==RESULT_OK) {
+            Job job = JobSingleton.getInstance().readJobFromSingleton();
+
+              tv.setText(job.getJobNumber());
+          }
     }
 }

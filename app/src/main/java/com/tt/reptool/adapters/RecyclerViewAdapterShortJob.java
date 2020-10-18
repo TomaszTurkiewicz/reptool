@@ -21,6 +21,15 @@ public class RecyclerViewAdapterShortJob extends RecyclerView.Adapter<RecyclerVi
 
     private List<Job> mList;
     private Context mContext;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener{
+        void onSelectedItemClick(int position);
+    }
+
+    public void setOnSelectedItemClickListener (OnItemClickListener listener){
+        mListener=listener;
+    }
 
     public RecyclerViewAdapterShortJob(Context mContext, List<Job> mList){
         this.mList=mList;
@@ -67,9 +76,11 @@ public class RecyclerViewAdapterShortJob extends RecyclerView.Adapter<RecyclerVi
         ImageView jobDeleteImage;
         TextView jobName;
         ImageView jobFinished;
+        ConstraintLayout layout;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
+            layout = itemView.findViewById(R.id.constraintLayoutLayoutJob);
             jobNumber = itemView.findViewById(R.id.jobNumberLayoutJob);
             jobManager = itemView.findViewById(R.id.jobManagerLayoutJob);
             jobName = itemView.findViewById(R.id.jobNameLayoutJob);
@@ -84,6 +95,18 @@ public class RecyclerViewAdapterShortJob extends RecyclerView.Adapter<RecyclerVi
             jobFinished.setVisibility(View.GONE);
             jobEditImage.setVisibility(View.GONE);
             jobDeleteImage.setVisibility(View.GONE);
+
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mListener!=null){
+                        int position = getAdapterPosition();
+                        if(position!=RecyclerView.NO_POSITION){
+                            mListener.onSelectedItemClick(position);
+                        }
+                    }
+                }
+            });
 
 
         }
