@@ -83,4 +83,15 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="8dp"/>
 
+  <ImageView
+      android:id="@+id/imageFinishedJob"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/ic_job_finished"
+      app:layout_constraintEnd_toStartOf="@id/imageEditLayoutJob"
+      app:layout_constraintTop_toTopOf="parent"
+      android:layout_margin="8dp"/>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

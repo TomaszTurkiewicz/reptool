@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -52,6 +53,8 @@ public class EditJob extends AppCompatActivity {
     private List<Manager> managerList = new ArrayList<>();
     private LinearLayout jNumberLinearLayout;
     private LinearLayout managerLinearLayout;
+    private LinearLayout jobFinishedLinearLayout;
+    private CheckBox finishedJobCheckedBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,8 @@ public class EditJob extends AppCompatActivity {
         jobManager = (Spinner) findViewById(R.id.jobPMSpinner);
         jNumberLinearLayout = findViewById(R.id.jobNumberLinearLayoutEditJob);
         managerLinearLayout = findViewById(R.id.managerLinearLayoutEditJob);
+        jobFinishedLinearLayout = findViewById(R.id.linearLayoutIsJobFinished);
+        finishedJobCheckedBox = findViewById(R.id.jobFinishedCheckBox);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReferenceManager = firebaseDatabase.getReference(getString(R.string.firebasepath_manager));
         databaseReferenceJob = firebaseDatabase.getReference(getString(R.string.firebasepath_job));
@@ -210,6 +215,7 @@ public class EditJob extends AppCompatActivity {
 
                     }
                 });
+                finishedJobCheckedBox.setChecked(job.isFinished());
                 RadioButton r = findViewById(R.id.instRadioButtonEditJob);
                 r.setChecked(true);
                 break;
@@ -218,6 +224,7 @@ public class EditJob extends AppCompatActivity {
             case MAINTENANCE:{
                 jNumberLinearLayout.setVisibility(View.GONE);
                 managerLinearLayout.setVisibility(View.GONE);
+                jobFinishedLinearLayout.setVisibility(View.GONE);
                 RadioButton r = findViewById(R.id.maintRadioButtonEditJob);
                 r.setChecked(true);
                 break;
@@ -225,6 +232,7 @@ public class EditJob extends AppCompatActivity {
             case SERVICE:{
                 jNumberLinearLayout.setVisibility(View.GONE);
                 managerLinearLayout.setVisibility(View.GONE);
+                jobFinishedLinearLayout.setVisibility(View.GONE);
                 RadioButton r = findViewById(R.id.servRadioButtonEditJob);
                 r.setChecked(true);
                 break;
@@ -232,6 +240,7 @@ public class EditJob extends AppCompatActivity {
             case CALL_OUT:{
                 jNumberLinearLayout.setVisibility(View.GONE);
                 managerLinearLayout.setVisibility(View.GONE);
+                jobFinishedLinearLayout.setVisibility(View.GONE);
                 RadioButton r = findViewById(R.id.callRadioButtonEditJob);
                 r.setChecked(true);
                 break;
@@ -280,6 +289,7 @@ public class EditJob extends AppCompatActivity {
             nAddress.setPostCode(jobPostcode.getText().toString().trim());
             nJob.setAddress(nAddress);
             nJob.setProjectManager(nManager);
+            nJob.setFinished(finishedJobCheckedBox.isChecked());
         } else {
             nJob.setShortDescription(jobDescription.getText().toString().trim());
             nAddress.setName(jobClientName.getText().toString().trim());
@@ -481,6 +491,7 @@ public class EditJob extends AppCompatActivity {
             case R.id.instRadioButtonEditJob:{
                 jNumberLinearLayout.setVisibility(View.VISIBLE);
                 managerLinearLayout.setVisibility(View.VISIBLE);
+                jobFinishedLinearLayout.setVisibility(View.VISIBLE);
                 jobType=JobType.INSTALLATION;
                 managerList.clear();
                 managerList.add(null);
@@ -530,18 +541,21 @@ public class EditJob extends AppCompatActivity {
             case R.id.maintRadioButtonEditJob:{
                 jNumberLinearLayout.setVisibility(View.GONE);
                 managerLinearLayout.setVisibility(View.GONE);
+                jobFinishedLinearLayout.setVisibility(View.GONE);
                 jobType=JobType.MAINTENANCE;
                 break;
             }
             case R.id.servRadioButtonEditJob:{
                 jNumberLinearLayout.setVisibility(View.GONE);
                 managerLinearLayout.setVisibility(View.GONE);
+                jobFinishedLinearLayout.setVisibility(View.GONE);
                 jobType=JobType.SERVICE;
                 break;
             }
             case R.id.callRadioButtonEditJob:{
                 jNumberLinearLayout.setVisibility(View.GONE);
                 managerLinearLayout.setVisibility(View.GONE);
+                jobFinishedLinearLayout.setVisibility(View.GONE);
                 jobType=JobType.CALL_OUT;
                 break;
             }

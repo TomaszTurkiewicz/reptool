@@ -226,6 +226,39 @@
             />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayoutIsJobFinished">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:ignore="Suspicious0dp"
+            android:layout_weight="1"
+            android:text="finished?"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/marginHalf"
+            android:layout_marginTop="@dimen/marginHalf"
+            android:layout_marginBottom="@dimen/marginHalf"
+            android:textSize="@dimen/smallText"/>
+
+        <CheckBox
+            android:id="@+id/jobFinishedCheckBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:ignore="Suspicious0dp"
+            android:layout_weight="3"
+            android:layout_marginStart="@dimen/marginHalf"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginTop="@dimen/marginHalf"
+            android:layout_marginBottom="@dimen/margin"/>
+
+
+
+    </LinearLayout>
 </LinearLayout>
 
     <LinearLayout

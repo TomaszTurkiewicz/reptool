@@ -46,7 +46,10 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    // todo sending daily reports
-    // todo daily report with list of jobs
 
+    public void goToJobToChoose(View view) {
+        Intent intent = new Intent(this,JobsToChoose.class);
+        startActivity(intent);
+        finish();
+    }
 }

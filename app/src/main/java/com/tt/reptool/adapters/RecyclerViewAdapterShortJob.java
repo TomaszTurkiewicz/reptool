@@ -17,51 +17,33 @@ import com.tt.reptool.javaClasses.JobType;
 
 import java.util.List;
 
-public class RecyclerViewAdapterJob extends RecyclerView.Adapter<RecyclerViewAdapterJob.ViewHolder> {
+public class RecyclerViewAdapterShortJob extends RecyclerView.Adapter<RecyclerViewAdapterShortJob.ViewHolder> {
 
     private List<Job> mList;
     private Context mContext;
-    private OnItemClickListener mListener;
 
-
-
-    public interface OnItemClickListener{
-        void onDeleteClick(int position);
-        void onEditClick(int position);
+    public RecyclerViewAdapterShortJob(Context mContext, List<Job> mList){
+        this.mList=mList;
+        this.mContext=mContext;
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
-        mListener = listener;
-    }
-
-    public RecyclerViewAdapterJob(Context mContext, List<Job> mList){
-        this.mList = mList;
-        this.mContext = mContext;
-    }
     @NonNull
     @Override
-    public RecyclerViewAdapterJob.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_job,parent,false);
-        ViewHolder holder = new ViewHolder(view);
+        RecyclerViewAdapterShortJob.ViewHolder holder = new ViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapterJob.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if(mList.get(position).getJobType()==null||mList.get(position).getJobType()== JobType.INSTALLATION) {
-            if(mList.get(position).isFinished()){
-                holder.jobFinished.setVisibility(View.VISIBLE);
-            }
-            else{
-                holder.jobFinished.setVisibility(View.GONE);
-            }
             holder.jobNumber.setText(mList.get(position).getJobNumber());
             holder.jobManager.setVisibility(View.VISIBLE);
             holder.jobManager.setText(mList.get(position).getProjectManager().nameAndSurnameToString());
         }else{
             holder.jobNumber.setText(mList.get(position).getJobType().toString());
             holder.jobManager.setVisibility(View.GONE);
-            holder.jobFinished.setVisibility(View.GONE);
         }
         holder.jobName.setText(mList.get(position).getAddress().getName());
         holder.jobPostcode.setText(mList.get(position).getAddress().getPostCode());
@@ -74,9 +56,7 @@ public class RecyclerViewAdapterJob extends RecyclerView.Adapter<RecyclerViewAda
         return mList.size();
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder{
-
         TextView jobNumber;
         TextView jobManager;
         TextView jobPostcode;
@@ -99,32 +79,11 @@ public class RecyclerViewAdapterJob extends RecyclerView.Adapter<RecyclerViewAda
             jobLayout = itemView.findViewById(R.id.constraintLayoutLayoutJob);
             jobEditImage = itemView.findViewById(R.id.imageEditLayoutJob);
             jobDeleteImage = itemView.findViewById(R.id.imageDeleteLayoutJob);
+
             jobFinished = itemView.findViewById(R.id.imageFinishedJob);
-
-            jobEditImage.setOnClickListener(new View.OnClickListener(){
-
-                @Override
-                public void onClick(View v) {
-                    if(mListener != null){
-                        int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION){
-                            mListener.onEditClick(position);
-                        }
-                    }
-                }
-            });
-            jobDeleteImage.setOnClickListener(new View.OnClickListener(){
-
-                @Override
-                public void onClick(View v) {
-                    if(mListener != null){
-                        int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION){
-                            mListener.onDeleteClick(position);
-                        }
-                    }
-                }
-            });
+            jobFinished.setVisibility(View.GONE);
+            jobEditImage.setVisibility(View.GONE);
+            jobDeleteImage.setVisibility(View.GONE);
 
 
         }

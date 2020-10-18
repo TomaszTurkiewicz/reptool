@@ -18,6 +18,15 @@ public class Job {
     private String shortDescription;
     private Manager projectManager;
     private JobType jobType;
+    private boolean isFinished;
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
+    }
 
     public JobType getJobType() {
         return jobType;

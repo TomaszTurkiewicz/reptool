@@ -373,9 +373,6 @@ public class FindJobActivity extends AppCompatActivity {
 
     }
 
-    private void initlist(JobType jType) {
-
-    }
 
 
     public void onRadioButtonFindJobClicked(View view) {
