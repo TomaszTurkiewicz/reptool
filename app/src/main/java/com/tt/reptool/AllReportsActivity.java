@@ -118,16 +118,6 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
 
                                                     job=clickedItem;
 
-
-//                                                    job.setJobNumber(clickedItem.getJobNumber());
-//                                                    job.setAddress(new Address(clickedItem.getAddress().getName(),
-//                                                            clickedItem.getAddress().getStreet(),
-//                                                            clickedItem.getAddress().getPostCode()));
-//                                                    job.setShortDescription(clickedItem.getShortDescription());
-//                                                    job.setProjectManager(new Manager(clickedItem.getProjectManager().getName(),
-//                                                            clickedItem.getProjectManager().getSurname(),
-//                                                            clickedItem.getProjectManager().getEmailAddress()));
-//                                                    jobNumber=clickedItem.getJobNumber();
                                                     date.setYear(0);
                                                     date.setMonth(0);
                                                     date.setMinute(0);

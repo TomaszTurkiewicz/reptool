@@ -664,6 +664,4 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
 }
 
 
-// todo add floating button to add another job
-// todo check if first job is complited before adding new one
 // TODO change picking up job (filtering), maybe different activity?

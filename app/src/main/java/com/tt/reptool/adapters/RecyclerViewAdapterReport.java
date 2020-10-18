@@ -57,19 +57,46 @@ public class RecyclerViewAdapterReport extends RecyclerView.Adapter<RecyclerView
         }
         }
 
-        holder.reportAddress2.setVisibility(View.GONE);
+        if(repList.get(position).getWorkReport2()!=null){
+
+
+            if(repList.get(position).getWorkReport2().getType()== Type.WORK){
+                holder.reportJobNumber2.setText(repList.get(position).getWorkReport2().getJob().getJobNumber());
+                holder.reportName2.setText(repList.get(position).getWorkReport2().getJob().getAddress().getName());
+                holder.reportAddress2.setText(repList.get(position).getWorkReport2().getJob().getAddress().fullAddress());
+                holder.reportDescription2.setText(repList.get(position).getWorkReport2().getDescription());
+            }
+            else {
+                holder.reportJobNumber2.setVisibility(View.GONE);
+                holder.reportName2.setVisibility(View.GONE);
+                holder.reportAddress2.setVisibility(View.GONE);
+                if(repList.get(position).getWorkReport2().getType()==Type.TRAINING){
+                    holder.reportDescription2.setText(repList.get(position).getWorkReport2().getType().name()+"\n"+
+                            repList.get(position).getWorkReport2().getDescription());
+                }else{
+                    holder.reportDescription2.setText(repList.get(position).getWorkReport().getType().name());
+                }
+            }
+
+
+        }
+        else{
+            holder.reportAddress2.setVisibility(View.GONE);
+            holder.reportDescription2.setVisibility(View.GONE);
+            holder.reportJobNumber2.setVisibility(View.GONE);
+            holder.reportName2.setVisibility(View.GONE);
+        }
+
+
         holder.reportAddress3.setVisibility(View.GONE);
         holder.reportAddress4.setVisibility(View.GONE);
         holder.reportAddress5.setVisibility(View.GONE);
-        holder.reportDescription2.setVisibility(View.GONE);
         holder.reportDescription3.setVisibility(View.GONE);
         holder.reportDescription4.setVisibility(View.GONE);
         holder.reportDescription5.setVisibility(View.GONE);
-        holder.reportJobNumber2.setVisibility(View.GONE);
         holder.reportJobNumber3.setVisibility(View.GONE);
         holder.reportJobNumber4.setVisibility(View.GONE);
         holder.reportJobNumber5.setVisibility(View.GONE);
-        holder.reportName2.setVisibility(View.GONE);
         holder.reportName3.setVisibility(View.GONE);
         holder.reportName4.setVisibility(View.GONE);
         holder.reportName5.setVisibility(View.GONE);

@@ -79,9 +79,18 @@ public class DailyReport {
 
 
     public String reportToString(){
-        return dateToString()+"\n"+
+        String dailyReportToString = "";
+
+        dailyReportToString = dateToString()+"\n"+
                 showTimeInToString()+"-"+showTimeOutToString()+"\n"+
                 workReport.toString();
+
+        if(workReport2!=null){
+            dailyReportToString = dailyReportToString+"\n"+workReport2.toString();
+        }
+
+
+        return dailyReportToString;
     }
 
 
