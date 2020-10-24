@@ -91,6 +91,13 @@ public class JobActivity extends AppCompatActivity {
                     mList.add(manager);
                 }
 
+
+                for(int i=1;i<mList.size();i++){
+                    if(!mList.get(i).isWorking()){
+                        mList.remove(i);
+                    }
+                }
+
                 //after list is initialize load to spinner
 
                 jobPMSpinner = (Spinner)findViewById(R.id.jobPM);

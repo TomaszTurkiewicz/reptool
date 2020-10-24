@@ -124,6 +124,7 @@ public class ManagerActivity extends AppCompatActivity {
                 new ManagerDialog(mList.get(position).getName(),
                         mList.get(position).getSurname(),
                         mList.get(position).getEmailAddress(),
+                        mList.get(position).isWorking(),
                         new ManagerDialog.DialogCallback() {
                             @Override
                             public void onDialogCallback() {

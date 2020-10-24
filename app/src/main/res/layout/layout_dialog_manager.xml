@@ -24,4 +24,10 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:maxLines="1"/>
+
+    <CheckBox
+        android:id="@+id/isWorking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WORKING?"/>
 </LinearLayout>

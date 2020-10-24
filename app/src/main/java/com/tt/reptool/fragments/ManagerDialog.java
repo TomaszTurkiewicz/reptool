@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -26,20 +27,23 @@ public class ManagerDialog extends AppCompatDialogFragment {
     private EditText editTextManagerName;
     private EditText editTextManagerSurname;
     private EditText editTextManagerEmail;
+    private CheckBox checkBoxWorking;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
 
     private String name;
     private String surname;
     private String email;
+    private boolean working;
     private DialogCallback callback;
     private Manager oManager;
     private Manager nManager;
 
-    public ManagerDialog(String name, String surname, String email, DialogCallback callback) {
+    public ManagerDialog(String name, String surname, String email, boolean working, DialogCallback callback) {
         this.name = name;
         this.surname = surname;
         this.email = email;
+        this.working = working;
         this.callback = callback;
     }
 
@@ -54,6 +58,7 @@ public class ManagerDialog extends AppCompatDialogFragment {
         editTextManagerName = view.findViewById(R.id.editManagerName);
         editTextManagerSurname = view.findViewById(R.id.editManagerSurname);
         editTextManagerEmail = view.findViewById(R.id.editManagerEmail);
+        checkBoxWorking = view.findViewById(R.id.isWorking);
 
         oManager = new Manager();
         nManager = new Manager();
@@ -61,10 +66,13 @@ public class ManagerDialog extends AppCompatDialogFragment {
         oManager.setName(name);
         oManager.setSurname(surname);
         oManager.setEmailAddress(email);
+        oManager.setWorking(working);
 
         editTextManagerName.setText(name);
         editTextManagerSurname.setText(surname);
         editTextManagerEmail.setText(email);
+            checkBoxWorking.setChecked(working);
+
 
         builder.setView(view)
                 .setTitle(getString(R.string.change))
@@ -92,6 +100,8 @@ public class ManagerDialog extends AppCompatDialogFragment {
                                 .toString()
                                 .trim();
 
+                        boolean tWorking = checkBoxWorking.isChecked();
+
                         // check if fields are not empty
 
                         if(!TextUtils.isEmpty(managerName)&&
@@ -101,6 +111,7 @@ public class ManagerDialog extends AppCompatDialogFragment {
                             nManager.setName(managerName);
                             nManager.setSurname(managerSurname);
                             nManager.setEmailAddress(managerEmail);
+                            nManager.setWorking(tWorking);
                             databaseReference.child(oManager.getName() +
                                     " " + oManager.getSurname() +
                                     " " + oManager.getEmailAddress()

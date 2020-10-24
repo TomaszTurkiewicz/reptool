@@ -17,7 +17,18 @@ public class Manager {
     private String surname;
     private String emailAddress;
 
+    public boolean isWorking() {
+        return working;
+    }
+
+    public void setWorking(boolean working) {
+        this.working = working;
+    }
+
+    private boolean working;
+
     public Manager() {
+        working=true;
     }
 
     public Manager(String name, String surname, String emailAddress){

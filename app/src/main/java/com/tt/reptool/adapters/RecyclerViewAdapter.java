@@ -1,5 +1,6 @@
 package com.tt.reptool.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +13,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.collection.LLRBNode;
 import com.tt.reptool.R;
 import com.tt.reptool.javaClasses.Manager;
 
 import java.util.List;
+
+import static android.graphics.Color.TRANSPARENT;
 
 /*
     RecyclerViewAdapter for managers
@@ -51,10 +55,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return holder;
     }
 
+    @SuppressLint("ResourceType")
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
             holder.managerName.setText(mList.get(position).getName());
             holder.managerSurname.setText(mList.get(position).getSurname());
+            if(!mList.get(position).isWorking()){
+                holder.managerLayout.setBackgroundResource(R.color.colorPINK);
+            }
+            else {
+                holder.managerLayout.setBackgroundResource(TRANSPARENT);
+        }
     }
 
     @Override
