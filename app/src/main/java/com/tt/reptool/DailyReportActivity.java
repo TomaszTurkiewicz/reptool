@@ -537,6 +537,3 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         }
     }
 }
-
-
-// TODO change picking up job (filtering), maybe different activity?
