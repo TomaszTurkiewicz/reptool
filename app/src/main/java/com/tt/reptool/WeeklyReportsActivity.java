@@ -124,7 +124,7 @@ public class WeeklyReportsActivity extends AppCompatActivity {
         builder.setCancelable(true);
         builder.setTitle(R.string.deleting);
         builder.setMessage(getString(R.string.are_you_sure_you_want_delete)+"\n"+
-                wRepList.get(position).dateToString()+" "+wRepList.get(position).getWorkReport().getJob().getAddress().getName()+"?");
+                wRepList.get(position).dateToString()+"?");
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

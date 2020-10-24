@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -64,7 +65,8 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         private Job job2 = new Job();
         private Type type1, type2;
         private LinearLayout jobSpinnerLinearLayout1, jobOverviewLinearLayout1, descriptionLinearLayout1,
-                jobInfoLinearLayout1, accidentsLinearLayout1, jobOverviewLinearLayout2;
+                jobInfoLinearLayout1, accidentsLinearLayout1, jobOverviewLinearLayout2,
+    jobAccidentLinearLayout2, jobInfoLinearLayout2,jobSpinnerLinearLayout2;
 
         private LinearLayout workReport2LinearLayout, workReport3LinearLayout, workReport4LinearLayout, workReport5LinearLayout;
         private Button addWorkReport;
@@ -381,7 +383,7 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
                 if(!TextUtils.isEmpty(desc)) {
                     enableWorkReport2();
                     workReportCounter=2;
-                    setWorkReport(workReport1,job1,desc,null,null,type1);
+                    setWorkReport(workReport1,null,desc,null,null,type1);
                 }else{
                     Toast.makeText(this,R.string.empty_fields,Toast.LENGTH_LONG).show();
                 }
@@ -416,11 +418,9 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
         jobDescription2 = findViewById(R.id.jobDescriptionActivityDailyReport2);
         info2 = findViewById(R.id.jobInfoActivityDailyReport2);
         accidents2 = findViewById(R.id.jobAccidentsActivityDailyReport2);
-
-
-        //todo finish
-        // to do change spinner type to radio buttons
-        // todo only two buttons when work report 2 and above
+        jobInfoLinearLayout2=findViewById(R.id.jobInfoLinearLayout2);
+        jobAccidentLinearLayout2=findViewById(R.id.accidentsLinearLayout2);
+        jobSpinnerLinearLayout2=findViewById(R.id.jobSpinnerLinearLayout2);
     }
 
     public void onRadioButtonClickedWorkReport1(View view) {
@@ -472,11 +472,15 @@ public class DailyReportActivity extends AppCompatActivity implements DatePicker
     }
 
     private void setTrainingReportLayout2() {
-//todo
+        jobAccidentLinearLayout2.setVisibility(View.GONE);
+        jobInfoLinearLayout2.setVisibility(View.GONE);
+        jobSpinnerLinearLayout2.setVisibility(View.GONE);
     }
 
     private void setWorkReportLayout2() {
-// todo
+        jobAccidentLinearLayout2.setVisibility(View.VISIBLE);
+        jobInfoLinearLayout2.setVisibility(View.VISIBLE);
+        jobSpinnerLinearLayout2.setVisibility(View.VISIBLE);
     }
 
     public void chooseJobOnClick(View view) {
