@@ -40,6 +40,9 @@ public class RecyclerViewAdapterReport extends RecyclerView.Adapter<RecyclerView
         holder.reportTimeOut.setText(repList.get(position).showTimeOutToString());
 
         if(repList.get(position).getWorkReport().getType()== Type.WORK){
+            holder.reportJobNumber1.setVisibility(View.VISIBLE);
+            holder.reportName1.setVisibility(View.VISIBLE);
+            holder.reportAddress1.setVisibility(View.VISIBLE);
             holder.reportJobNumber1.setText(repList.get(position).getWorkReport().getJob().getJobNumber());
             holder.reportName1.setText(repList.get(position).getWorkReport().getJob().getAddress().getName());
             holder.reportAddress1.setText(repList.get(position).getWorkReport().getJob().getAddress().fullAddress());
@@ -58,6 +61,11 @@ public class RecyclerViewAdapterReport extends RecyclerView.Adapter<RecyclerView
         }
 
         if(repList.get(position).getWorkReport2()!=null){
+
+            holder.reportAddress2.setVisibility(View.VISIBLE);
+            holder.reportDescription2.setVisibility(View.VISIBLE);
+            holder.reportJobNumber2.setVisibility(View.VISIBLE);
+            holder.reportName2.setVisibility(View.VISIBLE);
 
 
             if(repList.get(position).getWorkReport2().getType()== Type.WORK){

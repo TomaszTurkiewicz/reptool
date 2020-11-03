@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.telephony.CellIdentityWcdma;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
@@ -22,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tt.reptool.adapters.JobSpinnerAdapter;
+import com.tt.reptool.adapters.RecyclerViewAdapter;
 import com.tt.reptool.adapters.RecyclerViewAdapterReport;
 import com.tt.reptool.fragments.DatePickerFragment;
 import com.tt.reptool.javaClasses.Address;
@@ -30,6 +32,7 @@ import com.tt.reptool.javaClasses.DateAndTime;
 import com.tt.reptool.javaClasses.Job;
 import com.tt.reptool.javaClasses.JobType;
 import com.tt.reptool.javaClasses.Manager;
+import com.tt.reptool.javaClasses.Type;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,8 +55,9 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
     private List<Job> jobList = new ArrayList<>();
     private JobSpinnerAdapter jobSpinnerAdapter;
     private Job job = new Job();
-    private String jobNumber;
     private DateAndTime date = new DateAndTime();
+    private RecyclerView recyclerView;
+    private RecyclerViewAdapterReport adapter;
 
 
     @Override
@@ -68,6 +72,7 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
         databaseReferenceCallOut=firebaseDatabase.getReference(getString(R.string.firebasepath_job_callout));
         dateTextView = findViewById(R.id.startDateAllReport);
         jobSpinner = findViewById(R.id.jobNumberSpinnerAllReports);
+        recyclerView = findViewById(R.id.recyclerViewAllReportsActivity);
         final DialogFragment datePicker = new DatePickerFragment();
         initReportList(rList);
         calendar = Calendar.getInstance();
@@ -192,7 +197,8 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
                     list.add(dr);
                 }
                 Collections.reverse(list);
-                initRecyclerView(list);
+                loadDataToRecyclerView(list);
+
             }
 
             @Override
@@ -202,13 +208,13 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
         });
     }
 
-    private void initRecyclerView(List<DailyReport> list) {
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewAllReportsActivity);
+    private void loadDataToRecyclerView(List<DailyReport> list) {
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),DividerItemDecoration.VERTICAL));
-        RecyclerViewAdapterReport adapter = new RecyclerViewAdapterReport(this,list);
+        adapter = new RecyclerViewAdapterReport(AllReportsActivity.this,list);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(AllReportsActivity.this));
     }
+
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -223,59 +229,68 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
         rFilterList.clear();
 
         if(date.getYear()==0){
-            if(job.getJobType()==JobType.INSTALLATION||job.getJobType()==null){
-                for(int i = 0; i<rList.size();i++){
-                    if(((rList.get(i).getWorkReport().getJob().getJobType()==JobType.INSTALLATION||
-                            rList.get(i).getWorkReport().getJob().getJobType()==null)&&
-                            rList.get(i).getWorkReport().getJob().getJobNumber().equals(job.getJobNumber()))||
-                            (rList.get(i).getWorkReport2()!=null&&(
-                                    ((rList.get(i).getWorkReport2().getJob().getJobType()==JobType.INSTALLATION||
-                                            rList.get(i).getWorkReport2().getJob().getJobType()==null)&&
-                                            rList.get(i).getWorkReport2().getJob().getJobNumber().equals(job.getJobNumber())
-                                    )))){
-                        rFilterList.add(rList.get(i));
-                    }
-                }
-            }else if(job.getJobType()==JobType.MAINTENANCE){
-                for(int i = 0; i<rList.size();i++){
-                    if((rList.get(i).getWorkReport().getJob().getJobType()==JobType.MAINTENANCE&&
-                            rList.get(i).getWorkReport().getJob().getAddress().getName().equals(job.getAddress().getName()))||
-                    rList.get(i).getWorkReport2()!=null&&(
-                            rList.get(i).getWorkReport2().getJob().getJobType()==JobType.MAINTENANCE&&
-                                    rList.get(i).getWorkReport2().getJob().getAddress().getName().equals(job.getAddress().getName()
-                            )))
-                    {
-                        rFilterList.add(rList.get(i));
-                    }
-                }
-            }
-            else if(job.getJobType()==JobType.SERVICE){
-                for(int i = 0; i<rList.size();i++){
-                    if((rList.get(i).getWorkReport().getJob().getJobType()==JobType.SERVICE&&
-                            rList.get(i).getWorkReport().getJob().getAddress().getName().equals(job.getAddress().getName()))||
-                            (rList.get(i).getWorkReport2()!=null&&(
-                                    rList.get(i).getWorkReport2().getJob().getJobType()==JobType.SERVICE&&
-                                            rList.get(i).getWorkReport2().getJob().getAddress().getName().equals(job.getAddress().getName()))))
-                    {
-                        rFilterList.add(rList.get(i));
-                    }
-                }
-            }
-            else if(job.getJobType()==JobType.CALL_OUT){
-                for(int i = 0; i<rList.size();i++){
-                    if((rList.get(i).getWorkReport().getJob().getJobType()==JobType.CALL_OUT&&
-                            rList.get(i).getWorkReport().getJob().getAddress().getName().equals(job.getAddress().getName()))||
-                            (rList.get(i).getWorkReport2()!=null&&(
-                                    rList.get(i).getWorkReport2().getJob().getJobType()==JobType.CALL_OUT&&
-                                            rList.get(i).getWorkReport2().getJob().getAddress().getName().equals(job.getAddress().getName())
-                                    )))
-                    {
-                        rFilterList.add(rList.get(i));
-                    }
-                }
-            }
+            DailyReport drtemp = new DailyReport();
+            // INSTALLATION
+            if(job.getJobType()==null||job.getJobType().equals(JobType.INSTALLATION)) {
+                for (int i = 0; i < rList.size(); i++) {
+                    drtemp = rList.get(i);
+                    // work report first, check if work (not training, day off or bank holiday)
+                    if(drtemp.getWorkReport().getType().equals(Type.WORK)){
 
+                        // check if there is a job type at all, or job type is installation
+                        if(drtemp.getWorkReport().getJob().getJobType()==null||
+                                drtemp.getWorkReport().getJob().getJobType().equals(JobType.INSTALLATION)){
 
+                            // compare job number
+                            if(drtemp.getWorkReport().getJob().getJobNumber().equals(job.getJobNumber())){
+                             rFilterList.add(drtemp);
+                            }
+                        }
+                    }
+
+                    // work report second exists
+                    if(drtemp.getWorkReport2()!=null){
+                        // work not training
+                        if(drtemp.getWorkReport2().getType().equals(Type.WORK)){
+                            // check job type (null or installation)
+                            if(drtemp.getWorkReport2().getJob().getJobType()==null||
+                                    drtemp.getWorkReport2().getJob().getJobType().equals(JobType.INSTALLATION)){
+                                // compare job number
+                                if(drtemp.getWorkReport2().getJob().getJobNumber().equals(job.getJobNumber())){
+                                    rFilterList.add(drtemp);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            // MAINTENANCE, SERVICE, CALL OUT
+            else{
+                for (int i = 0; i < rList.size(); i++){
+                    drtemp = rList.get(i);
+                    // work report first
+                    if(drtemp.getWorkReport().getType().equals(Type.WORK)){
+                        if(drtemp.getWorkReport().getJob().getJobType()!=null&&
+                                drtemp.getWorkReport().getJob().getJobType().equals(job.getJobType())){
+                            if(drtemp.getWorkReport().getJob().getAddress().fullAddress().equals(job.getAddress().fullAddress())){
+                                rFilterList.add(drtemp);
+                            }
+                        }
+                    }
+
+                    // work report second
+                    if(drtemp.getWorkReport2()!=null){
+                        if(drtemp.getWorkReport2().getType().equals(Type.WORK)){
+                            if(drtemp.getWorkReport2().getJob().getJobType()!=null&&
+                                    drtemp.getWorkReport2().getJob().getJobType().equals(job.getJobType())){
+                                if(drtemp.getWorkReport2().getJob().getAddress().fullAddress().equals(job.getAddress().fullAddress())){
+                                    rFilterList.add(drtemp);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
         else{
             for(int i = 0; i<rList.size();i++){
@@ -286,6 +301,6 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
                 }
             }
         }
-        initRecyclerView(rFilterList);
+        loadDataToRecyclerView(rFilterList);
     }
 }
