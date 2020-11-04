@@ -97,27 +97,10 @@ public class WeeklyReportsActivity extends AppCompatActivity {
                 removeWeeklyReport(position);
             }
 
-            @Override
-            public void onEditWeeklyReportClick(int position) {
-                editWeeklyReport(wRepList,position);
-            }
         });
     }
 
-    private void editWeeklyReport(List<DailyReport> wRepList, int position) {
-        String format = "%1$02d";
-        String month = String.format(format, wRepList.get(position).getStartTime().getMonth());
-        String day = String.format(format, wRepList.get(position).getStartTime().getDay());
 
-        String date = (wRepList.get(position).getStartTime().getYear())+"_"+
-                month+"_"+
-                day;
-
-        Intent intent = new Intent(this, EditDailyReport.class);
-        intent.putExtra("Date",date);
-        startActivity(intent);
-        finish();
-    }
 
     private void removeWeeklyReport(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(WeeklyReportsActivity.this);

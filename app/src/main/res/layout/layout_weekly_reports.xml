@@ -111,15 +111,6 @@
         android:layout_marginBottom="@dimen/marginHalf"
         android:text="@string/jobDescription"/>
 
-    <ImageView
-        android:id="@+id/imageEditLayoutWeeklyReport"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_edit"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/imageDeleteLayoutWeeklyReport"
-        android:layout_marginTop="@dimen/marginHalf"
-        android:layout_marginEnd="@dimen/margin2"/>
 
     <ImageView
         android:id="@+id/imageDeleteLayoutWeeklyReport"

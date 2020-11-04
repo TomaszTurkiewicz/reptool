@@ -26,7 +26,6 @@ public class RecyclerViewAdapterWeeklyReports extends RecyclerView.Adapter<Recyc
 
     public interface OnItemClickListener{
         void onDeleteWeeklyReportClick (int position);
-        void onEditWeeklyReportClick (int position);
     }
     public void setOnItemClickListener(OnItemClickListener listener){
         mListener = listener;
@@ -136,7 +135,7 @@ public class RecyclerViewAdapterWeeklyReports extends RecyclerView.Adapter<Recyc
     public class ViewH extends RecyclerView.ViewHolder {
         ConstraintLayout reportLayout;
         TextView reportDate, reportTimeIn, reportTimeOut, reportJobNumber, reportName, reportAddress, reportDescription;
-        ImageView reportDeleteImage, reportEditImage;
+        ImageView reportDeleteImage;
         LinearLayout jobNumberAndName2;
         TextView reportJobNumber2, reportName2, reportAddress2, reportDescription2;
 
@@ -151,7 +150,6 @@ public class RecyclerViewAdapterWeeklyReports extends RecyclerView.Adapter<Recyc
             reportAddress = itemView.findViewById(R.id.addressLayoutWeeklyReport);
             reportDescription = itemView.findViewById(R.id.descriptionLayoutWeeklyReport);
             reportDeleteImage = itemView.findViewById(R.id.imageDeleteLayoutWeeklyReport);
-            reportEditImage = itemView.findViewById(R.id.imageEditLayoutWeeklyReport);
             jobNumberAndName2 = itemView.findViewById(R.id.jobNumberAndNameLinearLayoutLayoutWeeklyReport2);
             reportJobNumber2 = itemView.findViewById(R.id.jobNumberLayoutWeeklyReport2);
             reportName2 = itemView.findViewById(R.id.nameLayoutWeeklyReport2);
@@ -169,19 +167,6 @@ public class RecyclerViewAdapterWeeklyReports extends RecyclerView.Adapter<Recyc
                     }
                 }
             });
-
-            reportEditImage.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-                    if(mListener != null){
-                        int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION){
-                            mListener.onEditWeeklyReportClick(position);
-                        }
-                    }
-                }
-            });
-
         }
     }
 }
