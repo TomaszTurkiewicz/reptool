@@ -72,7 +72,8 @@
         android:src="@drawable/ic_edit"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/imageDeleteLayoutJob"
-        android:layout_margin="8dp"/>
+        android:layout_margin="8dp"
+        android:contentDescription="@string/edit_job" />
 
     <ImageView
         android:id="@+id/imageDeleteLayoutJob"
@@ -81,7 +82,8 @@
         android:src="@drawable/ic_delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="8dp"/>
+        android:layout_margin="8dp"
+        android:contentDescription="@string/delete_job" />
 
   <ImageView
       android:id="@+id/imageFinishedJob"
@@ -90,7 +92,8 @@
       android:src="@drawable/ic_job_finished"
       app:layout_constraintEnd_toStartOf="@id/imageEditLayoutJob"
       app:layout_constraintTop_toTopOf="parent"
-      android:layout_margin="8dp"/>
+      android:layout_margin="8dp"
+      android:contentDescription="@string/job_finished" />
 
 
 

@@ -19,28 +19,28 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="INST"
+            android:text="@string/inst"
             android:onClick="onRadioButtonJobToChooseClicked"/>
         <RadioButton
             android:id="@+id/maintRadioButtonJobToChoose"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="MAINT"
+            android:text="@string/maint"
             android:onClick="onRadioButtonJobToChooseClicked"/>
         <RadioButton
             android:id="@+id/servRadioButtonJobToChoose"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="SERV"
+            android:text="@string/serv"
             android:onClick="onRadioButtonJobToChooseClicked"/>
         <RadioButton
             android:id="@+id/callRadioButtonJobToChoose"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="CALL"
+            android:text="@string/call"
             android:onClick="onRadioButtonJobToChooseClicked"/>
 
     </RadioGroup>

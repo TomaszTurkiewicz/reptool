@@ -22,7 +22,7 @@
         android:textSize="@dimen/TextSize"
         android:layout_margin="8dp"
         android:text="@string/surname"
-        android:layout_toRightOf="@id/managerNameLayoutManager"/>
+        android:layout_toEndOf="@id/managerNameLayoutManager"/>
 
     <ImageView
         android:id="@+id/imageEditLayoutManager"
@@ -31,7 +31,8 @@
         android:src="@drawable/ic_edit"
         android:layout_gravity="center_vertical"
         android:layout_margin="8dp"
-        android:layout_toRightOf="@id/managerSurnameLayoutManager"/>
+        android:layout_toEndOf="@id/managerSurnameLayoutManager"
+        android:contentDescription="@string/edit_manager" />
 
     <ImageView
         android:id="@+id/imageDeleteLayoutManager"
@@ -40,6 +41,7 @@
         android:src="@drawable/ic_delete"
         android:layout_gravity="center_vertical"
         android:layout_margin="8dp"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/delete_manager" />
 
 </RelativeLayout>

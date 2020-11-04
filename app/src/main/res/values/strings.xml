@@ -71,6 +71,24 @@
     <string name="no">NO</string>
     <string name="daily_report_saved">DAILY REPORT SAVED</string>
     <string name="choose_date">choose date</string>
+    <string name="training_short">TR</string>
+    <string name="day_off_short">DO</string>
+    <string name="bank_holiday_short">BH</string>
+    <string name="choose">CHOOSE</string>
+    <string name="add_mark">+</string>
+    <string name="inst">INST</string>
+    <string name="maint">MAINT</string>
+    <string name="serv">SERV</string>
+    <string name="call">CALL</string>
+    <string name="finished_question_mark">finished?</string>
+    <string name="working_question_mark">WORKING?</string>
+    <string name="edit_job">EDIT JOB</string>
+    <string name="delete_job">DELETE JOB</string>
+    <string name="job_finished">JOB FINISHED</string>
+    <string name="edit_manager">EDIT MANAGER</string>
+    <string name="delete_manager">DELETE MANAGER</string>
+    <string name="delete_daily_report">DELETE DAILY REPORT</string>
+    <string name="none">NONE</string>
 
 
     <string-array name="spinnerDailyReport">

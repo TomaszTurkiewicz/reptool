@@ -40,8 +40,7 @@ public class RecyclerViewAdapterWeeklyReports extends RecyclerView.Adapter<Recyc
     @Override
     public ViewH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_weekly_reports, parent, false);
-        ViewH holder = new ViewH(view);
-        return holder;
+        return new ViewH(view);
     }
 
     @Override

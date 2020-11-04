@@ -119,6 +119,7 @@
         android:src="@drawable/ic_delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="@dimen/marginHalf"/>
+        android:layout_margin="@dimen/marginHalf"
+        android:contentDescription="@string/delete_daily_report" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

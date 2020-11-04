@@ -9,13 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.telephony.CellIdentityWcdma;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,15 +21,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tt.reptool.adapters.JobSpinnerAdapter;
-import com.tt.reptool.adapters.RecyclerViewAdapter;
 import com.tt.reptool.adapters.RecyclerViewAdapterReport;
 import com.tt.reptool.fragments.DatePickerFragment;
-import com.tt.reptool.javaClasses.Address;
 import com.tt.reptool.javaClasses.DailyReport;
 import com.tt.reptool.javaClasses.DateAndTime;
 import com.tt.reptool.javaClasses.Job;
 import com.tt.reptool.javaClasses.JobType;
-import com.tt.reptool.javaClasses.Manager;
 import com.tt.reptool.javaClasses.Type;
 
 import java.util.ArrayList;
@@ -41,14 +36,12 @@ import java.util.List;
 
 public class AllReportsActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReferenceAllReports;
-    private List<DailyReport> rList = new ArrayList<>();
+    private final List<DailyReport> rList = new ArrayList<>();
     private List<DailyReport> rFilterList = new ArrayList<>();
     private TextView dateTextView;
     private Spinner jobSpinner;
     private Calendar calendar;
-    private DatabaseReference databaseReferenceJob;
     private DatabaseReference databaseReferenceMaintenance;
     private DatabaseReference databaseReferenceService;
     private DatabaseReference databaseReferenceCallOut;
@@ -57,19 +50,18 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
     private Job job = new Job();
     private DateAndTime date = new DateAndTime();
     private RecyclerView recyclerView;
-    private RecyclerViewAdapterReport adapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_reports);
-        firebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReferenceAllReports = firebaseDatabase.getReference(getString(R.string.firebasepath_all_reports));
-        databaseReferenceJob=firebaseDatabase.getReference(getString(R.string.firebasepath_job));
-        databaseReferenceMaintenance=firebaseDatabase.getReference(getString(R.string.firebasepath_job_maintenance));
-        databaseReferenceService=firebaseDatabase.getReference(getString(R.string.firebasepath_job_service));
-        databaseReferenceCallOut=firebaseDatabase.getReference(getString(R.string.firebasepath_job_callout));
+        DatabaseReference databaseReferenceJob = firebaseDatabase.getReference(getString(R.string.firebasepath_job));
+        databaseReferenceMaintenance= firebaseDatabase.getReference(getString(R.string.firebasepath_job_maintenance));
+        databaseReferenceService= firebaseDatabase.getReference(getString(R.string.firebasepath_job_service));
+        databaseReferenceCallOut= firebaseDatabase.getReference(getString(R.string.firebasepath_job_callout));
         dateTextView = findViewById(R.id.startDateAllReport);
         jobSpinner = findViewById(R.id.jobNumberSpinnerAllReports);
         recyclerView = findViewById(R.id.recyclerViewAllReportsActivity);
@@ -210,7 +202,7 @@ public class AllReportsActivity extends AppCompatActivity implements DatePickerD
 
     private void loadDataToRecyclerView(List<DailyReport> list) {
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),DividerItemDecoration.VERTICAL));
-        adapter = new RecyclerViewAdapterReport(AllReportsActivity.this,list);
+        RecyclerViewAdapterReport adapter = new RecyclerViewAdapterReport(AllReportsActivity.this, list);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(AllReportsActivity.this));
     }

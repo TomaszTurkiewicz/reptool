@@ -6,10 +6,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.tt.reptool.Singletons.JobSingleton;
+import com.tt.reptool.singletons.JobSingleton;
 import com.tt.reptool.javaClasses.Job;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tv = findViewById(R.id.textviewmainactivity);
-        tv.setText("NONE");
+        tv.setText(getResources().getString(R.string.none));
     }
 
 

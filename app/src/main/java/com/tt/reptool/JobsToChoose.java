@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.RadioButton;
 
@@ -16,14 +15,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.tt.reptool.Singletons.JobSingleton;
-import com.tt.reptool.adapters.JobSpinnerAdapter;
-import com.tt.reptool.adapters.RecyclerViewAdapterJob;
+import com.tt.reptool.singletons.JobSingleton;
 import com.tt.reptool.adapters.RecyclerViewAdapterShortJob;
 import com.tt.reptool.javaClasses.Job;
 import com.tt.reptool.javaClasses.JobType;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,12 +117,11 @@ public class JobsToChoose extends AppCompatActivity {
         adapter.setOnSelectedItemClickListener(new RecyclerViewAdapterShortJob.OnItemClickListener() {
             @Override
             public void onSelectedItemClick(int position) {
-                int resultCode = RESULT_OK;
                 Job job = jList.get(position);
                 JobSingleton.getInstance().saveJobToSingleton(job);
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra("KEY_GOES_HERE", true);
-                setResult(resultCode,resultIntent);
+                setResult(RESULT_OK,resultIntent);
                 finish();
             }
         });

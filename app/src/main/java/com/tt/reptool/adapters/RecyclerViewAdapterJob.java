@@ -42,8 +42,7 @@ public class RecyclerViewAdapterJob extends RecyclerView.Adapter<RecyclerViewAda
     @Override
     public RecyclerViewAdapterJob.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_job,parent,false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override

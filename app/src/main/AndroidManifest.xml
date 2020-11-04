@@ -10,11 +10,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".JobsToChoose"></activity>
         <activity
-            android:name=".EditDailyReport"
+            android:name=".JobsToChoose"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
+
         <activity
             android:name=".WeeklyReportsActivity"
             android:screenOrientation="portrait"

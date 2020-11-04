@@ -1,4 +1,4 @@
-package com.tt.reptool.Singletons;
+package com.tt.reptool.singletons;
 
 import com.tt.reptool.javaClasses.Job;
 

@@ -29,5 +29,5 @@
         android:id="@+id/isWorking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="WORKING?"/>
+        android:text="@string/working_question_mark"/>
 </LinearLayout>

@@ -22,28 +22,28 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="INST"
+            android:text="@string/inst"
             android:onClick="onRadioButtonEditJobClicked"/>
         <RadioButton
             android:id="@+id/maintRadioButtonEditJob"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="MAINT"
+            android:text="@string/maint"
             android:onClick="onRadioButtonEditJobClicked"/>
         <RadioButton
             android:id="@+id/servRadioButtonEditJob"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="SERV"
+            android:text="@string/serv"
             android:onClick="onRadioButtonEditJobClicked"/>
         <RadioButton
             android:id="@+id/callRadioButtonEditJob"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="CALL"
+            android:text="@string/call"
             android:onClick="onRadioButtonEditJobClicked"/>
 
 
@@ -238,7 +238,7 @@
             android:layout_height="wrap_content"
             tools:ignore="Suspicious0dp"
             android:layout_weight="1"
-            android:text="finished?"
+            android:text="@string/finished_question_mark"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginEnd="@dimen/marginHalf"
             android:layout_marginTop="@dimen/marginHalf"
