@@ -13,16 +13,10 @@ import com.tt.reptool.javaClasses.Job;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView tv;
-    public final static int REQ_CODE_CHILD = 1;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tv = findViewById(R.id.textviewmainactivity);
-        tv.setText(getResources().getString(R.string.none));
     }
 
 
@@ -54,20 +48,13 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-
-    public void goToJobToChoose(View view) {
-        Intent intent = new Intent(this,JobsToChoose.class);
-        startActivityForResult(intent,REQ_CODE_CHILD);
-    }
-
-    @SuppressLint("MissingSuperCall")
-    @Override
-    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
-
-          if (requestCode == REQ_CODE_CHILD&&resultCode==RESULT_OK) {
-            Job job = JobSingleton.getInstance().readJobFromSingleton();
-
-              tv.setText(job.getJobNumber());
-          }
-    }
 }
+
+/*
+*  todo zrobić kolory w aplikacji
+*   todo zmienić buttony na ładniejsze
+*    todo zmienić przycisk "+" na jakiś mniejszy
+*     todo jak zrobić żeby było widoczne kiedy wpisujesz w edit text w daily report
+*
+*
+* */

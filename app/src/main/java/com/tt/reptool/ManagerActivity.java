@@ -21,8 +21,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.tt.reptool.adapters.RecyclerViewAdapter;
 import com.tt.reptool.fragments.ManagerDialog;
 import com.tt.reptool.javaClasses.Manager;
+import com.tt.reptool.javaClasses.ManagerComparator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ManagerActivity extends AppCompatActivity {
@@ -59,6 +61,9 @@ public class ManagerActivity extends AppCompatActivity {
                     Manager tmanager = ps.getValue(Manager.class);
                     mList.add(tmanager);
                 }
+                Collections.sort(mList,new ManagerComparator());
+
+
                 initRecycleView();
             }
 
@@ -69,6 +74,8 @@ public class ManagerActivity extends AppCompatActivity {
         });
 
     }
+
+
 
     //init recyclerview with data
     private void initRecycleView() {
