@@ -5,52 +5,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorAccent">
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_gravity="center"
         android:text="@string/daily_report"
         android:id="@+id/buttonDailyReport"
-        android:layout_margin="@dimen/margin"
-        android:onClick="dailyReportOnClick"/>
+        android:onClick="dailyReportOnClick"
+        style="@style/ButtonMy"/>
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_gravity="center"
         android:text="@string/weeklyReport"
         android:id="@+id/buttonWeeklyReport"
-        android:layout_margin="@dimen/margin"
-        android:onClick="weeklyReportOnClick"/>
+        android:onClick="weeklyReportOnClick"
+        style="@style/ButtonMy"/>
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_gravity="center"
         android:text="@string/allReports"
         android:id="@+id/buttonAllReports"
-        android:layout_margin="@dimen/margin"
-        android:onClick="allReportsActivityClick"/>
+        android:onClick="allReportsActivityClick"
+        style="@style/ButtonMy"/>
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_gravity="center"
         android:text="@string/job"
         android:id="@+id/buttonJob"
-        android:layout_margin="@dimen/margin"
-        android:onClick="onJobClick"/>
+        android:onClick="onJobClick"
+        style="@style/ButtonMy"/>
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_gravity="center"
         android:text="@string/manager"
         android:id="@+id/buttonManager"
-        android:layout_margin="@dimen/margin"
-        android:onClick="onManagerClick"/>
+        android:onClick="onManagerClick"
+        style="@style/ButtonMy"/>
 
 
 

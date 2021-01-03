@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 }
 
 /*
-*  todo zrobić kolory w aplikacji
+*  todo zrobić kolory w aplikacji i lepsza grafika
 *   todo zmienić buttony na ładniejsze
 *    todo zmienić przycisk "+" na jakiś mniejszy
 *     todo jak zrobić żeby było widoczne kiedy wpisujesz w edit text w daily report

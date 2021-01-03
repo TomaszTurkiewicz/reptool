@@ -118,8 +118,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/choose"
-            android:layout_margin="@dimen/margin"
-            android:onClick="chooseJobOnClick"/>
+            android:onClick="chooseJobOnClick"
+            style="@style/ButtonMy"/>
 
 
 </LinearLayout>
