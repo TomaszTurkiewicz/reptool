@@ -330,11 +330,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <Spinner
-            android:layout_width="wrap_content"
+        <RadioGroup
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin"
-            android:id="@+id/spinnerDayType3"/>
+            android:orientation="horizontal"
+            android:id="@+id/radioGroup3">
+
+            <RadioButton
+                android:id="@+id/workRadioButtonWorkReport3"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/WORK"
+                android:onClick="onRadioButtonClickedWorkReport3"/>
+            <RadioButton
+                android:id="@+id/trainingRadioButtonWorkReport3"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/training_short"
+                android:onClick="onRadioButtonClickedWorkReport3"/>
+
+        </RadioGroup>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -348,11 +365,12 @@
                 android:text="@string/job"
                 android:layout_margin="@dimen/margin"/>
 
-            <Spinner
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/choose"
                 android:layout_margin="@dimen/margin"
-                android:id="@+id/jobNumberSpinner3"/>
+                android:onClick="chooseJobOnClick"/>
 
 
         </LinearLayout>

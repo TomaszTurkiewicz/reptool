@@ -112,6 +112,49 @@
         android:text="@string/jobDescription"/>
 
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/jobNumberAndNameLinearLayoutLayoutWeeklyReport3"
+        app:layout_constraintTop_toBottomOf="@id/descriptionLayoutWeeklyReport2"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/jobNumberLayoutWeeklyReport3"
+            android:layout_marginEnd="@dimen/marginHalf"
+            android:text="@string/job_number"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nameLayoutWeeklyReport3"
+            android:layout_marginStart="@dimen/marginHalf"
+            android:text="@string/name"/>
+    </LinearLayout>
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/jobNumberAndNameLinearLayoutLayoutWeeklyReport3"
+        android:id="@+id/addressLayoutWeeklyReport3"
+        android:text="@string/jobAddress"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addressLayoutWeeklyReport3"
+        android:id="@+id/descriptionLayoutWeeklyReport3"
+        android:layout_marginBottom="@dimen/marginHalf"
+        android:text="@string/jobDescription"/>
+
+
+
+
+
     <ImageView
         android:id="@+id/imageDeleteLayoutWeeklyReport"
         android:layout_width="wrap_content"

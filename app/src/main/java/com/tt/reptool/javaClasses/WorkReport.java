@@ -61,7 +61,14 @@ public class WorkReport {
 
     public String toString(){
         if(type==Type.WORK){
-            String fullDescription = job.getJobNumber()+" "+job.getAddress().getName()+"\n"+
+
+            String jobNumber = "";
+
+            if(job.getJobNumber()!=null){
+                jobNumber=job.getJobNumber();
+            }
+
+            String fullDescription = jobNumber+" "+job.getAddress().getName()+"\n"+
                     job.getAddress().fullAddress()+"\n"+
                     description;
 

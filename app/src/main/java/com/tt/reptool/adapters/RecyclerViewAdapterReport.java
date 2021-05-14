@@ -81,7 +81,7 @@ public class RecyclerViewAdapterReport extends RecyclerView.Adapter<RecyclerView
                     holder.reportDescription2.setText(repList.get(position).getWorkReport2().getType().name()+"\n"+
                             repList.get(position).getWorkReport2().getDescription());
                 }else{
-                    holder.reportDescription2.setText(repList.get(position).getWorkReport().getType().name());
+                    holder.reportDescription2.setText(repList.get(position).getWorkReport2().getType().name());
                 }
             }
 
@@ -95,16 +95,51 @@ public class RecyclerViewAdapterReport extends RecyclerView.Adapter<RecyclerView
         }
 
 
-        holder.reportAddress3.setVisibility(View.GONE);
+        if(repList.get(position).getWorkReport3()!=null){
+
+            holder.reportAddress3.setVisibility(View.VISIBLE);
+            holder.reportDescription3.setVisibility(View.VISIBLE);
+            holder.reportJobNumber3.setVisibility(View.VISIBLE);
+            holder.reportName3.setVisibility(View.VISIBLE);
+
+
+            if(repList.get(position).getWorkReport3().getType()== Type.WORK){
+                holder.reportJobNumber3.setText(repList.get(position).getWorkReport3().getJob().getJobNumber());
+                holder.reportName3.setText(repList.get(position).getWorkReport3().getJob().getAddress().getName());
+                holder.reportAddress3.setText(repList.get(position).getWorkReport3().getJob().getAddress().fullAddress());
+                holder.reportDescription3.setText(repList.get(position).getWorkReport3().getDescription());
+            }
+            else {
+                holder.reportJobNumber3.setVisibility(View.GONE);
+                holder.reportName3.setVisibility(View.GONE);
+                holder.reportAddress3.setVisibility(View.GONE);
+                if(repList.get(position).getWorkReport3().getType()==Type.TRAINING){
+                    holder.reportDescription3.setText(repList.get(position).getWorkReport3().getType().name()+"\n"+
+                            repList.get(position).getWorkReport3().getDescription());
+                }else{
+                    holder.reportDescription3.setText(repList.get(position).getWorkReport3().getType().name());
+                }
+            }
+
+
+        }
+        else{
+            holder.reportAddress3.setVisibility(View.GONE);
+            holder.reportDescription3.setVisibility(View.GONE);
+            holder.reportJobNumber3.setVisibility(View.GONE);
+            holder.reportName3.setVisibility(View.GONE);
+        }
+
+
+
+
+
         holder.reportAddress4.setVisibility(View.GONE);
         holder.reportAddress5.setVisibility(View.GONE);
-        holder.reportDescription3.setVisibility(View.GONE);
         holder.reportDescription4.setVisibility(View.GONE);
         holder.reportDescription5.setVisibility(View.GONE);
-        holder.reportJobNumber3.setVisibility(View.GONE);
         holder.reportJobNumber4.setVisibility(View.GONE);
         holder.reportJobNumber5.setVisibility(View.GONE);
-        holder.reportName3.setVisibility(View.GONE);
         holder.reportName4.setVisibility(View.GONE);
         holder.reportName5.setVisibility(View.GONE);
     }

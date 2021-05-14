@@ -19,18 +19,27 @@ public class DailyReport {
     private DateAndTime endTime;
     private WorkReport workReport;
     private WorkReport workReport2;
-//    private WorkReport workReport3;
+    private WorkReport workReport3;
 //    private WorkReport workReport4;
 //    private WorkReport workReport5;
 
     public DailyReport() {
     }
 
-    public DailyReport(DateAndTime startTime, DateAndTime endTime, WorkReport workReport, WorkReport workReport2) {
+    public DailyReport(DateAndTime startTime, DateAndTime endTime, WorkReport workReport, WorkReport workReport2, WorkReport workReport3) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.workReport = workReport;
         this.workReport2 = workReport2;
+        this.workReport3 = workReport3;
+    }
+
+    public WorkReport getWorkReport3() {
+        return workReport3;
+    }
+
+    public void setWorkReport3(WorkReport workReport3) {
+        this.workReport3 = workReport3;
     }
 
     public WorkReport getWorkReport2() {
@@ -87,6 +96,10 @@ public class DailyReport {
 
         if(workReport2!=null){
             dailyReportToString = dailyReportToString+"\n"+workReport2.toString();
+        }
+
+        if(workReport3!=null){
+            dailyReportToString = dailyReportToString+"\n"+workReport3.toString();
         }
 
 
