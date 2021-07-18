@@ -66,6 +66,8 @@ public class WorkReport {
 
             if(job.getJobNumber()!=null){
                 jobNumber=job.getJobNumber();
+            }else{
+                jobNumber = "";
             }
 
             String fullDescription = jobNumber+" "+job.getAddress().getName()+"\n"+
